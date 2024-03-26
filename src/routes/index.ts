@@ -2,10 +2,11 @@ import { Request, Response, Router, raw } from "express";
 import crypto from "crypto";
 import { exec } from "child_process";
 
-const webhookSecret = process.env.WEBHOOK_SECRET;
+const webhookSecret = process.env.WEBHOOK_SECRET || "";
 
 function verifySignature(req: Request, body: string) {
-	const signature = req.headers["x-hub-signature"];
+	const signature: string = req.headers["x-hub-signature"] as string;
+
 	if (!signature) {
 		throw new Error("Signature header not found");
 	}
@@ -13,7 +14,8 @@ function verifySignature(req: Request, body: string) {
 	const hmac = crypto.createHmac("sha1", webhookSecret);
 	const digest = "sha1=" + hmac.update(body).digest("hex");
 
-	if (signature !== digest) {
+	// Use secure comparison to avoid timing attacks
+	if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(digest))) {
 		throw new Error("Signature verification failed");
 	}
 }
@@ -38,11 +40,9 @@ router.post(
 			exec("git pull origin master", error => {
 				if (error) {
 					console.error("Deployment error:", error);
-
 					res.status(500).send("Deployment failed");
 				} else {
 					console.log("Deployment successful");
-
 					res.status(200).send("Deployment successful");
 				}
 			});
