@@ -7,7 +7,7 @@ const repoPath = process.env.REPO_PATH || "";
 
 export const router = Router();
 
-router.get("/", (res: Response) => {
+router.get("/", (_, res) => {
 	res.status(200).json({ message: "Сървърът работи нормално." });
 });
 
