@@ -11,10 +11,6 @@ router.get("/", (_, res) => {
 	res.status(200).json({ message: "Сървърът работи нормално." });
 });
 
-router.get("/health", (_, res) => {
-	res.status(200).json({ status: "UP" });
-});
-
 router.post(
 	"/webhook",
 	raw({ type: "application/json" }),
