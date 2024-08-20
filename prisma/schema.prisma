@@ -1,0 +1,226 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// TODO: Administrator and login info on models
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+generator zod {
+    provider = "zod-prisma-types"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+enum LessonWeek {
+    ODD
+    EVEN
+    BOTH
+}
+
+enum Day {
+    MONDAY
+    TUESDAY
+    WEDNESDAY
+    THURSDAY
+    FRIDAY
+    SATURDAY
+    SUNDAY
+}
+
+model Teacher {
+    id   String @id @default(auto()) @map("_id") @db.ObjectId
+    // ? should the name be unique?
+    name String /// @zod.string.min(1, { message: "Името трябва да сърдържа поне 1 символ" })
+
+    schoolId String @db.ObjectId
+    school   School @relation(fields: [schoolId], references: [id])
+
+    lessons Lesson[] @relation("TeacherLessons")
+
+    subjectIds String[]  @db.ObjectId
+    subjects   Subject[] @relation(fields: [subjectIds], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([schoolId])
+}
+
+model Student {
+    id   String @id @default(auto()) @map("_id") @db.ObjectId
+    // ? should the name be unique?
+    name String /// @zod.string.min(1, { message: "Името трябва да сърдържа поне 1 символ" })
+
+    classId String      @db.ObjectId
+    class   SchoolClass @relation(fields: [classId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([classId])
+}
+
+model Subject {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    name String /// @zod.string.min(1, { message: "Името трябва да сърдържа поне 1 символ" })
+
+    schoolId String @db.ObjectId
+    school   School @relation(fields: [schoolId], references: [id])
+
+    lessons Lesson[] @relation("SubjectLessons")
+
+    teacherIds String[]  @db.ObjectId
+    teachers   Teacher[] @relation(fields: [teacherIds], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([schoolId])
+}
+
+model Lesson {
+    id           String     @id @default(auto()) @map("_id") @db.ObjectId
+    lessonNumber Int /// @zod.number.gte(0, { message: "Номерът на часа не може да бъде отрицателно число" })
+    startTime    DateTime
+    endTime      DateTime
+    lessonWeeks  LessonWeek @default(BOTH)
+
+    roomId String @db.ObjectId
+    room   Room   @relation(fields: [roomId], references: [id])
+
+    teacherId String  @db.ObjectId
+    teacher   Teacher @relation(fields: [teacherId], references: [id], name: "TeacherLessons")
+
+    subjectId String  @db.ObjectId
+    subject   Subject @relation(fields: [subjectId], references: [id], name: "SubjectLessons")
+
+    scheduleId String   @db.ObjectId
+    schedule   Schedule @relation(fields: [scheduleId], references: [id], name: "ScheduleLessons")
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // The lesson number should be unique within a schedule and week type
+    @@unique([lessonNumber, lessonWeeks, scheduleId])
+    // ? maybe add these indexes?
+    // @@index([lessonNumber])
+    // @@index([lessonWeeks])
+    // @@index([roomId])
+    @@index([teacherId])
+    @@index([subjectId])
+    @@index([scheduleId])
+}
+
+// TODO: rename to DailySchedule
+model Schedule {
+    id  String @id @default(auto()) @map("_id") @db.ObjectId
+    day Day
+
+    classId String      @db.ObjectId
+    class   SchoolClass @relation(fields: [classId], references: [id])
+
+    lessons Lesson[] @relation("ScheduleLessons")
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // The day should be unique within a class
+    @@unique([day, classId])
+    @@index([day])
+    @@index([classId])
+}
+
+model SchoolClass {
+    id   String @id @default(auto()) @map("_id") @db.ObjectId
+    name String /// @zod.string.min(1, { message: "Името трябва да сърдържа поне 1 символ" })
+
+    schoolId String @db.ObjectId
+    school   School @relation(fields: [schoolId], references: [id])
+
+    students Student[]
+
+    weeklySchedule Schedule[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // The class name should be unique within a school
+    @@unique([schoolId, name])
+    @@index([schoolId])
+}
+
+model School {
+    id   String @id @default(auto()) @map("_id") @db.ObjectId
+    name String @unique /// @zod.string.min(1, { message: "Името трябва да сърдържа поне 1 символ" })
+
+    classes SchoolClass[]
+
+    subjects Subject[]
+
+    teachers Teacher[]
+
+    buildings Building[]
+}
+
+model Building {
+    id   String @id @default(auto()) @map("_id") @db.ObjectId
+    name String /// @zod.string.min(1, { message: "Името трябва да сърдържа поне 1 символ" })
+
+    schoolId String @db.ObjectId
+    school   School @relation(fields: [schoolId], references: [id])
+
+    floors Floor[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // The building name should be unique within a school
+    @@unique([schoolId, name])
+    @@index([schoolId])
+}
+
+model Floor {
+    id            String  @id @default(auto()) @map("_id") @db.ObjectId
+    number        Int
+    description   String?
+    floorPlanUUID String? @unique
+    floorMaskUUID String? @unique
+
+    buildingId String   @db.ObjectId
+    building   Building @relation(fields: [buildingId], references: [id])
+
+    rooms Room[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // The floor number should be unique within a building
+    @@unique([buildingId, number])
+    @@index([buildingId])
+}
+
+model Room {
+    id   String @id @default(auto()) @map("_id") @db.ObjectId
+    name String /// @zod.string.min(1, { message: "Името трябва да сърдържа поне 1 символ" })
+
+    floorId String @db.ObjectId
+    floor   Floor  @relation(fields: [floorId], references: [id])
+
+    lessons Lesson[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // The room name should be unique within a floor
+    @@unique([floorId, name])
+    @@index([floorId])
+}

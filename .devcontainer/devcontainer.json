@@ -1,0 +1,27 @@
+{
+	"name": "Bun & Node.js & TypeScript",
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"oven.bun-vscode",
+				"ms-azuretools.vscode-docker",
+				"christian-kohler.path-intellisense",
+				"esbenp.prettier-vscode",
+				"Postman.postman-for-vscode",
+				"YoavBls.pretty-ts-errors",
+				"Prisma.prisma",
+				"chrmarti.regex",
+				"EthanSK.restore-terminals",
+				"Orta.vscode-twoslash-queries"
+			]
+		}
+	},
+	"features": {
+		"ghcr.io/shyim/devcontainers-features/bun:0": {},
+		"ghcr.io/devcontainers/features/common-utils:2": {},
+		"ghcr.io/devcontainers/features/git:1": {}
+	}
+}
