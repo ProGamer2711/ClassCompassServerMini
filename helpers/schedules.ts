@@ -37,7 +37,10 @@ async function getSchedules(where: Prisma.ScheduleWhereInput = {}) {
 	try {
 		ScheduleWhereInputSchema.parse(where);
 
-		const schedules = await client.schedule.findMany({ where });
+		const schedules = await client.schedule.findMany({
+			where,
+			include: { lessons: true },
+		});
 
 		return schedules;
 	} catch (error) {
