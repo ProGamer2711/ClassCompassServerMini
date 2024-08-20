@@ -4,8 +4,7 @@
 	"type": "module",
 	"scripts": {
 		"start": "bun run index.ts",
-		"dev": "nodemon -x 'bun --bun run index.ts' --watch . --recursive -e ts,json,prisma -i uploads/",
-		"generate": "prisma generate"
+		"dev": "nodemon -x 'bun --bun run index.ts' --watch . --recursive -e ts,json,prisma -i uploads/"
 	},
 	"devDependencies": {
 		"@types/bun": "^1.1.6",
