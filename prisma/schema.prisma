@@ -5,6 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 // TODO: Administrator and login info on models
+// TODO: Add referential actions
 
 generator client {
     provider = "prisma-client-js"
