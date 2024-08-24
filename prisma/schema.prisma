@@ -190,11 +190,11 @@ model Building {
 }
 
 model Floor {
-    id            String  @id @default(auto()) @map("_id") @db.ObjectId
-    number        Int
-    description   String?
-    floorPlanUUID String? @unique
-    floorMaskUUID String? @unique
+    id           String  @id @default(auto()) @map("_id") @db.ObjectId
+    number       Int
+    description  String?
+    planFilename String? @unique
+    maskFilename String? @unique
 
     buildingId String   @db.ObjectId
     building   Building @relation(fields: [buildingId], references: [id])

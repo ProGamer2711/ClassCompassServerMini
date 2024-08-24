@@ -26,7 +26,7 @@ export const SchoolScalarFieldEnumSchema = z.enum(['id','name']);
 
 export const BuildingScalarFieldEnumSchema = z.enum(['id','name','schoolId','createdAt','updatedAt']);
 
-export const FloorScalarFieldEnumSchema = z.enum(['id','number','description','floorPlanUUID','floorMaskUUID','buildingId','createdAt','updatedAt']);
+export const FloorScalarFieldEnumSchema = z.enum(['id','number','description','planFilename','maskFilename','buildingId','createdAt','updatedAt']);
 
 export const RoomScalarFieldEnumSchema = z.enum(['id','name','floorId','createdAt','updatedAt']);
 
@@ -171,8 +171,8 @@ export const FloorSchema = z.object({
   id: z.string(),
   number: z.number().int(),
   description: z.string().nullable(),
-  floorPlanUUID: z.string().nullable(),
-  floorMaskUUID: z.string().nullable(),
+  planFilename: z.string().nullable(),
+  maskFilename: z.string().nullable(),
   buildingId: z.string(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
@@ -464,8 +464,8 @@ export const FloorSelectSchema: z.ZodType<Prisma.FloorSelect> = z.object({
   id: z.boolean().optional(),
   number: z.boolean().optional(),
   description: z.boolean().optional(),
-  floorPlanUUID: z.boolean().optional(),
-  floorMaskUUID: z.boolean().optional(),
+  planFilename: z.boolean().optional(),
+  maskFilename: z.boolean().optional(),
   buildingId: z.boolean().optional(),
   createdAt: z.boolean().optional(),
   updatedAt: z.boolean().optional(),
@@ -1098,8 +1098,8 @@ export const FloorWhereInputSchema: z.ZodType<Prisma.FloorWhereInput> = z.object
   id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   number: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   description: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  floorPlanUUID: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  floorMaskUUID: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  planFilename: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  maskFilename: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   buildingId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
@@ -1111,8 +1111,8 @@ export const FloorOrderByWithRelationInputSchema: z.ZodType<Prisma.FloorOrderByW
   id: z.lazy(() => SortOrderSchema).optional(),
   number: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
-  floorPlanUUID: z.lazy(() => SortOrderSchema).optional(),
-  floorMaskUUID: z.lazy(() => SortOrderSchema).optional(),
+  planFilename: z.lazy(() => SortOrderSchema).optional(),
+  maskFilename: z.lazy(() => SortOrderSchema).optional(),
   buildingId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
@@ -1123,62 +1123,62 @@ export const FloorOrderByWithRelationInputSchema: z.ZodType<Prisma.FloorOrderByW
 export const FloorWhereUniqueInputSchema: z.ZodType<Prisma.FloorWhereUniqueInput> = z.union([
   z.object({
     id: z.string(),
-    floorPlanUUID: z.string(),
-    floorMaskUUID: z.string(),
+    planFilename: z.string(),
+    maskFilename: z.string(),
     buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema)
   }),
   z.object({
     id: z.string(),
-    floorPlanUUID: z.string(),
-    floorMaskUUID: z.string(),
+    planFilename: z.string(),
+    maskFilename: z.string(),
   }),
   z.object({
     id: z.string(),
-    floorPlanUUID: z.string(),
+    planFilename: z.string(),
     buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema),
   }),
   z.object({
     id: z.string(),
-    floorPlanUUID: z.string(),
+    planFilename: z.string(),
   }),
   z.object({
     id: z.string(),
-    floorMaskUUID: z.string(),
-    buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema),
-  }),
-  z.object({
-    id: z.string(),
-    floorMaskUUID: z.string(),
-  }),
-  z.object({
-    id: z.string(),
+    maskFilename: z.string(),
     buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema),
   }),
   z.object({
     id: z.string(),
+    maskFilename: z.string(),
   }),
   z.object({
-    floorPlanUUID: z.string(),
-    floorMaskUUID: z.string(),
+    id: z.string(),
     buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema),
   }),
   z.object({
-    floorPlanUUID: z.string(),
-    floorMaskUUID: z.string(),
+    id: z.string(),
   }),
   z.object({
-    floorPlanUUID: z.string(),
+    planFilename: z.string(),
+    maskFilename: z.string(),
     buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema),
   }),
   z.object({
-    floorPlanUUID: z.string(),
+    planFilename: z.string(),
+    maskFilename: z.string(),
   }),
   z.object({
-    floorMaskUUID: z.string(),
+    planFilename: z.string(),
     buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema),
   }),
   z.object({
-    floorMaskUUID: z.string(),
+    planFilename: z.string(),
+  }),
+  z.object({
+    maskFilename: z.string(),
+    buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema),
+  }),
+  z.object({
+    maskFilename: z.string(),
   }),
   z.object({
     buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema),
@@ -1186,8 +1186,8 @@ export const FloorWhereUniqueInputSchema: z.ZodType<Prisma.FloorWhereUniqueInput
 ])
 .and(z.object({
   id: z.string().optional(),
-  floorPlanUUID: z.string().optional(),
-  floorMaskUUID: z.string().optional(),
+  planFilename: z.string().optional(),
+  maskFilename: z.string().optional(),
   buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema).optional(),
   AND: z.union([ z.lazy(() => FloorWhereInputSchema),z.lazy(() => FloorWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => FloorWhereInputSchema).array().optional(),
@@ -1205,8 +1205,8 @@ export const FloorOrderByWithAggregationInputSchema: z.ZodType<Prisma.FloorOrder
   id: z.lazy(() => SortOrderSchema).optional(),
   number: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
-  floorPlanUUID: z.lazy(() => SortOrderSchema).optional(),
-  floorMaskUUID: z.lazy(() => SortOrderSchema).optional(),
+  planFilename: z.lazy(() => SortOrderSchema).optional(),
+  maskFilename: z.lazy(() => SortOrderSchema).optional(),
   buildingId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
@@ -1224,8 +1224,8 @@ export const FloorScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.FloorSc
   id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   number: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   description: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
-  floorPlanUUID: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
-  floorMaskUUID: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  planFilename: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  maskFilename: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   buildingId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
@@ -1789,8 +1789,8 @@ export const FloorCreateInputSchema: z.ZodType<Prisma.FloorCreateInput> = z.obje
   id: z.string().optional(),
   number: z.number().int(),
   description: z.string().optional().nullable(),
-  floorPlanUUID: z.string().optional().nullable(),
-  floorMaskUUID: z.string().optional().nullable(),
+  planFilename: z.string().optional().nullable(),
+  maskFilename: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   building: z.lazy(() => BuildingCreateNestedOneWithoutFloorsInputSchema),
@@ -1801,8 +1801,8 @@ export const FloorUncheckedCreateInputSchema: z.ZodType<Prisma.FloorUncheckedCre
   id: z.string().optional(),
   number: z.number().int(),
   description: z.string().optional().nullable(),
-  floorPlanUUID: z.string().optional().nullable(),
-  floorMaskUUID: z.string().optional().nullable(),
+  planFilename: z.string().optional().nullable(),
+  maskFilename: z.string().optional().nullable(),
   buildingId: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
@@ -1812,8 +1812,8 @@ export const FloorUncheckedCreateInputSchema: z.ZodType<Prisma.FloorUncheckedCre
 export const FloorUpdateInputSchema: z.ZodType<Prisma.FloorUpdateInput> = z.object({
   number: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorPlanUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorMaskUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  planFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  maskFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   building: z.lazy(() => BuildingUpdateOneRequiredWithoutFloorsNestedInputSchema).optional(),
@@ -1823,8 +1823,8 @@ export const FloorUpdateInputSchema: z.ZodType<Prisma.FloorUpdateInput> = z.obje
 export const FloorUncheckedUpdateInputSchema: z.ZodType<Prisma.FloorUncheckedUpdateInput> = z.object({
   number: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorPlanUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorMaskUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  planFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  maskFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   buildingId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
@@ -1835,8 +1835,8 @@ export const FloorCreateManyInputSchema: z.ZodType<Prisma.FloorCreateManyInput> 
   id: z.string().optional(),
   number: z.number().int(),
   description: z.string().optional().nullable(),
-  floorPlanUUID: z.string().optional().nullable(),
-  floorMaskUUID: z.string().optional().nullable(),
+  planFilename: z.string().optional().nullable(),
+  maskFilename: z.string().optional().nullable(),
   buildingId: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional()
@@ -1845,8 +1845,8 @@ export const FloorCreateManyInputSchema: z.ZodType<Prisma.FloorCreateManyInput> 
 export const FloorUpdateManyMutationInputSchema: z.ZodType<Prisma.FloorUpdateManyMutationInput> = z.object({
   number: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorPlanUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorMaskUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  planFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  maskFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -1854,8 +1854,8 @@ export const FloorUpdateManyMutationInputSchema: z.ZodType<Prisma.FloorUpdateMan
 export const FloorUncheckedUpdateManyInputSchema: z.ZodType<Prisma.FloorUncheckedUpdateManyInput> = z.object({
   number: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorPlanUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorMaskUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  planFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  maskFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   buildingId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
@@ -2425,8 +2425,8 @@ export const FloorCountOrderByAggregateInputSchema: z.ZodType<Prisma.FloorCountO
   id: z.lazy(() => SortOrderSchema).optional(),
   number: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
-  floorPlanUUID: z.lazy(() => SortOrderSchema).optional(),
-  floorMaskUUID: z.lazy(() => SortOrderSchema).optional(),
+  planFilename: z.lazy(() => SortOrderSchema).optional(),
+  maskFilename: z.lazy(() => SortOrderSchema).optional(),
   buildingId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
@@ -2440,8 +2440,8 @@ export const FloorMaxOrderByAggregateInputSchema: z.ZodType<Prisma.FloorMaxOrder
   id: z.lazy(() => SortOrderSchema).optional(),
   number: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
-  floorPlanUUID: z.lazy(() => SortOrderSchema).optional(),
-  floorMaskUUID: z.lazy(() => SortOrderSchema).optional(),
+  planFilename: z.lazy(() => SortOrderSchema).optional(),
+  maskFilename: z.lazy(() => SortOrderSchema).optional(),
   buildingId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
@@ -2451,8 +2451,8 @@ export const FloorMinOrderByAggregateInputSchema: z.ZodType<Prisma.FloorMinOrder
   id: z.lazy(() => SortOrderSchema).optional(),
   number: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
-  floorPlanUUID: z.lazy(() => SortOrderSchema).optional(),
-  floorMaskUUID: z.lazy(() => SortOrderSchema).optional(),
+  planFilename: z.lazy(() => SortOrderSchema).optional(),
+  maskFilename: z.lazy(() => SortOrderSchema).optional(),
   buildingId: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
@@ -4512,8 +4512,8 @@ export const FloorCreateWithoutBuildingInputSchema: z.ZodType<Prisma.FloorCreate
   id: z.string().optional(),
   number: z.number().int(),
   description: z.string().optional().nullable(),
-  floorPlanUUID: z.string().optional().nullable(),
-  floorMaskUUID: z.string().optional().nullable(),
+  planFilename: z.string().optional().nullable(),
+  maskFilename: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   rooms: z.lazy(() => RoomCreateNestedManyWithoutFloorInputSchema).optional()
@@ -4523,8 +4523,8 @@ export const FloorUncheckedCreateWithoutBuildingInputSchema: z.ZodType<Prisma.Fl
   id: z.string().optional(),
   number: z.number().int(),
   description: z.string().optional().nullable(),
-  floorPlanUUID: z.string().optional().nullable(),
-  floorMaskUUID: z.string().optional().nullable(),
+  planFilename: z.string().optional().nullable(),
+  maskFilename: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   rooms: z.lazy(() => RoomUncheckedCreateNestedManyWithoutFloorInputSchema).optional()
@@ -4587,8 +4587,8 @@ export const FloorScalarWhereInputSchema: z.ZodType<Prisma.FloorScalarWhereInput
   id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   number: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   description: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  floorPlanUUID: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  floorMaskUUID: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  planFilename: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  maskFilename: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   buildingId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
@@ -4696,8 +4696,8 @@ export const FloorCreateWithoutRoomsInputSchema: z.ZodType<Prisma.FloorCreateWit
   id: z.string().optional(),
   number: z.number().int(),
   description: z.string().optional().nullable(),
-  floorPlanUUID: z.string().optional().nullable(),
-  floorMaskUUID: z.string().optional().nullable(),
+  planFilename: z.string().optional().nullable(),
+  maskFilename: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   building: z.lazy(() => BuildingCreateNestedOneWithoutFloorsInputSchema)
@@ -4707,8 +4707,8 @@ export const FloorUncheckedCreateWithoutRoomsInputSchema: z.ZodType<Prisma.Floor
   id: z.string().optional(),
   number: z.number().int(),
   description: z.string().optional().nullable(),
-  floorPlanUUID: z.string().optional().nullable(),
-  floorMaskUUID: z.string().optional().nullable(),
+  planFilename: z.string().optional().nullable(),
+  maskFilename: z.string().optional().nullable(),
   buildingId: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional()
@@ -4768,8 +4768,8 @@ export const FloorUpdateToOneWithWhereWithoutRoomsInputSchema: z.ZodType<Prisma.
 export const FloorUpdateWithoutRoomsInputSchema: z.ZodType<Prisma.FloorUpdateWithoutRoomsInput> = z.object({
   number: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorPlanUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorMaskUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  planFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  maskFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   building: z.lazy(() => BuildingUpdateOneRequiredWithoutFloorsNestedInputSchema).optional()
@@ -4778,8 +4778,8 @@ export const FloorUpdateWithoutRoomsInputSchema: z.ZodType<Prisma.FloorUpdateWit
 export const FloorUncheckedUpdateWithoutRoomsInputSchema: z.ZodType<Prisma.FloorUncheckedUpdateWithoutRoomsInput> = z.object({
   number: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorPlanUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorMaskUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  planFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  maskFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   buildingId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
@@ -5174,8 +5174,8 @@ export const FloorCreateManyBuildingInputSchema: z.ZodType<Prisma.FloorCreateMan
   id: z.string().optional(),
   number: z.number().int(),
   description: z.string().optional().nullable(),
-  floorPlanUUID: z.string().optional().nullable(),
-  floorMaskUUID: z.string().optional().nullable(),
+  planFilename: z.string().optional().nullable(),
+  maskFilename: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional()
 }).strict();
@@ -5183,8 +5183,8 @@ export const FloorCreateManyBuildingInputSchema: z.ZodType<Prisma.FloorCreateMan
 export const FloorUpdateWithoutBuildingInputSchema: z.ZodType<Prisma.FloorUpdateWithoutBuildingInput> = z.object({
   number: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorPlanUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorMaskUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  planFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  maskFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   rooms: z.lazy(() => RoomUpdateManyWithoutFloorNestedInputSchema).optional()
@@ -5193,8 +5193,8 @@ export const FloorUpdateWithoutBuildingInputSchema: z.ZodType<Prisma.FloorUpdate
 export const FloorUncheckedUpdateWithoutBuildingInputSchema: z.ZodType<Prisma.FloorUncheckedUpdateWithoutBuildingInput> = z.object({
   number: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorPlanUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorMaskUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  planFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  maskFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   rooms: z.lazy(() => RoomUncheckedUpdateManyWithoutFloorNestedInputSchema).optional()
@@ -5203,8 +5203,8 @@ export const FloorUncheckedUpdateWithoutBuildingInputSchema: z.ZodType<Prisma.Fl
 export const FloorUncheckedUpdateManyWithoutBuildingInputSchema: z.ZodType<Prisma.FloorUncheckedUpdateManyWithoutBuildingInput> = z.object({
   number: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorPlanUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  floorMaskUUID: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  planFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  maskFilename: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();

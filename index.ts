@@ -17,6 +17,25 @@ dotenv.config();
 const app = express();
 
 const routesPath = path.join(__dirname, "routes");
+const uploadsPath = path.join(__dirname, "uploads");
+
+export const floorPlansPath = path.join(uploadsPath, "floorPlans");
+export const floorMasksPath = path.join(uploadsPath, "floorMasks");
+
+// if "uploads" directory does not exist, create it
+if (!fs.existsSync(uploadsPath)) {
+	fs.mkdirSync(uploadsPath);
+}
+
+// if "floorPlans" directory does not exist, create it
+if (!fs.existsSync(floorPlansPath)) {
+	fs.mkdirSync(floorPlansPath);
+}
+
+// if "floorMasks" directory does not exist, create it
+if (!fs.existsSync(floorMasksPath)) {
+	fs.mkdirSync(floorMasksPath);
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,8 +43,20 @@ app.use(express.urlencoded({ extended: true }));
 const instance = hyperid({ urlSafe: true });
 
 const storage = multer.diskStorage({
-	destination: path.join(__dirname, "uploads"),
-	filename: (_req, _file, cb) => cb(null, instance()),
+	destination: (req, _file, cb) => {
+		const route = req.path;
+
+		if (route.endsWith("/plan")) {
+			cb(null, floorPlansPath);
+		} else if (route.endsWith("/mask")) {
+			cb(null, floorMasksPath);
+		} else {
+			cb(new Error("Invalid route"), "");
+		}
+	},
+	filename: (_req, file, cb) => {
+		cb(null, `${instance()}.${file.originalname.split(".").pop()}`);
+	},
 });
 
 export const upload = multer({
