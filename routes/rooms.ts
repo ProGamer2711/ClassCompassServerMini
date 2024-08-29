@@ -30,9 +30,35 @@ router.post("", async (req, res) => {
 	}
 });
 
-router.get("", async (_, res) => {
+// router.get("", async (_, res) => {
+// 	try {
+// 		const result = await getRooms();
+
+// 		if ("error" in result) {
+// 			return serverResponses.sendError(
+// 				res,
+// 				messages.BAD_REQUEST,
+// 				result.error
+// 			);
+// 		}
+
+// 		return serverResponses.sendSuccess(res, messages.OK, result);
+// 	} catch (error) {
+// 		console.error(error);
+
+// 		return serverResponses.sendError(
+// 			res,
+// 			messages.INTERNAL_SERVER_ERROR,
+// 			error
+// 		);
+// 	}
+// });
+
+router.get("/:floorId", async (req, res) => {
 	try {
-		const result = await getRooms();
+		const { floorId } = req.params;
+
+		const result = await getRooms({ floorId });
 
 		if ("error" in result) {
 			return serverResponses.sendError(

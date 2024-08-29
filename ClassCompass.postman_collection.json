@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "1fd0d0a1-c395-42d4-942b-0adcc2688a44",
+		"_postman_id": "a0c03a86-3cf1-4e5b-a435-329624925577",
 		"name": "ClassCompass",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "15225861",
-		"_collection_link": "https://classcompass.postman.co/workspace/ClassCompass~a54d13f9-bb15-4071-9bf8-89da9db57840/collection/15225861-1fd0d0a1-c395-42d4-942b-0adcc2688a44?action=share&source=collection_link&creator=15225861"
+		"_collection_link": "https://classcompass.postman.co/workspace/ClassCompass~a54d13f9-bb15-4071-9bf8-89da9db57840/collection/15225861-a0c03a86-3cf1-4e5b-a435-329624925577?action=share&source=collection_link&creator=15225861"
 	},
 	"item": [
 		{
@@ -25,12 +25,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/teachers",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/teachers",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"teachers"
 							]
@@ -39,19 +37,24 @@
 					"response": []
 				},
 				{
-					"name": "/",
+					"name": "/:schoolId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/teachers",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/teachers/:schoolId",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
-								"teachers"
+								"teachers",
+								":schoolId"
+							],
+							"variable": [
+								{
+									"key": "schoolId",
+									"value": "66d08423d820592065b73bf0"
+								}
 							]
 						}
 					},
@@ -72,12 +75,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/teachers/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/teachers/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"teachers",
 								":id"
@@ -98,12 +99,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/teachers/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/teachers/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"teachers",
 								":id"
@@ -138,12 +137,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/students",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/students",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"students"
 							]
@@ -152,19 +149,24 @@
 					"response": []
 				},
 				{
-					"name": "/",
+					"name": "/:classId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/students",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/students/:classId",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
-								"students"
+								"students",
+								":classId"
+							],
+							"variable": [
+								{
+									"key": "classId",
+									"value": "66c494df4828507c6edb1f85"
+								}
 							]
 						}
 					},
@@ -185,12 +187,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/students/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/students/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"students",
 								":id"
@@ -211,12 +211,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/students/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/students/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"students",
 								":id"
@@ -251,12 +249,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/subjects",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/subjects",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"subjects"
 							]
@@ -265,19 +261,24 @@
 					"response": []
 				},
 				{
-					"name": "/",
+					"name": "/:schoolId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/subjects",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/subjects/:schoolId",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
-								"subjects"
+								"subjects",
+								":schoolId"
+							],
+							"variable": [
+								{
+									"key": "schoolId",
+									"value": "66d08423d820592065b73bf0"
+								}
 							]
 						}
 					},
@@ -298,12 +299,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/subjects/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/subjects/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"subjects",
 								":id"
@@ -324,12 +323,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/subjects/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/subjects/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"subjects",
 								":id"
@@ -364,12 +361,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/classes",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/classes",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"classes"
 							]
@@ -378,19 +373,24 @@
 					"response": []
 				},
 				{
-					"name": "/",
+					"name": "/:schoolId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/classes",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/classes/:schoolId",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
-								"classes"
+								"classes",
+								":schoolId"
+							],
+							"variable": [
+								{
+									"key": "schoolId",
+									"value": "66c4910e0b65e25ad676243b"
+								}
 							]
 						}
 					},
@@ -411,12 +411,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/classes/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/classes/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"classes",
 								":id"
@@ -437,12 +435,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/classes/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/classes/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"classes",
 								":id"
@@ -477,12 +473,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/lessons",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/lessons",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"lessons"
 							]
@@ -496,12 +490,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/lessons",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/lessons",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"lessons"
 							]
@@ -524,12 +516,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/lessons/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/lessons/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"lessons",
 								":id"
@@ -550,12 +540,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/lessons/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/lessons/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"lessons",
 								":id"
@@ -590,12 +578,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/schedules",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/schedules",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"schedules"
 							]
@@ -604,19 +590,24 @@
 					"response": []
 				},
 				{
-					"name": "/",
+					"name": "/:classId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/schedules",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/schedules/:classId",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
-								"schedules"
+								"schedules",
+								":classId"
+							],
+							"variable": [
+								{
+									"key": "classId",
+									"value": "66c494df4828507c6edb1f85"
+								}
 							]
 						}
 					},
@@ -637,12 +628,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/schedules/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/schedules/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"schedules",
 								":id"
@@ -663,12 +652,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/schedules/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/schedules/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"schedules",
 								":id"
@@ -703,12 +690,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/schools",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/schools",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"schools"
 							]
@@ -722,12 +707,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/schools",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/schools",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"schools"
 							]
@@ -750,12 +733,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/schools/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/schools/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"schools",
 								":id"
@@ -776,12 +757,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/schools/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/schools/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"schools",
 								":id"
@@ -816,12 +795,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/buildings",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/buildings",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"buildings"
 							]
@@ -830,19 +807,24 @@
 					"response": []
 				},
 				{
-					"name": "/",
+					"name": "/:schoolId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/buildings",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/buildings/:schoolId",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
-								"buildings"
+								"buildings",
+								":schoolId"
+							],
+							"variable": [
+								{
+									"key": "schoolId",
+									"value": "66c4910e0b65e25ad676243b"
+								}
 							]
 						}
 					},
@@ -863,12 +845,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/buildings/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/buildings/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"buildings",
 								":id"
@@ -889,12 +869,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/buildings/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/buildings/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"buildings",
 								":id"
@@ -929,12 +907,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/floors",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/floors",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"floors"
 							]
@@ -943,19 +919,24 @@
 					"response": []
 				},
 				{
-					"name": "/",
+					"name": "/:buildingId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/floors",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/floors/:buildingId",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
-								"floors"
+								"floors",
+								":buildingId"
+							],
+							"variable": [
+								{
+									"key": "buildingId",
+									"value": "66c492103f4e77dc6e327de2"
+								}
 							]
 						}
 					},
@@ -976,12 +957,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/floors/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/floors/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"floors",
 								":id"
@@ -1002,12 +981,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/floors/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/floors/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"floors",
 								":id"
@@ -1038,12 +1015,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8393/floors/:id/plan",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/floors/:id/plan",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"floors",
 								":id",
@@ -1065,12 +1040,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/floors/:id/plan",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/floors/:id/plan",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"floors",
 								":id",
@@ -1092,12 +1065,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/floors/:id/plan",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/floors/:id/plan",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"floors",
 								":id",
@@ -1119,12 +1090,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/floors/:id/mask",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/floors/:id/mask",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"floors",
 								":id",
@@ -1156,12 +1125,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8393/floors/:id/mask",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/floors/:id/mask",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"floors",
 								":id",
@@ -1183,12 +1150,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/floors/:id/mask",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/floors/:id/mask",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"floors",
 								":id",
@@ -1224,12 +1189,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/rooms",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/rooms",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"rooms"
 							]
@@ -1238,19 +1201,24 @@
 					"response": []
 				},
 				{
-					"name": "/",
+					"name": "/:floorId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/rooms",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/rooms/:floorId",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
-								"rooms"
+								"rooms",
+								":floorId"
+							],
+							"variable": [
+								{
+									"key": "floorId",
+									"value": "66c492f42d059d9f621ea683"
+								}
 							]
 						}
 					},
@@ -1271,12 +1239,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8393/rooms/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/rooms/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"rooms",
 								":id"
@@ -1297,12 +1263,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8393/rooms/:id",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/rooms/:id",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8393",
 							"path": [
 								"rooms",
 								":id"
@@ -1318,6 +1282,35 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://129.152.16.187:8393",
+			"type": "string"
 		}
 	]
 }
