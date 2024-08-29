@@ -7,9 +7,9 @@ const repoPath = process.env.REPO_PATH || "";
 
 export const router = Router();
 
-// router.get("/", (_, res) => {
-// 	res.status(200).json({ message: "Сървърът работи нормално." });
-// });
+router.get("/", (_, res) => {
+	res.status(200).json({ message: "Сървърът работи нормално." });
+});
 
 router.post(
 	"/webhook",
