@@ -1,0 +1,1316 @@
+{
+	"info": {
+		"_postman_id": "a0c03a86-3cf1-4e5b-a435-329624925577",
+		"name": "ClassCompass",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15225861",
+		"_collection_link": "https://classcompass.postman.co/workspace/ClassCompass~a54d13f9-bb15-4071-9bf8-89da9db57840/collection/15225861-a0c03a86-3cf1-4e5b-a435-329624925577?action=share&source=collection_link&creator=15225861"
+	},
+	"item": [
+		{
+			"name": "/teachers",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Даниел Александров\",\r\n    \"school\": {\r\n        \"connect\": {\r\n            \"id\": \"66c4910e0b65e25ad676243b\"\r\n        }\r\n    },\r\n    \"subjects\": {\r\n        \"connect\": [\r\n            {\r\n                \"id\": \"66c495bd4828507c6edb1f88\"\r\n            },\r\n            {\r\n                \"id\": \"66c4d068f072de3f47cc6c02\"\r\n            },\r\n            {\r\n                \"id\": \"66c4d114f072de3f47cc6c03\"\r\n            },\r\n            {\r\n                \"id\": \"66c4d117f072de3f47cc6c04\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/teachers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"teachers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:schoolId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/teachers/:schoolId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"teachers",
+								":schoolId"
+							],
+							"variable": [
+								{
+									"key": "schoolId",
+									"value": "66d08423d820592065b73bf0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"subjects\": {\r\n        \"disconnect\": [\r\n            {\r\n                \"id\": \"66c4d068f072de3f47cc6c02\"\r\n            },\r\n            {\r\n                \"id\": \"66c4d114f072de3f47cc6c03\"\r\n            },\r\n            {\r\n                \"id\": \"66c4d117f072de3f47cc6c04\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/teachers/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"teachers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c495f34828507c6edb1f89"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/teachers/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"teachers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ac8d7bdb8a0b4cad246606"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/students",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Йордан\",\r\n    \"class\": {\r\n        \"connect\": {\r\n            \"id\": \"66c494df4828507c6edb1f85\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/students",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:classId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/students/:classId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"students",
+								":classId"
+							],
+							"variable": [
+								{
+									"key": "classId",
+									"value": "66c494df4828507c6edb1f85"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Иван Петров\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/students/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"students",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ad113ac0ee415b55eb3495"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/students/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"students",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ad113ac0ee415b55eb3495"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/subjects",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"История\",\r\n    \"school\": {\r\n        \"connect\": {\r\n            \"id\": \"66c4910e0b65e25ad676243b\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/subjects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:schoolId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subjects/:schoolId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subjects",
+								":schoolId"
+							],
+							"variable": [
+								{
+									"key": "schoolId",
+									"value": "66d08423d820592065b73bf0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Математика\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/subjects/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subjects",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ac8d04db8a0b4cad246604"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subjects/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subjects",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c4d117f072de3f47cc6c04"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/classes",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"11 Б\",\r\n    \"school\": {\r\n        \"connect\": {\r\n            \"id\": \"66c4910e0b65e25ad676243b\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/classes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"classes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:schoolId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/classes/:schoolId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"classes",
+								":schoolId"
+							],
+							"variable": [
+								{
+									"key": "schoolId",
+									"value": "66c4910e0b65e25ad676243b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"11 Б\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/classes/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"classes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ad107bc0ee415b55eb3494"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/classes/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"classes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/lessons",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lessonNumber\": 1,\r\n    \"startTime\": \"8:00\",\r\n    \"endTime\": \"9:20\",\r\n    \"room\": {\r\n        \"connect\": {\r\n            \"id\": \"66c4940b4828507c6edb1f84\"\r\n        }\r\n    },\r\n    \"teacher\": {\r\n        \"connect\": {\r\n            \"id\": \"66c495f34828507c6edb1f89\"\r\n        }\r\n    },\r\n    \"subject\": {\r\n        \"connect\": {\r\n            \"id\": \"66c495bd4828507c6edb1f88\"\r\n        }\r\n    },\r\n    \"schedule\": {\r\n        \"connect\": {\r\n            \"id\": \"66c49925c7f67e35ed0e8247\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/lessons",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"lessons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/lessons",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"lessons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lessonNumber\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/lessons/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"lessons",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ad251fb42a067a9ff724d1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/lessons/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"lessons",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ad251fb42a067a9ff724d1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/schedules",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"day\": \"TUESDAY\",\r\n    \"class\": {\r\n        \"connect\": {\r\n            \"id\": \"66c494df4828507c6edb1f85\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/schedules",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"schedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:classId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/schedules/:classId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"schedules",
+								":classId"
+							],
+							"variable": [
+								{
+									"key": "classId",
+									"value": "66c494df4828507c6edb1f85"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"day\": \"TUESDAY\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/schedules/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"schedules",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ad30248c2f676ee35f4846"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/schedules/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"schedules",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ad30248c2f676ee35f4846"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/schools",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Технологично училище „Електронни системи“\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/schools",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"schools"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/schools",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"schools"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Технологично училище „Електронни системи“ към Технически Университет - София\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/schools/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"schools",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c48f49fefad496ad8da800"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/schools/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"schools",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c48f49fefad496ad8da800"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/buildings",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"9 блок\",\r\n    \"school\": {\r\n        \"connect\": {\r\n            \"id\": \"66c4910e0b65e25ad676243b\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/buildings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"buildings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:schoolId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/buildings/:schoolId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"buildings",
+								":schoolId"
+							],
+							"variable": [
+								{
+									"key": "schoolId",
+									"value": "66c4910e0b65e25ad676243b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"8 блок\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/buildings/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"buildings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c491160b65e25ad676243c"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/buildings/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"buildings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c491160b65e25ad676243c"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/floors",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\": 1,\r\n    \"building\": {\r\n        \"connect\": {\r\n            \"id\": \"66c492103f4e77dc6e327de2\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/floors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"floors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:buildingId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/floors/:buildingId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"floors",
+								":buildingId"
+							],
+							"variable": [
+								{
+									"key": "buildingId",
+									"value": "66c492103f4e77dc6e327de2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\": 0,\r\n    \"description\": \"Партер\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/floors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"floors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492b02d059d9f621ea681"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/floors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"floors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492b02d059d9f621ea681"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id/plan",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "plan",
+									"type": "file",
+									"src": "/C:/Users/User/Downloads/ClassCompassLogo.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/floors/:id/plan",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"floors",
+								":id",
+								"plan"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492f42d059d9f621ea683"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id/plan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/floors/:id/plan",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"floors",
+								":id",
+								"plan"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492f42d059d9f621ea683"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id/plan",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/floors/:id/plan",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"floors",
+								":id",
+								"plan"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492f42d059d9f621ea683"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id/mask",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/floors/:id/mask",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"floors",
+								":id",
+								"mask"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492f42d059d9f621ea683"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id/mask",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mask",
+									"type": "file",
+									"src": "/C:/Users/User/Downloads/3dgifmaker22902.gif"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/floors/:id/mask",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"floors",
+								":id",
+								"mask"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492f42d059d9f621ea683"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id/mask",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/floors/:id/mask",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"floors",
+								":id",
+								"mask"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492f42d059d9f621ea683"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/rooms",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"9205\",\r\n    \"floor\": {\r\n        \"connect\": {\r\n            \"id\": \"66c492f42d059d9f621ea683\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rooms",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:floorId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rooms/:floorId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rooms",
+								":floorId"
+							],
+							"variable": [
+								{
+									"key": "floorId",
+									"value": "66c492f42d059d9f621ea683"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"9222\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rooms/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rooms",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c493c54828507c6edb1f82"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rooms/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rooms",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c493c54828507c6edb1f82"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://129.152.16.187:8393",
+			"type": "string"
+		}
+	]
+}

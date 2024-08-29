@@ -35,9 +35,35 @@ router.post("", async (req, res) => {
 	}
 });
 
-router.get("", async (_, res) => {
+// router.get("", async (_, res) => {
+// 	try {
+// 		const result = await getStudents();
+
+// 		if ("error" in result) {
+// 			return serverResponses.sendError(
+// 				res,
+// 				messages.BAD_REQUEST,
+// 				result.error
+// 			);
+// 		}
+
+// 		return serverResponses.sendSuccess(res, messages.OK, result);
+// 	} catch (error) {
+// 		console.error(error);
+
+// 		return serverResponses.sendError(
+// 			res,
+// 			messages.INTERNAL_SERVER_ERROR,
+// 			error
+// 		);
+// 	}
+// });
+
+router.get("/:classId", async (req, res) => {
 	try {
-		const result = await getStudents();
+		const { classId } = req.params;
+
+		const result = await getStudents({ classId });
 
 		if ("error" in result) {
 			return serverResponses.sendError(

@@ -59,29 +59,31 @@ router.get("", async (_, res) => {
 			);
 		}
 
-		// ? Should this be here or in the frontend
-		// TODO: check if this is the best way to do this
-		interface ParsedLesson extends Omit<Lesson, "startTime" | "endTime"> {
-			startTime: string;
-			endTime: string;
-		}
+		// // ? Should this be here or in the frontend
+		// // TODO: check if this is the best way to do this
+		// interface ParsedLesson extends Omit<Lesson, "startTime" | "endTime"> {
+		// 	startTime: string;
+		// 	endTime: string;
+		// }
 
-		let parsedResult: ParsedLesson[] = [];
+		// let parsedResult: ParsedLesson[] = [];
 
-		result.forEach(lesson => {
-			parsedResult.push({
-				...lesson,
-				startTime: moment
-					.tz(lesson.startTime, "Europe/Sofia")
-					.format("HH:mm"),
-				endTime: moment
-					.tz(lesson.endTime, "Europe/Sofia")
-					.format("HH:mm"),
-			});
-		});
-		// & End of the TODO
+		// result.forEach(lesson => {
+		// 	parsedResult.push({
+		// 		...lesson,
+		// 		startTime: moment
+		// 			.tz(lesson.startTime, "Europe/Sofia")
+		// 			.format("HH:mm"),
+		// 		endTime: moment
+		// 			.tz(lesson.endTime, "Europe/Sofia")
+		// 			.format("HH:mm"),
+		// 	});
+		// });
+		// // & End of the TODO
 
-		return serverResponses.sendSuccess(res, messages.OK, parsedResult);
+		// return serverResponses.sendSuccess(res, messages.OK, parsedResult);
+
+		return serverResponses.sendSuccess(res, messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
