@@ -1,0 +1,1323 @@
+{
+	"info": {
+		"_postman_id": "1fd0d0a1-c395-42d4-942b-0adcc2688a44",
+		"name": "ClassCompass",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15225861",
+		"_collection_link": "https://classcompass.postman.co/workspace/ClassCompass~a54d13f9-bb15-4071-9bf8-89da9db57840/collection/15225861-1fd0d0a1-c395-42d4-942b-0adcc2688a44?action=share&source=collection_link&creator=15225861"
+	},
+	"item": [
+		{
+			"name": "/teachers",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Даниел Александров\",\r\n    \"school\": {\r\n        \"connect\": {\r\n            \"id\": \"66c4910e0b65e25ad676243b\"\r\n        }\r\n    },\r\n    \"subjects\": {\r\n        \"connect\": [\r\n            {\r\n                \"id\": \"66c495bd4828507c6edb1f88\"\r\n            },\r\n            {\r\n                \"id\": \"66c4d068f072de3f47cc6c02\"\r\n            },\r\n            {\r\n                \"id\": \"66c4d114f072de3f47cc6c03\"\r\n            },\r\n            {\r\n                \"id\": \"66c4d117f072de3f47cc6c04\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/teachers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"teachers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/teachers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"teachers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"subjects\": {\r\n        \"disconnect\": [\r\n            {\r\n                \"id\": \"66c4d068f072de3f47cc6c02\"\r\n            },\r\n            {\r\n                \"id\": \"66c4d114f072de3f47cc6c03\"\r\n            },\r\n            {\r\n                \"id\": \"66c4d117f072de3f47cc6c04\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/teachers/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"teachers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c495f34828507c6edb1f89"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/teachers/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"teachers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ac8d7bdb8a0b4cad246606"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/students",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Йордан\",\r\n    \"class\": {\r\n        \"connect\": {\r\n            \"id\": \"66c494df4828507c6edb1f85\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Иван Петров\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/students/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"students",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ad113ac0ee415b55eb3495"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/students/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"students",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ad113ac0ee415b55eb3495"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/subjects",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"История\",\r\n    \"school\": {\r\n        \"connect\": {\r\n            \"id\": \"66c4910e0b65e25ad676243b\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/subjects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/subjects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Математика\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/subjects/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"subjects",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ac8d04db8a0b4cad246604"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/subjects/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"subjects",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c4d117f072de3f47cc6c04"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/classes",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"11 Б\",\r\n    \"school\": {\r\n        \"connect\": {\r\n            \"id\": \"66c4910e0b65e25ad676243b\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/classes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"classes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/classes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"classes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"11 Б\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/classes/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"classes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ad107bc0ee415b55eb3494"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/classes/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"classes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/lessons",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lessonNumber\": 1,\r\n    \"startTime\": \"8:00\",\r\n    \"endTime\": \"9:20\",\r\n    \"room\": {\r\n        \"connect\": {\r\n            \"id\": \"66c4940b4828507c6edb1f84\"\r\n        }\r\n    },\r\n    \"teacher\": {\r\n        \"connect\": {\r\n            \"id\": \"66c495f34828507c6edb1f89\"\r\n        }\r\n    },\r\n    \"subject\": {\r\n        \"connect\": {\r\n            \"id\": \"66c495bd4828507c6edb1f88\"\r\n        }\r\n    },\r\n    \"schedule\": {\r\n        \"connect\": {\r\n            \"id\": \"66c49925c7f67e35ed0e8247\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/lessons",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"lessons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/lessons",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"lessons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lessonNumber\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/lessons/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"lessons",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ad251fb42a067a9ff724d1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/lessons/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"lessons",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ad251fb42a067a9ff724d1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/schedules",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"day\": \"TUESDAY\",\r\n    \"class\": {\r\n        \"connect\": {\r\n            \"id\": \"66c494df4828507c6edb1f85\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/schedules",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"schedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/schedules",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"schedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"day\": \"TUESDAY\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/schedules/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"schedules",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ad30248c2f676ee35f4846"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/schedules/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"schedules",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66ad30248c2f676ee35f4846"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/schools",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Технологично училище „Електронни системи“\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/schools",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"schools"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/schools",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"schools"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Технологично училище „Електронни системи“ към Технически Университет - София\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/schools/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"schools",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c48f49fefad496ad8da800"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/schools/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"schools",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c48f49fefad496ad8da800"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/buildings",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"9 блок\",\r\n    \"school\": {\r\n        \"connect\": {\r\n            \"id\": \"66c4910e0b65e25ad676243b\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/buildings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"buildings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/buildings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"buildings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"8 блок\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/buildings/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"buildings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c491160b65e25ad676243c"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/buildings/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"buildings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c491160b65e25ad676243c"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/floors",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\": 1,\r\n    \"building\": {\r\n        \"connect\": {\r\n            \"id\": \"66c492103f4e77dc6e327de2\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/floors",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"floors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/floors",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"floors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\": 0,\r\n    \"description\": \"Партер\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/floors/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"floors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492b02d059d9f621ea681"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/floors/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"floors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492b02d059d9f621ea681"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id/plan",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "plan",
+									"type": "file",
+									"src": "/C:/Users/User/Downloads/ClassCompassLogo.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8393/floors/:id/plan",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"floors",
+								":id",
+								"plan"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492f42d059d9f621ea683"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id/plan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/floors/:id/plan",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"floors",
+								":id",
+								"plan"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492f42d059d9f621ea683"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id/plan",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/floors/:id/plan",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"floors",
+								":id",
+								"plan"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492f42d059d9f621ea683"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id/mask",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/floors/:id/mask",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"floors",
+								":id",
+								"mask"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492f42d059d9f621ea683"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id/mask",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mask",
+									"type": "file",
+									"src": "/C:/Users/User/Downloads/3dgifmaker22902.gif"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8393/floors/:id/mask",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"floors",
+								":id",
+								"mask"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492f42d059d9f621ea683"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id/mask",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/floors/:id/mask",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"floors",
+								":id",
+								"mask"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492f42d059d9f621ea683"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/rooms",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"9205\",\r\n    \"floor\": {\r\n        \"connect\": {\r\n            \"id\": \"66c492f42d059d9f621ea683\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/rooms",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"rooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/rooms",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"rooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"9222\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8393/rooms/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"rooms",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c493c54828507c6edb1f82"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8393/rooms/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8393",
+							"path": [
+								"rooms",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c493c54828507c6edb1f82"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
