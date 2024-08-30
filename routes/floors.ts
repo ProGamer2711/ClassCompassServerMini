@@ -181,7 +181,10 @@ router.post("/:id/plan", upload.single("plan"), async (req, res) => {
 		}
 
 		// if a file already exists, delete it
-		if (floors[0].planFilename) {
+		if (
+			floors[0].planFilename &&
+			fs.existsSync(join(floorPlansPath, floors[0].planFilename))
+		) {
 			fs.unlinkSync(join(floorPlansPath, floors[0].planFilename));
 		}
 
@@ -241,6 +244,16 @@ router.get("/:id/plan", async (req, res) => {
 		const filePath = join(floorPlansPath, floors[0].planFilename);
 
 		if (!fs.existsSync(filePath)) {
+			// remove the filename from the database
+			await updateFloor(
+				{
+					id,
+				},
+				{
+					planFilename: null,
+				}
+			);
+
 			return serverResponses.sendError(res, messages.NOT_FOUND);
 		}
 
@@ -282,12 +295,6 @@ router.delete("/:id/plan", async (req, res) => {
 
 		const filePath = join(floorPlansPath, floors[0].planFilename);
 
-		if (!fs.existsSync(filePath)) {
-			return serverResponses.sendError(res, messages.NOT_FOUND);
-		}
-
-		fs.unlinkSync(filePath);
-
 		const result = await updateFloor(
 			{
 				id,
@@ -296,6 +303,12 @@ router.delete("/:id/plan", async (req, res) => {
 				planFilename: null,
 			}
 		);
+
+		if (!fs.existsSync(filePath)) {
+			return serverResponses.sendError(res, messages.NOT_FOUND);
+		}
+
+		fs.unlinkSync(filePath);
 
 		if ("error" in result) {
 			return serverResponses.sendError(
@@ -349,7 +362,10 @@ router.post("/:id/mask", upload.single("mask"), async (req, res) => {
 		}
 
 		// if a file already exists, delete it
-		if (floors[0].maskFilename) {
+		if (
+			floors[0].maskFilename &&
+			fs.existsSync(join(floorMasksPath, floors[0].maskFilename))
+		) {
 			fs.unlinkSync(join(floorMasksPath, floors[0].maskFilename));
 		}
 
@@ -409,6 +425,16 @@ router.get("/:id/mask", async (req, res) => {
 		const filePath = join(floorMasksPath, floors[0].maskFilename);
 
 		if (!fs.existsSync(filePath)) {
+			// remove the filename from the database
+			await updateFloor(
+				{
+					id,
+				},
+				{
+					maskFilename: null,
+				}
+			);
+
 			return serverResponses.sendError(res, messages.NOT_FOUND);
 		}
 
@@ -450,12 +476,6 @@ router.delete("/:id/mask", async (req, res) => {
 
 		const filePath = join(floorMasksPath, floors[0].maskFilename);
 
-		if (!fs.existsSync(filePath)) {
-			return serverResponses.sendError(res, messages.NOT_FOUND);
-		}
-
-		fs.unlinkSync(filePath);
-
 		const result = await updateFloor(
 			{
 				id,
@@ -464,6 +484,12 @@ router.delete("/:id/mask", async (req, res) => {
 				maskFilename: null,
 			}
 		);
+
+		if (!fs.existsSync(filePath)) {
+			return serverResponses.sendError(res, messages.NOT_FOUND);
+		}
+
+		fs.unlinkSync(filePath);
 
 		if ("error" in result) {
 			return serverResponses.sendError(
