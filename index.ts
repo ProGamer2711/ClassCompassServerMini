@@ -7,7 +7,7 @@ import express from "express";
 import multer from "multer";
 import hyperid from "hyperid";
 import dotenv from "dotenv";
-// import cors from "cors";
+import cors from "cors";
 
 import { messages } from "./utils/messages";
 import * as serverResponses from "./utils/responses";
@@ -68,36 +68,36 @@ export const upload = multer({
 });
 
 // Set CORS With Whitelist Array
-// let whitelistedDomains = process.env.WHITELISTED_DOMAINS?.split(", ") || [];
-// let allowedOrigins =
-// 	process.env.NODE_ENV === "production"
-// 		? whitelistedDomains
-// 		: ["http://localhost:5500", "http://127.0.0.1:5500"];
+let whitelistedDomains = process.env.WHITELISTED_DOMAINS?.split(", ") || [];
+let allowedOrigins =
+	process.env.NODE_ENV === "production"
+		? whitelistedDomains
+		: ["http://localhost:5500", "http://127.0.0.1:5500"];
 
-// app.use(
-// 	cors({
-// 		origin: allowedOrigins,
-// 		optionsSuccessStatus: 200,
-// 	})
-// );
+app.use(
+	cors({
+		origin: allowedOrigins,
+		optionsSuccessStatus: 200,
+	})
+);
 
-// app.use((req, res, next) => {
-// 	const origin = req.headers.origin;
+app.use((req, res, next) => {
+	// const origin = req.headers.origin;
 
-// 	if (allowedOrigins.includes(origin))
-// 		res.setHeader("Access-Control-Allow-Origin", "*");
+	// if (allowedOrigins.includes(origin))
+	res.setHeader("Access-Control-Allow-Origin", "*");
 
-// 	res.setHeader(
-// 		"Access-Control-Allow-Methods",
-// 		"GET, POST, PUT, DELETE, OPTIONS"
-// 	);
-// 	res.setHeader(
-// 		"Access-Control-Allow-Headers",
-// 		"Content-Type, X-Token, Origin"
-// 	);
+	res.setHeader(
+		"Access-Control-Allow-Methods",
+		"GET, POST, PUT, DELETE, OPTIONS"
+	);
+	res.setHeader(
+		"Access-Control-Allow-Headers",
+		"Origin, X-Requested-With, Content-Type, Accept, X-Token"
+	);
 
-// 	next();
-// });
+	next();
+});
 
 // Register Routes
 try {
