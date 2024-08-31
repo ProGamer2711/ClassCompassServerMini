@@ -1,20 +1,18 @@
-import { PrismaClient } from "@prisma/client";
-
 import path from "path";
 import fs from "fs";
 
-import express from "express";
-import multer from "multer";
-import hyperid from "hyperid";
 import dotenv from "dotenv";
+import hyperid from "hyperid";
+import multer from "multer";
+import express from "express";
 import cors from "cors";
+import { PrismaClient } from "@prisma/client";
+import { Redis } from "ioredis";
 
 import { messages } from "./utils/messages";
 import * as serverResponses from "./utils/responses";
 
 dotenv.config();
-
-const app = express();
 
 const routesPath = path.join(__dirname, "routes");
 const uploadsPath = path.join(__dirname, "uploads");
@@ -22,23 +20,22 @@ const uploadsPath = path.join(__dirname, "uploads");
 export const floorPlansPath = path.join(uploadsPath, "floorPlans");
 export const floorMasksPath = path.join(uploadsPath, "floorMasks");
 
-// if "uploads" directory does not exist, create it
+// if any of the directories does not exist, create it
+if (!fs.existsSync(routesPath)) {
+	fs.mkdirSync(routesPath);
+}
+
 if (!fs.existsSync(uploadsPath)) {
 	fs.mkdirSync(uploadsPath);
 }
 
-// if "floorPlans" directory does not exist, create it
 if (!fs.existsSync(floorPlansPath)) {
 	fs.mkdirSync(floorPlansPath);
 }
 
-// if "floorMasks" directory does not exist, create it
 if (!fs.existsSync(floorMasksPath)) {
 	fs.mkdirSync(floorMasksPath);
 }
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 const instance = hyperid({ urlSafe: true });
 
@@ -67,12 +64,18 @@ export const upload = multer({
 	},
 });
 
-// Set CORS With Whitelist Array
-let whitelistedDomains = process.env.WHITELISTED_DOMAINS?.split(", ") || [];
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// CORS Configuration
+let whitelistedDomains = process.env.WHITELISTED_DOMAINS?.split(", ") ?? [];
+
 let allowedOrigins =
 	process.env.NODE_ENV === "production"
 		? whitelistedDomains
-		: ["http://localhost:5500", "http://127.0.0.1:5500"];
+		: ["http://localhost:5173", "http://127.0.0.1:5173"];
 
 app.use(
 	cors({
@@ -82,10 +85,11 @@ app.use(
 );
 
 app.use((req, res, next) => {
-	// const origin = req.headers.origin;
+	const origin = req.headers.origin ?? "";
 
-	// if (allowedOrigins.includes(origin))
-	res.setHeader("Access-Control-Allow-Origin", "*");
+	if (allowedOrigins.includes(origin)) {
+		res.setHeader("Access-Control-Allow-Origin", origin);
+	}
 
 	res.setHeader(
 		"Access-Control-Allow-Methods",
@@ -117,10 +121,12 @@ try {
 	});
 }
 
-const port = process.env.PORT || 8393;
+export const prismaClient = new PrismaClient();
+
+export const redisClient = new Redis(process.env.REDIS_URL ?? "");
+
+const port = process.env.PORT ?? 8393;
 
 app.listen(port, () => {
 	console.log(`Server running on http://localhost:${port}/`);
 });
-
-export const client = new PrismaClient();

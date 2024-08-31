@@ -2,8 +2,8 @@ import { Router, raw } from "express";
 import crypto from "crypto";
 import { exec } from "child_process";
 
-const webhookSecret = process.env.WEBHOOK_SECRET || "";
-const repoPath = process.env.REPO_PATH || "";
+const webhookSecret = process.env.WEBHOOK_SECRET ?? "";
+const repoPath = process.env.REPO_PATH ?? "";
 
 export const router = Router();
 

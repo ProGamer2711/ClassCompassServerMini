@@ -8,13 +8,13 @@ import {
 	RoomUpdateInputSchema,
 } from "../prisma/generated/zod";
 
-import { client } from "..";
+import { prismaClient } from "..";
 
 async function createRoom(room: Prisma.RoomCreateInput) {
 	try {
 		RoomCreateInputSchema.parse(room);
 
-		const newRoom = await client.room.create({
+		const newRoom = await prismaClient.room.create({
 			data: room,
 		});
 
@@ -37,7 +37,7 @@ async function getRooms(where: Prisma.RoomWhereInput = {}) {
 	try {
 		RoomWhereInputSchema.parse(where);
 
-		const rooms = await client.room.findMany({
+		const rooms = await prismaClient.room.findMany({
 			where,
 		});
 
@@ -60,7 +60,7 @@ async function updateRoom(
 		RoomWhereUniqueInputSchema.parse(where);
 		RoomUpdateInputSchema.parse(data);
 
-		const room = await client.room.update({
+		const room = await prismaClient.room.update({
 			where,
 			data,
 		});
@@ -84,7 +84,7 @@ async function deleteRoom(where: Prisma.RoomWhereUniqueInput) {
 	try {
 		RoomWhereUniqueInputSchema.parse(where);
 
-		const room = await client.room.delete({
+		const room = await prismaClient.room.delete({
 			where,
 		});
 

@@ -8,13 +8,13 @@ import {
 	SubjectUpdateInputSchema,
 } from "../prisma/generated/zod";
 
-import { client } from "..";
+import { prismaClient } from "..";
 
 async function createSubject(subject: Prisma.SubjectCreateInput) {
 	try {
 		SubjectCreateInputSchema.parse(subject);
 
-		const newSubject = await client.subject.create({
+		const newSubject = await prismaClient.subject.create({
 			data: subject,
 		});
 
@@ -37,7 +37,7 @@ async function getSubjects(where: Prisma.SubjectWhereInput = {}) {
 	try {
 		SubjectWhereInputSchema.parse(where);
 
-		const subjects = await client.subject.findMany({ where });
+		const subjects = await prismaClient.subject.findMany({ where });
 
 		return subjects;
 	} catch (error) {
@@ -58,7 +58,7 @@ async function updateSubject(
 		SubjectWhereUniqueInputSchema.parse(where);
 		SubjectUpdateInputSchema.parse(data);
 
-		const subject = await client.subject.update({
+		const subject = await prismaClient.subject.update({
 			where,
 			data,
 		});
@@ -82,7 +82,7 @@ async function deleteSubject(where: Prisma.SubjectWhereUniqueInput) {
 	try {
 		SubjectWhereUniqueInputSchema.parse(where);
 
-		const subject = await client.subject.delete({
+		const subject = await prismaClient.subject.delete({
 			where,
 		});
 

@@ -8,13 +8,13 @@ import {
 	TeacherUpdateInputSchema,
 } from "../prisma/generated/zod";
 
-import { client } from "..";
+import { prismaClient } from "..";
 
 async function createTeacher(teacher: Prisma.TeacherCreateInput) {
 	try {
 		TeacherCreateInputSchema.parse(teacher);
 
-		const newTeacher = await client.teacher.create({
+		const newTeacher = await prismaClient.teacher.create({
 			data: teacher,
 		});
 
@@ -37,7 +37,7 @@ async function getTeachers(where: Prisma.TeacherWhereInput = {}) {
 	try {
 		TeacherWhereInputSchema.parse(where);
 
-		const teachers = await client.teacher.findMany({ where });
+		const teachers = await prismaClient.teacher.findMany({ where });
 
 		return teachers;
 	} catch (error) {
@@ -58,7 +58,7 @@ async function updateTeacher(
 		TeacherWhereUniqueInputSchema.parse(where);
 		TeacherUpdateInputSchema.parse(data);
 
-		const teacher = await client.teacher.update({
+		const teacher = await prismaClient.teacher.update({
 			where,
 			data,
 		});
@@ -82,7 +82,7 @@ async function deleteTeacher(where: Prisma.TeacherWhereUniqueInput) {
 	try {
 		TeacherWhereUniqueInputSchema.parse(where);
 
-		const teacher = await client.teacher.delete({
+		const teacher = await prismaClient.teacher.delete({
 			where,
 		});
 

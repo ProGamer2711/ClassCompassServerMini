@@ -8,13 +8,13 @@ import {
 	BuildingUpdateInputSchema,
 } from "../prisma/generated/zod";
 
-import { client } from "..";
+import { prismaClient } from "..";
 
 async function createBuilding(building: Prisma.BuildingCreateInput) {
 	try {
 		BuildingCreateInputSchema.parse(building);
 
-		const newBuilding = await client.building.create({
+		const newBuilding = await prismaClient.building.create({
 			data: building,
 		});
 
@@ -37,7 +37,7 @@ async function getBuildings(where: Prisma.BuildingWhereInput = {}) {
 	try {
 		BuildingWhereInputSchema.parse(where);
 
-		const buildings = await client.building.findMany({
+		const buildings = await prismaClient.building.findMany({
 			where,
 		});
 
@@ -60,7 +60,7 @@ async function updateBuilding(
 		BuildingWhereUniqueInputSchema.parse(where);
 		BuildingUpdateInputSchema.parse(data);
 
-		const building = await client.building.update({
+		const building = await prismaClient.building.update({
 			where,
 			data,
 		});
@@ -84,7 +84,7 @@ async function deleteBuilding(where: Prisma.BuildingWhereUniqueInput) {
 	try {
 		BuildingWhereUniqueInputSchema.parse(where);
 
-		const building = await client.building.delete({
+		const building = await prismaClient.building.delete({
 			where,
 		});
 

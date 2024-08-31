@@ -8,13 +8,13 @@ import {
 	ScheduleUpdateInputSchema,
 } from "../prisma/generated/zod";
 
-import { client } from "..";
+import { prismaClient } from "..";
 
 async function createSchedule(schedule: Prisma.ScheduleCreateInput) {
 	try {
 		ScheduleCreateInputSchema.parse(schedule);
 
-		const newSchedule = await client.schedule.create({
+		const newSchedule = await prismaClient.schedule.create({
 			data: schedule,
 		});
 
@@ -37,7 +37,7 @@ async function getSchedules(where: Prisma.ScheduleWhereInput = {}) {
 	try {
 		ScheduleWhereInputSchema.parse(where);
 
-		const schedules = await client.schedule.findMany({
+		const schedules = await prismaClient.schedule.findMany({
 			where,
 			include: { lessons: true },
 		});
@@ -61,7 +61,7 @@ async function updateSchedule(
 		ScheduleWhereUniqueInputSchema.parse(where);
 		ScheduleUpdateInputSchema.parse(data);
 
-		const schedule = await client.schedule.update({
+		const schedule = await prismaClient.schedule.update({
 			where,
 			data,
 		});
@@ -85,7 +85,7 @@ async function deleteSchedule(where: Prisma.ScheduleWhereUniqueInput) {
 	try {
 		ScheduleWhereUniqueInputSchema.parse(where);
 
-		const schedule = await client.schedule.delete({
+		const schedule = await prismaClient.schedule.delete({
 			where,
 		});
 
