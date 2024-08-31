@@ -7,7 +7,7 @@ import multer from "multer";
 import express from "express";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
-import { Redis } from "ioredis";
+import { createClient } from "redis";
 
 import { messages } from "./utils/messages";
 import * as serverResponses from "./utils/responses";
@@ -123,14 +123,20 @@ try {
 
 export const prismaClient = new PrismaClient();
 
-export const redisClient = new Redis(process.env.REDIS_URL ?? "");
-
-redisClient.on("connect", () => {
-	console.log("Connected to Redis");
+export const redisClient = createClient({
+	url: process.env.REDIS_URL,
 });
 
 const port = process.env.PORT ?? 8393;
 
-app.listen(port, () => {
-	console.log(`Server running on http://localhost:${port}/`);
-});
+(async () => {
+	await redisClient
+		.on("connect", () => {
+			console.log("Connected to Redis");
+		})
+		.connect();
+
+	app.listen(port, () => {
+		console.log(`Server running on http://localhost:${port}/`);
+	});
+})();
