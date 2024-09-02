@@ -8,8 +8,8 @@ import {
 	updateLesson,
 } from "../helpers/lessons";
 import * as serverResponses from "../utils/responses";
-import { messages } from "../utils/messages";
-import type { Lesson } from "@prisma/client";
+import { messages } from "../types/messages";
+// import type { Lesson } from "@prisma/client";
 
 export const router = Router();
 

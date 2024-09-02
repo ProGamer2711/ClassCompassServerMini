@@ -7,10 +7,13 @@ import {
 	LessonWhereUniqueInputSchema,
 	LessonUpdateInputSchema,
 } from "../prisma/generated/zod";
+import type { Lesson } from "../types/interfaces";
 
 import { prismaClient } from "..";
 
-async function createLesson(lesson: Prisma.LessonCreateInput) {
+async function createLesson(
+	lesson: Prisma.LessonCreateInput
+): Promise<Lesson | { error: any }> {
 	try {
 		LessonCreateInputSchema.parse(lesson);
 
@@ -33,7 +36,9 @@ async function createLesson(lesson: Prisma.LessonCreateInput) {
 	}
 }
 
-async function getLessons(where: Prisma.LessonWhereInput = {}) {
+async function getLessons(
+	where: Prisma.LessonWhereInput = {}
+): Promise<Lesson[] | { error: any }> {
 	try {
 		LessonWhereInputSchema.parse(where);
 
@@ -53,7 +58,7 @@ async function getLessons(where: Prisma.LessonWhereInput = {}) {
 async function updateLesson(
 	where: Prisma.LessonWhereUniqueInput,
 	data: Prisma.LessonUpdateInput
-) {
+): Promise<Lesson | { error: any }> {
 	try {
 		LessonWhereUniqueInputSchema.parse(where);
 		LessonUpdateInputSchema.parse(data);
@@ -78,7 +83,9 @@ async function updateLesson(
 	}
 }
 
-async function deleteLesson(where: Prisma.LessonWhereUniqueInput) {
+async function deleteLesson(
+	where: Prisma.LessonWhereUniqueInput
+): Promise<Lesson | { error: any }> {
 	try {
 		LessonWhereUniqueInputSchema.parse(where);
 

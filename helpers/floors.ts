@@ -7,10 +7,13 @@ import {
 	FloorWhereUniqueInputSchema,
 	FloorUpdateInputSchema,
 } from "../prisma/generated/zod";
+import type { Floor } from "../types/interfaces";
 
 import { prismaClient } from "..";
 
-async function createFloor(floor: Prisma.FloorCreateInput) {
+async function createFloor(
+	floor: Prisma.FloorCreateInput
+): Promise<Floor | { error: any }> {
 	try {
 		FloorCreateInputSchema.parse(floor);
 
@@ -33,7 +36,9 @@ async function createFloor(floor: Prisma.FloorCreateInput) {
 	}
 }
 
-async function getFloors(where: Prisma.FloorWhereInput = {}) {
+async function getFloors(
+	where: Prisma.FloorWhereInput = {}
+): Promise<Floor[] | { error: any }> {
 	try {
 		FloorWhereInputSchema.parse(where);
 
@@ -55,7 +60,7 @@ async function getFloors(where: Prisma.FloorWhereInput = {}) {
 async function updateFloor(
 	where: Prisma.FloorWhereUniqueInput,
 	data: Prisma.FloorUpdateInput
-) {
+): Promise<Floor | { error: any }> {
 	try {
 		FloorWhereUniqueInputSchema.parse(where);
 		FloorUpdateInputSchema.parse(data);
@@ -80,7 +85,9 @@ async function updateFloor(
 	}
 }
 
-async function deleteFloor(where: Prisma.FloorWhereUniqueInput) {
+async function deleteFloor(
+	where: Prisma.FloorWhereUniqueInput
+): Promise<Floor | { error: any }> {
 	try {
 		FloorWhereUniqueInputSchema.parse(where);
 

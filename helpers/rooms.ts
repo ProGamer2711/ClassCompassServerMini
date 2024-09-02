@@ -7,10 +7,13 @@ import {
 	RoomWhereUniqueInputSchema,
 	RoomUpdateInputSchema,
 } from "../prisma/generated/zod";
+import type { Room } from "../types/interfaces";
 
 import { prismaClient } from "..";
 
-async function createRoom(room: Prisma.RoomCreateInput) {
+async function createRoom(
+	room: Prisma.RoomCreateInput
+): Promise<Room | { error: any }> {
 	try {
 		RoomCreateInputSchema.parse(room);
 
@@ -33,7 +36,9 @@ async function createRoom(room: Prisma.RoomCreateInput) {
 	}
 }
 
-async function getRooms(where: Prisma.RoomWhereInput = {}) {
+async function getRooms(
+	where: Prisma.RoomWhereInput = {}
+): Promise<Room[] | { error: any }> {
 	try {
 		RoomWhereInputSchema.parse(where);
 
@@ -55,7 +60,7 @@ async function getRooms(where: Prisma.RoomWhereInput = {}) {
 async function updateRoom(
 	where: Prisma.RoomWhereUniqueInput,
 	data: Prisma.RoomUpdateInput
-) {
+): Promise<Room | { error: any }> {
 	try {
 		RoomWhereUniqueInputSchema.parse(where);
 		RoomUpdateInputSchema.parse(data);
@@ -80,7 +85,9 @@ async function updateRoom(
 	}
 }
 
-async function deleteRoom(where: Prisma.RoomWhereUniqueInput) {
+async function deleteRoom(
+	where: Prisma.RoomWhereUniqueInput
+): Promise<Room | { error: any }> {
 	try {
 		RoomWhereUniqueInputSchema.parse(where);
 

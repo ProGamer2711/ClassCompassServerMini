@@ -10,7 +10,7 @@ import {
 	updateFloor,
 } from "../helpers/floors";
 import * as serverResponses from "../utils/responses";
-import { messages } from "../utils/messages";
+import { messages } from "../types/messages";
 import { floorMasksPath, floorPlansPath, upload } from "..";
 
 export const router = Router();
@@ -177,7 +177,9 @@ router.post("/:id/plan", upload.single("plan"), async (req, res) => {
 		}
 
 		if (floors.length === 0) {
-			return serverResponses.sendError(res, messages.NOT_FOUND);
+			return serverResponses.sendError(res, messages.NOT_FOUND, {
+				message: "No floors found",
+			});
 		}
 
 		// if a file already exists, delete it
@@ -234,11 +236,15 @@ router.get("/:id/plan", async (req, res) => {
 		}
 
 		if (floors.length === 0) {
-			return serverResponses.sendError(res, messages.NOT_FOUND);
+			return serverResponses.sendError(res, messages.NOT_FOUND, {
+				message: "No floors found",
+			});
 		}
 
 		if (!floors[0].planFilename) {
-			return serverResponses.sendError(res, messages.NOT_FOUND);
+			return serverResponses.sendError(res, messages.NOT_FOUND, {
+				message: "No plan found",
+			});
 		}
 
 		const filePath = join(floorPlansPath, floors[0].planFilename);
@@ -254,7 +260,9 @@ router.get("/:id/plan", async (req, res) => {
 				}
 			);
 
-			return serverResponses.sendError(res, messages.NOT_FOUND);
+			return serverResponses.sendError(res, messages.NOT_FOUND, {
+				message: "File not found",
+			});
 		}
 
 		return res.sendFile(filePath);
@@ -286,11 +294,15 @@ router.delete("/:id/plan", async (req, res) => {
 		}
 
 		if (floors.length === 0) {
-			return serverResponses.sendError(res, messages.NOT_FOUND);
+			return serverResponses.sendError(res, messages.NOT_FOUND, {
+				message: "No floors found",
+			});
 		}
 
 		if (!floors[0].planFilename) {
-			return serverResponses.sendError(res, messages.NOT_FOUND);
+			return serverResponses.sendError(res, messages.NOT_FOUND, {
+				message: "No plan found",
+			});
 		}
 
 		const filePath = join(floorPlansPath, floors[0].planFilename);
@@ -305,7 +317,9 @@ router.delete("/:id/plan", async (req, res) => {
 		);
 
 		if (!fs.existsSync(filePath)) {
-			return serverResponses.sendError(res, messages.NOT_FOUND);
+			return serverResponses.sendError(res, messages.NOT_FOUND, {
+				message: "File not found",
+			});
 		}
 
 		fs.unlinkSync(filePath);
@@ -358,7 +372,9 @@ router.post("/:id/mask", upload.single("mask"), async (req, res) => {
 		}
 
 		if (floors.length === 0) {
-			return serverResponses.sendError(res, messages.NOT_FOUND);
+			return serverResponses.sendError(res, messages.NOT_FOUND, {
+				message: "No floors found",
+			});
 		}
 
 		// if a file already exists, delete it
@@ -415,11 +431,15 @@ router.get("/:id/mask", async (req, res) => {
 		}
 
 		if (floors.length === 0) {
-			return serverResponses.sendError(res, messages.NOT_FOUND);
+			return serverResponses.sendError(res, messages.NOT_FOUND, {
+				message: "No floors found",
+			});
 		}
 
 		if (!floors[0].maskFilename) {
-			return serverResponses.sendError(res, messages.NOT_FOUND);
+			return serverResponses.sendError(res, messages.NOT_FOUND, {
+				message: "No mask found",
+			});
 		}
 
 		const filePath = join(floorMasksPath, floors[0].maskFilename);
@@ -435,7 +455,9 @@ router.get("/:id/mask", async (req, res) => {
 				}
 			);
 
-			return serverResponses.sendError(res, messages.NOT_FOUND);
+			return serverResponses.sendError(res, messages.NOT_FOUND, {
+				message: "File not found",
+			});
 		}
 
 		return res.sendFile(filePath);
@@ -467,11 +489,15 @@ router.delete("/:id/mask", async (req, res) => {
 		}
 
 		if (floors.length === 0) {
-			return serverResponses.sendError(res, messages.NOT_FOUND);
+			return serverResponses.sendError(res, messages.NOT_FOUND, {
+				message: "No floors found",
+			});
 		}
 
 		if (!floors[0].maskFilename) {
-			return serverResponses.sendError(res, messages.NOT_FOUND);
+			return serverResponses.sendError(res, messages.NOT_FOUND, {
+				message: "No mask found",
+			});
 		}
 
 		const filePath = join(floorMasksPath, floors[0].maskFilename);
@@ -486,7 +512,9 @@ router.delete("/:id/mask", async (req, res) => {
 		);
 
 		if (!fs.existsSync(filePath)) {
-			return serverResponses.sendError(res, messages.NOT_FOUND);
+			return serverResponses.sendError(res, messages.NOT_FOUND, {
+				message: "File not found",
+			});
 		}
 
 		fs.unlinkSync(filePath);

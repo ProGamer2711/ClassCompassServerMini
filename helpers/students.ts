@@ -7,10 +7,13 @@ import {
 	StudentWhereUniqueInputSchema,
 	StudentUpdateInputSchema,
 } from "../prisma/generated/zod";
+import type { Student } from "../types/interfaces";
 
 import { prismaClient } from "..";
 
-async function createStudent(student: Prisma.StudentCreateInput) {
+async function createStudent(
+	student: Prisma.StudentCreateInput
+): Promise<Student | { error: any }> {
 	try {
 		StudentCreateInputSchema.parse(student);
 
@@ -33,7 +36,9 @@ async function createStudent(student: Prisma.StudentCreateInput) {
 	}
 }
 
-async function getStudents(where: Prisma.StudentWhereInput = {}) {
+async function getStudents(
+	where: Prisma.StudentWhereInput = {}
+): Promise<Student[] | { error: any }> {
 	try {
 		StudentWhereInputSchema.parse(where);
 
@@ -55,7 +60,7 @@ async function getStudents(where: Prisma.StudentWhereInput = {}) {
 async function updateStudent(
 	where: Prisma.StudentWhereUniqueInput,
 	data: Prisma.StudentUpdateInput
-) {
+): Promise<Student | { error: any }> {
 	try {
 		StudentWhereUniqueInputSchema.parse(where);
 		StudentUpdateInputSchema.parse(data);
@@ -80,7 +85,9 @@ async function updateStudent(
 	}
 }
 
-async function deleteStudent(where: Prisma.StudentWhereUniqueInput) {
+async function deleteStudent(
+	where: Prisma.StudentWhereUniqueInput
+): Promise<Student | { error: any }> {
 	try {
 		StudentWhereUniqueInputSchema.parse(where);
 

@@ -9,10 +9,33 @@ import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 import { createClient } from "redis";
 
-import { messages } from "./utils/messages";
+import { messages } from "./types/messages";
 import * as serverResponses from "./utils/responses";
+import { z } from "zod";
 
 dotenv.config();
+
+const envSchema = z.object({
+	DATABASE_URL: z.string().url(),
+	REDIS_URL: z.string().url(),
+	PORT: z.string().optional(),
+	WHITELISTED_DOMAINS: z.string().optional(),
+	NODE_ENV: z
+		.enum(["development", "production"], {
+			message: 'NODE_ENV must be either "development" or "production"',
+		})
+		.default("development"),
+});
+
+const result = envSchema.safeParse(process.env);
+
+if (!result.success) {
+	console.error(result.error.errors);
+
+	process.exit(1);
+}
+
+const env = result.data;
 
 const routesPath = path.join(__dirname, "routes");
 const uploadsPath = path.join(__dirname, "uploads");
@@ -40,7 +63,7 @@ if (!fs.existsSync(floorMasksPath)) {
 const instance = hyperid({ urlSafe: true });
 
 const storage = multer.diskStorage({
-	destination: (req, _file, cb) => {
+	destination: (req, _, cb) => {
 		const route = req.path;
 
 		if (route.endsWith("/plan")) {
@@ -51,7 +74,7 @@ const storage = multer.diskStorage({
 			cb(new Error("Invalid route"), "");
 		}
 	},
-	filename: (_req, file, cb) => {
+	filename: (_, file, cb) => {
 		cb(null, `${instance()}.${file.originalname.split(".").pop()}`);
 	},
 });
@@ -70,10 +93,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // CORS Configuration
-let whitelistedDomains = process.env.WHITELISTED_DOMAINS?.split(", ") ?? [];
+let whitelistedDomains = env.WHITELISTED_DOMAINS?.split(", ") ?? [];
 
 let allowedOrigins =
-	process.env.NODE_ENV === "production"
+	env.NODE_ENV === "production"
 		? whitelistedDomains
 		: ["http://localhost:5173", "http://127.0.0.1:5173"];
 
@@ -124,10 +147,10 @@ try {
 export const prismaClient = new PrismaClient();
 
 export const redisClient = createClient({
-	url: process.env.REDIS_URL,
+	url: env.REDIS_URL,
 });
 
-const port = process.env.PORT ?? 8393;
+const port = env.PORT ?? 8393;
 
 (async () => {
 	await redisClient

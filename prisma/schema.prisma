@@ -15,6 +15,11 @@ generator zod {
     provider = "zod-prisma-types"
 }
 
+generator typescriptInterfaces {
+    provider = "prisma-generator-typescript-interfaces"
+    output   = "../types/interfaces.ts"
+}
+
 datasource db {
     provider = "mongodb"
     url      = env("DATABASE_URL")
@@ -57,7 +62,6 @@ model Teacher {
 
 model Student {
     id   String @id @default(auto()) @map("_id") @db.ObjectId
-    // ? should the name be unique?
     name String /// @zod.string.min(1, { message: "Името трябва да сърдържа поне 1 символ" })
 
     classId String      @db.ObjectId

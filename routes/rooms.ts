@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { createRoom, deleteRoom, getRooms, updateRoom } from "../helpers/rooms";
 import * as serverResponses from "../utils/responses";
-import { messages } from "../utils/messages";
+import { messages } from "../types/messages";
 
 export const router = Router();
 

@@ -7,7 +7,7 @@ import {
 	updateStudent,
 } from "../helpers/students";
 import * as serverResponses from "../utils/responses";
-import { messages } from "../utils/messages";
+import { messages } from "../types/messages";
 
 export const router = Router();
 

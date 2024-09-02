@@ -7,10 +7,13 @@ import {
 	TeacherWhereUniqueInputSchema,
 	TeacherUpdateInputSchema,
 } from "../prisma/generated/zod";
+import type { Teacher } from "../types/interfaces";
 
 import { prismaClient } from "..";
 
-async function createTeacher(teacher: Prisma.TeacherCreateInput) {
+async function createTeacher(
+	teacher: Prisma.TeacherCreateInput
+): Promise<Teacher | { error: any }> {
 	try {
 		TeacherCreateInputSchema.parse(teacher);
 
@@ -33,7 +36,9 @@ async function createTeacher(teacher: Prisma.TeacherCreateInput) {
 	}
 }
 
-async function getTeachers(where: Prisma.TeacherWhereInput = {}) {
+async function getTeachers(
+	where: Prisma.TeacherWhereInput = {}
+): Promise<Teacher[] | { error: any }> {
 	try {
 		TeacherWhereInputSchema.parse(where);
 
@@ -53,7 +58,7 @@ async function getTeachers(where: Prisma.TeacherWhereInput = {}) {
 async function updateTeacher(
 	where: Prisma.TeacherWhereUniqueInput,
 	data: Prisma.TeacherUpdateInput
-) {
+): Promise<Teacher | { error: any }> {
 	try {
 		TeacherWhereUniqueInputSchema.parse(where);
 		TeacherUpdateInputSchema.parse(data);
@@ -78,7 +83,9 @@ async function updateTeacher(
 	}
 }
 
-async function deleteTeacher(where: Prisma.TeacherWhereUniqueInput) {
+async function deleteTeacher(
+	where: Prisma.TeacherWhereUniqueInput
+): Promise<Teacher | { error: any }> {
 	try {
 		TeacherWhereUniqueInputSchema.parse(where);
 

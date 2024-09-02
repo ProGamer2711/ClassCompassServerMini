@@ -7,10 +7,13 @@ import {
 	SchoolClassWhereUniqueInputSchema,
 	SchoolClassUpdateInputSchema,
 } from "../prisma/generated/zod";
+import type { SchoolClass } from "../types/interfaces";
 
 import { prismaClient } from "..";
 
-async function createSchoolClass(schoolClass: Prisma.SchoolClassCreateInput) {
+async function createSchoolClass(
+	schoolClass: Prisma.SchoolClassCreateInput
+): Promise<SchoolClass | { error: any }> {
 	try {
 		SchoolClassCreateInputSchema.parse(schoolClass);
 
@@ -33,7 +36,9 @@ async function createSchoolClass(schoolClass: Prisma.SchoolClassCreateInput) {
 	}
 }
 
-async function getSchoolClassеs(where: Prisma.SchoolClassWhereInput = {}) {
+async function getSchoolClassеs(
+	where: Prisma.SchoolClassWhereInput = {}
+): Promise<SchoolClass[] | { error: any }> {
 	try {
 		SchoolClassWhereInputSchema.parse(where);
 
@@ -53,7 +58,7 @@ async function getSchoolClassеs(where: Prisma.SchoolClassWhereInput = {}) {
 async function updateSchoolClass(
 	where: Prisma.SchoolClassWhereUniqueInput,
 	data: Prisma.SchoolClassUpdateInput
-) {
+): Promise<SchoolClass | { error: any }> {
 	try {
 		SchoolClassWhereUniqueInputSchema.parse(where);
 		SchoolClassUpdateInputSchema.parse(data);
@@ -78,7 +83,9 @@ async function updateSchoolClass(
 	}
 }
 
-async function deleteSchoolClass(where: Prisma.SchoolClassWhereUniqueInput) {
+async function deleteSchoolClass(
+	where: Prisma.SchoolClassWhereUniqueInput
+): Promise<SchoolClass | { error: any }> {
 	try {
 		SchoolClassWhereUniqueInputSchema.parse(where);
 
