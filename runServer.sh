@@ -7,6 +7,6 @@ PROJECT_DIR="/home/ubuntu/ClassCompass/server"
 SCREEN_NAME="class-compass-server"
 
 # Create a new detached screen session and execute npm run dev
-screen -dmS $SCREEN_NAME bash -c "cd $PROJECT_DIR && bun i && bunx prisma generate && bun dev"
+screen -dmS $SCREEN_NAME bash -c "cd $PROJECT_DIR && bun i --frozen-lockfile && bunx prisma generate && bun dev"
 
 echo "New screen session created and npm run dev started in $PROJECT_DIR"
