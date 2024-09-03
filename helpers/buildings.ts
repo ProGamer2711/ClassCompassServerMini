@@ -44,6 +44,9 @@ async function getBuildings(
 
 		const buildings = await prismaClient.building.findMany({
 			where,
+			include: {
+				floors: true,
+			},
 		});
 
 		return buildings;
