@@ -83,6 +83,8 @@ export interface School {
   subjects?: Subject[];
   teachers?: Teacher[];
   buildings?: Building[];
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Building {

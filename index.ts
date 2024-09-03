@@ -2,6 +2,7 @@ import path from "path";
 import fs from "fs";
 
 import dotenv from "dotenv";
+import { z } from "zod";
 import hyperid from "hyperid";
 import multer from "multer";
 import express from "express";
@@ -11,7 +12,7 @@ import { createClient } from "redis";
 
 import { messages } from "./types/messages";
 import * as serverResponses from "./utils/responses";
-import { z } from "zod";
+import { createIndexes } from "./utils/caching";
 
 dotenv.config();
 
@@ -38,6 +39,7 @@ if (!result.success) {
 const env = result.data;
 
 const routesPath = path.join(__dirname, "routes");
+const modelsPath = path.join(__dirname, "models");
 const uploadsPath = path.join(__dirname, "uploads");
 
 export const floorPlansPath = path.join(uploadsPath, "floorPlans");
@@ -46,6 +48,10 @@ export const floorMasksPath = path.join(uploadsPath, "floorMasks");
 // if any of the directories does not exist, create it
 if (!fs.existsSync(routesPath)) {
 	fs.mkdirSync(routesPath);
+}
+
+if (!fs.existsSync(modelsPath)) {
+	fs.mkdirSync(modelsPath);
 }
 
 if (!fs.existsSync(uploadsPath)) {
@@ -128,10 +134,15 @@ app.use((req, res, next) => {
 
 // Register Routes
 try {
-	fs.readdirSync(routesPath).forEach(file => {
-		const route = require(path.join(routesPath, file));
+	const routeFiles = fs.readdirSync(routesPath);
+
+	const routePromises = routeFiles.map(async file => {
+		const route = await import(path.join(routesPath, file));
+
 		app.use(route.path, route.router);
 	});
+
+	await Promise.all(routePromises);
 
 	app.all("*", (_, res) => {
 		serverResponses.sendError(res, messages.NOT_FOUND);
@@ -150,6 +161,10 @@ export const redisClient = createClient({
 	url: env.REDIS_URL,
 });
 
+redisClient.on("error", err => {
+	console.log(err);
+});
+
 const port = env.PORT ?? 8393;
 
 (async () => {
@@ -158,6 +173,8 @@ const port = env.PORT ?? 8393;
 			console.log("Connected to Redis");
 		})
 		.connect();
+
+	createIndexes(modelsPath);
 
 	app.listen(port, () => {
 		console.log(`Server running on http://localhost:${port}/`);

@@ -22,7 +22,7 @@ export const ScheduleScalarFieldEnumSchema = z.enum(['id','day','classId','creat
 
 export const SchoolClassScalarFieldEnumSchema = z.enum(['id','name','schoolId','createdAt','updatedAt']);
 
-export const SchoolScalarFieldEnumSchema = z.enum(['id','name']);
+export const SchoolScalarFieldEnumSchema = z.enum(['id','name','createdAt','updatedAt']);
 
 export const BuildingScalarFieldEnumSchema = z.enum(['id','name','schoolId','createdAt','updatedAt']);
 
@@ -145,6 +145,8 @@ export type SchoolClass = z.infer<typeof SchoolClassSchema>
 export const SchoolSchema = z.object({
   id: z.string(),
   name: z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
 })
 
 export type School = z.infer<typeof SchoolSchema>
@@ -404,6 +406,8 @@ export const SchoolCountOutputTypeSelectSchema: z.ZodType<Prisma.SchoolCountOutp
 export const SchoolSelectSchema: z.ZodType<Prisma.SchoolSelect> = z.object({
   id: z.boolean().optional(),
   name: z.boolean().optional(),
+  createdAt: z.boolean().optional(),
+  updatedAt: z.boolean().optional(),
   classes: z.union([z.boolean(),z.lazy(() => SchoolClassArgsSchema)]).optional(),
   subjects: z.union([z.boolean(),z.lazy(() => SubjectArgsSchema)]).optional(),
   teachers: z.union([z.boolean(),z.lazy(() => TeacherArgsSchema)]).optional(),
@@ -965,6 +969,8 @@ export const SchoolWhereInputSchema: z.ZodType<Prisma.SchoolWhereInput> = z.obje
   NOT: z.union([ z.lazy(() => SchoolWhereInputSchema),z.lazy(() => SchoolWhereInputSchema).array() ]).optional(),
   id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   classes: z.lazy(() => SchoolClassListRelationFilterSchema).optional(),
   subjects: z.lazy(() => SubjectListRelationFilterSchema).optional(),
   teachers: z.lazy(() => TeacherListRelationFilterSchema).optional(),
@@ -974,6 +980,8 @@ export const SchoolWhereInputSchema: z.ZodType<Prisma.SchoolWhereInput> = z.obje
 export const SchoolOrderByWithRelationInputSchema: z.ZodType<Prisma.SchoolOrderByWithRelationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   name: z.lazy(() => SortOrderSchema).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
   classes: z.lazy(() => SchoolClassOrderByRelationAggregateInputSchema).optional(),
   subjects: z.lazy(() => SubjectOrderByRelationAggregateInputSchema).optional(),
   teachers: z.lazy(() => TeacherOrderByRelationAggregateInputSchema).optional(),
@@ -998,6 +1006,8 @@ export const SchoolWhereUniqueInputSchema: z.ZodType<Prisma.SchoolWhereUniqueInp
   AND: z.union([ z.lazy(() => SchoolWhereInputSchema),z.lazy(() => SchoolWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => SchoolWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => SchoolWhereInputSchema),z.lazy(() => SchoolWhereInputSchema).array() ]).optional(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   classes: z.lazy(() => SchoolClassListRelationFilterSchema).optional(),
   subjects: z.lazy(() => SubjectListRelationFilterSchema).optional(),
   teachers: z.lazy(() => TeacherListRelationFilterSchema).optional(),
@@ -1007,6 +1017,8 @@ export const SchoolWhereUniqueInputSchema: z.ZodType<Prisma.SchoolWhereUniqueInp
 export const SchoolOrderByWithAggregationInputSchema: z.ZodType<Prisma.SchoolOrderByWithAggregationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   name: z.lazy(() => SortOrderSchema).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => SchoolCountOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => SchoolMaxOrderByAggregateInputSchema).optional(),
   _min: z.lazy(() => SchoolMinOrderByAggregateInputSchema).optional()
@@ -1018,6 +1030,8 @@ export const SchoolScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.School
   NOT: z.union([ z.lazy(() => SchoolScalarWhereWithAggregatesInputSchema),z.lazy(() => SchoolScalarWhereWithAggregatesInputSchema).array() ]).optional(),
   id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   name: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
 }).strict();
 
 export const BuildingWhereInputSchema: z.ZodType<Prisma.BuildingWhereInput> = z.object({
@@ -1123,62 +1137,10 @@ export const FloorOrderByWithRelationInputSchema: z.ZodType<Prisma.FloorOrderByW
 export const FloorWhereUniqueInputSchema: z.ZodType<Prisma.FloorWhereUniqueInput> = z.union([
   z.object({
     id: z.string(),
-    planFilename: z.string(),
-    maskFilename: z.string(),
     buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema)
   }),
   z.object({
     id: z.string(),
-    planFilename: z.string(),
-    maskFilename: z.string(),
-  }),
-  z.object({
-    id: z.string(),
-    planFilename: z.string(),
-    buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema),
-  }),
-  z.object({
-    id: z.string(),
-    planFilename: z.string(),
-  }),
-  z.object({
-    id: z.string(),
-    maskFilename: z.string(),
-    buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema),
-  }),
-  z.object({
-    id: z.string(),
-    maskFilename: z.string(),
-  }),
-  z.object({
-    id: z.string(),
-    buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema),
-  }),
-  z.object({
-    id: z.string(),
-  }),
-  z.object({
-    planFilename: z.string(),
-    maskFilename: z.string(),
-    buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema),
-  }),
-  z.object({
-    planFilename: z.string(),
-    maskFilename: z.string(),
-  }),
-  z.object({
-    planFilename: z.string(),
-    buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema),
-  }),
-  z.object({
-    planFilename: z.string(),
-  }),
-  z.object({
-    maskFilename: z.string(),
-    buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema),
-  }),
-  z.object({
-    maskFilename: z.string(),
   }),
   z.object({
     buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema),
@@ -1186,14 +1148,14 @@ export const FloorWhereUniqueInputSchema: z.ZodType<Prisma.FloorWhereUniqueInput
 ])
 .and(z.object({
   id: z.string().optional(),
-  planFilename: z.string().optional(),
-  maskFilename: z.string().optional(),
   buildingId_number: z.lazy(() => FloorBuildingIdNumberCompoundUniqueInputSchema).optional(),
   AND: z.union([ z.lazy(() => FloorWhereInputSchema),z.lazy(() => FloorWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => FloorWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => FloorWhereInputSchema),z.lazy(() => FloorWhereInputSchema).array() ]).optional(),
   number: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
   description: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  planFilename: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  maskFilename: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   buildingId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
@@ -1686,6 +1648,8 @@ export const SchoolClassUncheckedUpdateManyInputSchema: z.ZodType<Prisma.SchoolC
 export const SchoolCreateInputSchema: z.ZodType<Prisma.SchoolCreateInput> = z.object({
   id: z.string().optional(),
   name: z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   classes: z.lazy(() => SchoolClassCreateNestedManyWithoutSchoolInputSchema).optional(),
   subjects: z.lazy(() => SubjectCreateNestedManyWithoutSchoolInputSchema).optional(),
   teachers: z.lazy(() => TeacherCreateNestedManyWithoutSchoolInputSchema).optional(),
@@ -1695,6 +1659,8 @@ export const SchoolCreateInputSchema: z.ZodType<Prisma.SchoolCreateInput> = z.ob
 export const SchoolUncheckedCreateInputSchema: z.ZodType<Prisma.SchoolUncheckedCreateInput> = z.object({
   id: z.string().optional(),
   name: z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   classes: z.lazy(() => SchoolClassUncheckedCreateNestedManyWithoutSchoolInputSchema).optional(),
   subjects: z.lazy(() => SubjectUncheckedCreateNestedManyWithoutSchoolInputSchema).optional(),
   teachers: z.lazy(() => TeacherUncheckedCreateNestedManyWithoutSchoolInputSchema).optional(),
@@ -1703,6 +1669,8 @@ export const SchoolUncheckedCreateInputSchema: z.ZodType<Prisma.SchoolUncheckedC
 
 export const SchoolUpdateInputSchema: z.ZodType<Prisma.SchoolUpdateInput> = z.object({
   name: z.union([ z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   classes: z.lazy(() => SchoolClassUpdateManyWithoutSchoolNestedInputSchema).optional(),
   subjects: z.lazy(() => SubjectUpdateManyWithoutSchoolNestedInputSchema).optional(),
   teachers: z.lazy(() => TeacherUpdateManyWithoutSchoolNestedInputSchema).optional(),
@@ -1711,6 +1679,8 @@ export const SchoolUpdateInputSchema: z.ZodType<Prisma.SchoolUpdateInput> = z.ob
 
 export const SchoolUncheckedUpdateInputSchema: z.ZodType<Prisma.SchoolUncheckedUpdateInput> = z.object({
   name: z.union([ z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   classes: z.lazy(() => SchoolClassUncheckedUpdateManyWithoutSchoolNestedInputSchema).optional(),
   subjects: z.lazy(() => SubjectUncheckedUpdateManyWithoutSchoolNestedInputSchema).optional(),
   teachers: z.lazy(() => TeacherUncheckedUpdateManyWithoutSchoolNestedInputSchema).optional(),
@@ -1719,15 +1689,21 @@ export const SchoolUncheckedUpdateInputSchema: z.ZodType<Prisma.SchoolUncheckedU
 
 export const SchoolCreateManyInputSchema: z.ZodType<Prisma.SchoolCreateManyInput> = z.object({
   id: z.string().optional(),
-  name: z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" })
+  name: z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional()
 }).strict();
 
 export const SchoolUpdateManyMutationInputSchema: z.ZodType<Prisma.SchoolUpdateManyMutationInput> = z.object({
   name: z.union([ z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const SchoolUncheckedUpdateManyInputSchema: z.ZodType<Prisma.SchoolUncheckedUpdateManyInput> = z.object({
   name: z.union([ z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const BuildingCreateInputSchema: z.ZodType<Prisma.BuildingCreateInput> = z.object({
@@ -2333,17 +2309,23 @@ export const BuildingOrderByRelationAggregateInputSchema: z.ZodType<Prisma.Build
 
 export const SchoolCountOrderByAggregateInputSchema: z.ZodType<Prisma.SchoolCountOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  name: z.lazy(() => SortOrderSchema).optional()
+  name: z.lazy(() => SortOrderSchema).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const SchoolMaxOrderByAggregateInputSchema: z.ZodType<Prisma.SchoolMaxOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  name: z.lazy(() => SortOrderSchema).optional()
+  name: z.lazy(() => SortOrderSchema).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const SchoolMinOrderByAggregateInputSchema: z.ZodType<Prisma.SchoolMinOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  name: z.lazy(() => SortOrderSchema).optional()
+  name: z.lazy(() => SortOrderSchema).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const FloorListRelationFilterSchema: z.ZodType<Prisma.FloorListRelationFilter> = z.object({
@@ -3486,6 +3468,8 @@ export const NestedIntNullableFilterSchema: z.ZodType<Prisma.NestedIntNullableFi
 export const SchoolCreateWithoutTeachersInputSchema: z.ZodType<Prisma.SchoolCreateWithoutTeachersInput> = z.object({
   id: z.string().optional(),
   name: z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   classes: z.lazy(() => SchoolClassCreateNestedManyWithoutSchoolInputSchema).optional(),
   subjects: z.lazy(() => SubjectCreateNestedManyWithoutSchoolInputSchema).optional(),
   buildings: z.lazy(() => BuildingCreateNestedManyWithoutSchoolInputSchema).optional()
@@ -3494,6 +3478,8 @@ export const SchoolCreateWithoutTeachersInputSchema: z.ZodType<Prisma.SchoolCrea
 export const SchoolUncheckedCreateWithoutTeachersInputSchema: z.ZodType<Prisma.SchoolUncheckedCreateWithoutTeachersInput> = z.object({
   id: z.string().optional(),
   name: z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   classes: z.lazy(() => SchoolClassUncheckedCreateNestedManyWithoutSchoolInputSchema).optional(),
   subjects: z.lazy(() => SubjectUncheckedCreateNestedManyWithoutSchoolInputSchema).optional(),
   buildings: z.lazy(() => BuildingUncheckedCreateNestedManyWithoutSchoolInputSchema).optional()
@@ -3576,6 +3562,8 @@ export const SchoolUpdateToOneWithWhereWithoutTeachersInputSchema: z.ZodType<Pri
 
 export const SchoolUpdateWithoutTeachersInputSchema: z.ZodType<Prisma.SchoolUpdateWithoutTeachersInput> = z.object({
   name: z.union([ z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   classes: z.lazy(() => SchoolClassUpdateManyWithoutSchoolNestedInputSchema).optional(),
   subjects: z.lazy(() => SubjectUpdateManyWithoutSchoolNestedInputSchema).optional(),
   buildings: z.lazy(() => BuildingUpdateManyWithoutSchoolNestedInputSchema).optional()
@@ -3583,6 +3571,8 @@ export const SchoolUpdateWithoutTeachersInputSchema: z.ZodType<Prisma.SchoolUpda
 
 export const SchoolUncheckedUpdateWithoutTeachersInputSchema: z.ZodType<Prisma.SchoolUncheckedUpdateWithoutTeachersInput> = z.object({
   name: z.union([ z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   classes: z.lazy(() => SchoolClassUncheckedUpdateManyWithoutSchoolNestedInputSchema).optional(),
   subjects: z.lazy(() => SubjectUncheckedUpdateManyWithoutSchoolNestedInputSchema).optional(),
   buildings: z.lazy(() => BuildingUncheckedUpdateManyWithoutSchoolNestedInputSchema).optional()
@@ -3702,6 +3692,8 @@ export const SchoolClassUncheckedUpdateWithoutStudentsInputSchema: z.ZodType<Pri
 export const SchoolCreateWithoutSubjectsInputSchema: z.ZodType<Prisma.SchoolCreateWithoutSubjectsInput> = z.object({
   id: z.string().optional(),
   name: z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   classes: z.lazy(() => SchoolClassCreateNestedManyWithoutSchoolInputSchema).optional(),
   teachers: z.lazy(() => TeacherCreateNestedManyWithoutSchoolInputSchema).optional(),
   buildings: z.lazy(() => BuildingCreateNestedManyWithoutSchoolInputSchema).optional()
@@ -3710,6 +3702,8 @@ export const SchoolCreateWithoutSubjectsInputSchema: z.ZodType<Prisma.SchoolCrea
 export const SchoolUncheckedCreateWithoutSubjectsInputSchema: z.ZodType<Prisma.SchoolUncheckedCreateWithoutSubjectsInput> = z.object({
   id: z.string().optional(),
   name: z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   classes: z.lazy(() => SchoolClassUncheckedCreateNestedManyWithoutSchoolInputSchema).optional(),
   teachers: z.lazy(() => TeacherUncheckedCreateNestedManyWithoutSchoolInputSchema).optional(),
   buildings: z.lazy(() => BuildingUncheckedCreateNestedManyWithoutSchoolInputSchema).optional()
@@ -3792,6 +3786,8 @@ export const SchoolUpdateToOneWithWhereWithoutSubjectsInputSchema: z.ZodType<Pri
 
 export const SchoolUpdateWithoutSubjectsInputSchema: z.ZodType<Prisma.SchoolUpdateWithoutSubjectsInput> = z.object({
   name: z.union([ z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   classes: z.lazy(() => SchoolClassUpdateManyWithoutSchoolNestedInputSchema).optional(),
   teachers: z.lazy(() => TeacherUpdateManyWithoutSchoolNestedInputSchema).optional(),
   buildings: z.lazy(() => BuildingUpdateManyWithoutSchoolNestedInputSchema).optional()
@@ -3799,6 +3795,8 @@ export const SchoolUpdateWithoutSubjectsInputSchema: z.ZodType<Prisma.SchoolUpda
 
 export const SchoolUncheckedUpdateWithoutSubjectsInputSchema: z.ZodType<Prisma.SchoolUncheckedUpdateWithoutSubjectsInput> = z.object({
   name: z.union([ z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   classes: z.lazy(() => SchoolClassUncheckedUpdateManyWithoutSchoolNestedInputSchema).optional(),
   teachers: z.lazy(() => TeacherUncheckedUpdateManyWithoutSchoolNestedInputSchema).optional(),
   buildings: z.lazy(() => BuildingUncheckedUpdateManyWithoutSchoolNestedInputSchema).optional()
@@ -4148,6 +4146,8 @@ export const LessonUpdateManyWithWhereWithoutScheduleInputSchema: z.ZodType<Pris
 export const SchoolCreateWithoutClassesInputSchema: z.ZodType<Prisma.SchoolCreateWithoutClassesInput> = z.object({
   id: z.string().optional(),
   name: z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   subjects: z.lazy(() => SubjectCreateNestedManyWithoutSchoolInputSchema).optional(),
   teachers: z.lazy(() => TeacherCreateNestedManyWithoutSchoolInputSchema).optional(),
   buildings: z.lazy(() => BuildingCreateNestedManyWithoutSchoolInputSchema).optional()
@@ -4156,6 +4156,8 @@ export const SchoolCreateWithoutClassesInputSchema: z.ZodType<Prisma.SchoolCreat
 export const SchoolUncheckedCreateWithoutClassesInputSchema: z.ZodType<Prisma.SchoolUncheckedCreateWithoutClassesInput> = z.object({
   id: z.string().optional(),
   name: z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   subjects: z.lazy(() => SubjectUncheckedCreateNestedManyWithoutSchoolInputSchema).optional(),
   teachers: z.lazy(() => TeacherUncheckedCreateNestedManyWithoutSchoolInputSchema).optional(),
   buildings: z.lazy(() => BuildingUncheckedCreateNestedManyWithoutSchoolInputSchema).optional()
@@ -4227,6 +4229,8 @@ export const SchoolUpdateToOneWithWhereWithoutClassesInputSchema: z.ZodType<Pris
 
 export const SchoolUpdateWithoutClassesInputSchema: z.ZodType<Prisma.SchoolUpdateWithoutClassesInput> = z.object({
   name: z.union([ z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   subjects: z.lazy(() => SubjectUpdateManyWithoutSchoolNestedInputSchema).optional(),
   teachers: z.lazy(() => TeacherUpdateManyWithoutSchoolNestedInputSchema).optional(),
   buildings: z.lazy(() => BuildingUpdateManyWithoutSchoolNestedInputSchema).optional()
@@ -4234,6 +4238,8 @@ export const SchoolUpdateWithoutClassesInputSchema: z.ZodType<Prisma.SchoolUpdat
 
 export const SchoolUncheckedUpdateWithoutClassesInputSchema: z.ZodType<Prisma.SchoolUncheckedUpdateWithoutClassesInput> = z.object({
   name: z.union([ z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   subjects: z.lazy(() => SubjectUncheckedUpdateManyWithoutSchoolNestedInputSchema).optional(),
   teachers: z.lazy(() => TeacherUncheckedUpdateManyWithoutSchoolNestedInputSchema).optional(),
   buildings: z.lazy(() => BuildingUncheckedUpdateManyWithoutSchoolNestedInputSchema).optional()
@@ -4490,6 +4496,8 @@ export const BuildingScalarWhereInputSchema: z.ZodType<Prisma.BuildingScalarWher
 export const SchoolCreateWithoutBuildingsInputSchema: z.ZodType<Prisma.SchoolCreateWithoutBuildingsInput> = z.object({
   id: z.string().optional(),
   name: z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   classes: z.lazy(() => SchoolClassCreateNestedManyWithoutSchoolInputSchema).optional(),
   subjects: z.lazy(() => SubjectCreateNestedManyWithoutSchoolInputSchema).optional(),
   teachers: z.lazy(() => TeacherCreateNestedManyWithoutSchoolInputSchema).optional()
@@ -4498,6 +4506,8 @@ export const SchoolCreateWithoutBuildingsInputSchema: z.ZodType<Prisma.SchoolCre
 export const SchoolUncheckedCreateWithoutBuildingsInputSchema: z.ZodType<Prisma.SchoolUncheckedCreateWithoutBuildingsInput> = z.object({
   id: z.string().optional(),
   name: z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   classes: z.lazy(() => SchoolClassUncheckedCreateNestedManyWithoutSchoolInputSchema).optional(),
   subjects: z.lazy(() => SubjectUncheckedCreateNestedManyWithoutSchoolInputSchema).optional(),
   teachers: z.lazy(() => TeacherUncheckedCreateNestedManyWithoutSchoolInputSchema).optional()
@@ -4552,6 +4562,8 @@ export const SchoolUpdateToOneWithWhereWithoutBuildingsInputSchema: z.ZodType<Pr
 
 export const SchoolUpdateWithoutBuildingsInputSchema: z.ZodType<Prisma.SchoolUpdateWithoutBuildingsInput> = z.object({
   name: z.union([ z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   classes: z.lazy(() => SchoolClassUpdateManyWithoutSchoolNestedInputSchema).optional(),
   subjects: z.lazy(() => SubjectUpdateManyWithoutSchoolNestedInputSchema).optional(),
   teachers: z.lazy(() => TeacherUpdateManyWithoutSchoolNestedInputSchema).optional()
@@ -4559,6 +4571,8 @@ export const SchoolUpdateWithoutBuildingsInputSchema: z.ZodType<Prisma.SchoolUpd
 
 export const SchoolUncheckedUpdateWithoutBuildingsInputSchema: z.ZodType<Prisma.SchoolUncheckedUpdateWithoutBuildingsInput> = z.object({
   name: z.union([ z.string().min(1, { message: "Името трябва да сърдържа поне 1 символ" }),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   classes: z.lazy(() => SchoolClassUncheckedUpdateManyWithoutSchoolNestedInputSchema).optional(),
   subjects: z.lazy(() => SubjectUncheckedUpdateManyWithoutSchoolNestedInputSchema).optional(),
   teachers: z.lazy(() => TeacherUncheckedUpdateManyWithoutSchoolNestedInputSchema).optional()
