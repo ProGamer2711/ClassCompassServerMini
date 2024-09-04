@@ -145,7 +145,9 @@ try {
 	await Promise.all(routePromises);
 
 	app.all("*", (_, res) => {
-		serverResponses.sendError(res, messages.NOT_FOUND);
+		serverResponses.sendError(res, messages.NOT_FOUND, {
+			message: "Route not found",
+		});
 	});
 } catch (error) {
 	console.error(error);
