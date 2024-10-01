@@ -1,19 +1,24 @@
 import { Router } from "express";
 
-import {
-	createSchool,
-	deleteSchool,
-	getSchools,
-	updateSchool,
-} from "../helpers/schools";
 import * as serverResponses from "../utils/responses";
+import * as CRUD from "../utils/prisma";
+import {
+	SchoolFindUniqueOrThrowArgsSchema,
+	SchoolCreateArgsSchema,
+	SchoolDeleteArgsSchema,
+	SchoolUpdateArgsSchema,
+} from "../prisma/generated/zod";
 import { messages } from "../types/messages";
 
 export const router = Router();
 
 router.post("", async (req, res) => {
 	try {
-		const result = await createSchool(req.body);
+		const result = await CRUD.create(
+			"school",
+			{ data: req.body },
+			SchoolCreateArgsSchema
+		);
 
 		if ("error" in result) {
 			return serverResponses.sendError(
@@ -37,7 +42,45 @@ router.post("", async (req, res) => {
 
 router.get("", async (_, res) => {
 	try {
-		const result = await getSchools();
+		const result = await CRUD.findMany("school");
+
+		if ("error" in result) {
+			return serverResponses.sendError(
+				res,
+				messages.BAD_REQUEST,
+				result.error
+			);
+		}
+
+		return serverResponses.sendSuccess(res, messages.OK, result);
+	} catch (error) {
+		console.error(error);
+
+		return serverResponses.sendError(
+			res,
+			messages.INTERNAL_SERVER_ERROR,
+			error
+		);
+	}
+});
+
+router.get("/:id", async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		const result = await CRUD.findUniqueOrThrow(
+			"school",
+			{
+				where: { id },
+			},
+			SchoolFindUniqueOrThrowArgsSchema
+		);
+
+		if (!result) {
+			return serverResponses.sendError(res, messages.NOT_FOUND, {
+				message: "School was not found",
+			});
+		}
 
 		if ("error" in result) {
 			return serverResponses.sendError(
@@ -63,11 +106,13 @@ router.put("/:id", async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		const result = await updateSchool(
+		const result = await CRUD.update(
+			"school",
 			{
-				id,
+				where: { id },
+				data: req.body,
 			},
-			req.body
+			SchoolUpdateArgsSchema
 		);
 
 		if ("error" in result) {
@@ -94,9 +139,13 @@ router.delete("/:id", async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		const result = await deleteSchool({
-			id,
-		});
+		const result = await CRUD.delete(
+			"school",
+			{
+				where: { id },
+			},
+			SchoolDeleteArgsSchema
+		);
 
 		if ("error" in result) {
 			return serverResponses.sendError(

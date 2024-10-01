@@ -1,19 +1,25 @@
 import { Router } from "express";
 
-import {
-	createBuilding,
-	deleteBuilding,
-	getBuildings,
-	updateBuilding,
-} from "../helpers/buildings";
 import * as serverResponses from "../utils/responses";
+import * as CRUD from "../utils/prisma";
 import { messages } from "../types/messages";
+import {
+	BuildingCreateArgsSchema,
+	BuildingDeleteArgsSchema,
+	BuildingFindManyArgsSchema,
+	BuildingFindUniqueOrThrowArgsSchema,
+	BuildingUpdateArgsSchema,
+} from "../prisma/generated/zod";
 
 export const router = Router();
 
 router.post("", async (req, res) => {
 	try {
-		const result = await createBuilding(req.body);
+		const result = await CRUD.create(
+			"building",
+			{ data: req.body },
+			BuildingCreateArgsSchema
+		);
 
 		if ("error" in result) {
 			return serverResponses.sendError(
@@ -59,11 +65,45 @@ router.post("", async (req, res) => {
 // 	}
 // });
 
-router.get("/:schoolId", async (req, res) => {
+router.get("/school/:schoolId", async (req, res) => {
 	try {
 		const { schoolId } = req.params;
 
-		const result = await getBuildings({ schoolId });
+		const result = await CRUD.findMany(
+			"building",
+			{ where: { schoolId } },
+			BuildingFindManyArgsSchema
+		);
+
+		if ("error" in result) {
+			return serverResponses.sendError(
+				res,
+				messages.BAD_REQUEST,
+				result.error
+			);
+		}
+
+		return serverResponses.sendSuccess(res, messages.OK, result);
+	} catch (error) {
+		console.error(error);
+
+		return serverResponses.sendError(
+			res,
+			messages.INTERNAL_SERVER_ERROR,
+			error
+		);
+	}
+});
+
+router.get("/:id", async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		const result = await CRUD.findUniqueOrThrow(
+			"building",
+			{ where: { id } },
+			BuildingFindUniqueOrThrowArgsSchema
+		);
 
 		if ("error" in result) {
 			return serverResponses.sendError(
@@ -89,11 +129,13 @@ router.put("/:id", async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		const result = await updateBuilding(
+		const result = await CRUD.update(
+			"building",
 			{
-				id,
+				where: { id },
+				data: req.body,
 			},
-			req.body
+			BuildingUpdateArgsSchema
 		);
 
 		if ("error" in result) {
@@ -120,9 +162,13 @@ router.delete("/:id", async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		const result = await deleteBuilding({
-			id,
-		});
+		const result = await CRUD.delete(
+			"building",
+			{
+				where: { id },
+			},
+			BuildingDeleteArgsSchema
+		);
 
 		if ("error" in result) {
 			return serverResponses.sendError(

@@ -153,7 +153,9 @@ try {
 	console.error(error);
 
 	app.all("*", (_, res) => {
-		serverResponses.sendError(res, messages.INTERNAL_SERVER_ERROR);
+		serverResponses.sendError(res, messages.INTERNAL_SERVER_ERROR, {
+			message: "An error occurred while loading routes",
+		});
 	});
 }
 
@@ -170,13 +172,13 @@ redisClient.on("error", err => {
 const port = env.PORT ?? 8393;
 
 (async () => {
-	await redisClient
-		.on("connect", () => {
-			console.log("Connected to Redis");
-		})
-		.connect();
+	// await redisClient
+	// 	.on("connect", async () => {
+	// 		console.log("Connected to Redis");
+	// 	})
+	// 	.connect();
 
-	createIndexes(modelsPath);
+	// createIndexes(modelsPath);
 
 	app.listen(port, () => {
 		console.log(`Server running on http://localhost:${port}/`);

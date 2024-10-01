@@ -1,14 +1,25 @@
 import { Router } from "express";
 
-import { createRoom, deleteRoom, getRooms, updateRoom } from "../helpers/rooms";
+import * as CRUD from "../utils/prisma";
 import * as serverResponses from "../utils/responses";
 import { messages } from "../types/messages";
+import {
+	RoomCreateArgsSchema,
+	RoomDeleteArgsSchema,
+	RoomFindManyArgsSchema,
+	RoomFindUniqueOrThrowArgsSchema,
+	RoomUpdateArgsSchema,
+} from "../prisma/generated/zod";
 
 export const router = Router();
 
 router.post("", async (req, res) => {
 	try {
-		const result = await createRoom(req.body);
+		const result = await CRUD.create(
+			"room",
+			{ data: req.body },
+			RoomCreateArgsSchema
+		);
 
 		if ("error" in result) {
 			return serverResponses.sendError(
@@ -54,11 +65,45 @@ router.post("", async (req, res) => {
 // 	}
 // });
 
-router.get("/:floorId", async (req, res) => {
+router.get("/floor/:floorId", async (req, res) => {
 	try {
 		const { floorId } = req.params;
 
-		const result = await getRooms({ floorId });
+		const result = await CRUD.findMany(
+			"room",
+			{ where: { floorId } },
+			RoomFindManyArgsSchema
+		);
+
+		if ("error" in result) {
+			return serverResponses.sendError(
+				res,
+				messages.BAD_REQUEST,
+				result.error
+			);
+		}
+
+		return serverResponses.sendSuccess(res, messages.OK, result);
+	} catch (error) {
+		console.error(error);
+
+		return serverResponses.sendError(
+			res,
+			messages.INTERNAL_SERVER_ERROR,
+			error
+		);
+	}
+});
+
+router.get("/:id", async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		const result = await CRUD.findUniqueOrThrow(
+			"room",
+			{ where: { id } },
+			RoomFindUniqueOrThrowArgsSchema
+		);
 
 		if ("error" in result) {
 			return serverResponses.sendError(
@@ -84,11 +129,13 @@ router.put("/:id", async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		const result = await updateRoom(
+		const result = await CRUD.update(
+			"room",
 			{
-				id,
+				where: { id },
+				data: req.body,
 			},
-			req.body
+			RoomUpdateArgsSchema
 		);
 
 		if ("error" in result) {
@@ -115,9 +162,15 @@ router.delete("/:id", async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		const result = await deleteRoom({
-			id,
-		});
+		const result = await CRUD.delete(
+			"room",
+			{
+				where: {
+					id,
+				},
+			},
+			RoomDeleteArgsSchema
+		);
 
 		if ("error" in result) {
 			return serverResponses.sendError(

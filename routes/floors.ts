@@ -3,21 +3,27 @@ import { join } from "path";
 
 import { Router } from "express";
 
-import {
-	createFloor,
-	deleteFloor,
-	getFloors,
-	updateFloor,
-} from "../helpers/floors";
 import * as serverResponses from "../utils/responses";
+import * as CRUD from "../utils/prisma";
 import { messages } from "../types/messages";
 import { floorMasksPath, floorPlansPath, upload } from "..";
+import {
+	FloorCreateArgsSchema,
+	FloorDeleteArgsSchema,
+	FloorFindManyArgsSchema,
+	FloorFindUniqueOrThrowArgsSchema,
+	FloorUpdateArgsSchema,
+} from "../prisma/generated/zod";
 
 export const router = Router();
 
 router.post("", async (req, res) => {
 	try {
-		const result = await createFloor(req.body);
+		const result = await CRUD.create(
+			"floor",
+			{ data: req.body },
+			FloorCreateArgsSchema
+		);
 
 		if ("error" in result) {
 			return serverResponses.sendError(
@@ -63,11 +69,45 @@ router.post("", async (req, res) => {
 // 	}
 // });
 
-router.get("/:buildingId", async (req, res) => {
+router.get("/building/:buildingId", async (req, res) => {
 	try {
 		const { buildingId } = req.params;
 
-		const result = await getFloors({ buildingId });
+		const result = await CRUD.findMany(
+			"floor",
+			{ where: { buildingId } },
+			FloorFindManyArgsSchema
+		);
+
+		if ("error" in result) {
+			return serverResponses.sendError(
+				res,
+				messages.BAD_REQUEST,
+				result.error
+			);
+		}
+
+		return serverResponses.sendSuccess(res, messages.OK, result);
+	} catch (error) {
+		console.error(error);
+
+		return serverResponses.sendError(
+			res,
+			messages.INTERNAL_SERVER_ERROR,
+			error
+		);
+	}
+});
+
+router.get("/:id", async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		const result = await CRUD.findUniqueOrThrow(
+			"floor",
+			{ where: { id } },
+			FloorFindUniqueOrThrowArgsSchema
+		);
 
 		if ("error" in result) {
 			return serverResponses.sendError(
@@ -93,11 +133,13 @@ router.put("/:id", async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		const result = await updateFloor(
+		const result = await CRUD.update(
+			"floor",
 			{
-				id,
+				where: { id },
+				data: req.body,
 			},
-			req.body
+			FloorUpdateArgsSchema
 		);
 
 		if ("error" in result) {
@@ -124,9 +166,13 @@ router.delete("/:id", async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		const result = await deleteFloor({
-			id,
-		});
+		const result = await CRUD.delete(
+			"floor",
+			{
+				where: { id },
+			},
+			FloorDeleteArgsSchema
+		);
 
 		if ("error" in result) {
 			return serverResponses.sendError(
@@ -164,39 +210,39 @@ router.post("/:id/plan", upload.single("plan"), async (req, res) => {
 		}
 
 		// delete any existing file
-		const floors = await getFloors({
-			id,
-		});
+		const floor = await CRUD.findUniqueOrThrow(
+			"floor",
+			{
+				where: { id },
+			},
+			FloorFindUniqueOrThrowArgsSchema
+		);
 
-		if ("error" in floors) {
+		if ("error" in floor) {
 			return serverResponses.sendError(
 				res,
 				messages.BAD_REQUEST,
-				floors.error
+				floor.error
 			);
-		}
-
-		if (floors.length === 0) {
-			return serverResponses.sendError(res, messages.NOT_FOUND, {
-				message: "No floors found",
-			});
 		}
 
 		// if a file already exists, delete it
 		if (
-			floors[0].planFilename &&
-			fs.existsSync(join(floorPlansPath, floors[0].planFilename))
+			floor.planFilename &&
+			fs.existsSync(join(floorPlansPath, floor.planFilename))
 		) {
-			fs.unlinkSync(join(floorPlansPath, floors[0].planFilename));
+			fs.unlinkSync(join(floorPlansPath, floor.planFilename));
 		}
 
-		const result = await updateFloor(
+		const result = await CRUD.update(
+			"floor",
 			{
-				id,
+				where: { id },
+				data: {
+					planFilename: req.file?.filename,
+				},
 			},
-			{
-				planFilename: req.file?.filename,
-			}
+			FloorUpdateArgsSchema
 		);
 
 		if ("error" in result) {
@@ -223,41 +269,41 @@ router.get("/:id/plan", async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		const floors = await getFloors({
-			id,
-		});
+		const floor = await CRUD.findUniqueOrThrow(
+			"floor",
+			{
+				where: { id },
+			},
+			FloorFindUniqueOrThrowArgsSchema
+		);
 
-		if ("error" in floors) {
+		if ("error" in floor) {
 			return serverResponses.sendError(
 				res,
 				messages.BAD_REQUEST,
-				floors.error
+				floor.error
 			);
 		}
 
-		if (floors.length === 0) {
-			return serverResponses.sendError(res, messages.NOT_FOUND, {
-				message: "No floors found",
-			});
-		}
-
-		if (!floors[0].planFilename) {
+		if (!floor.planFilename) {
 			return serverResponses.sendError(res, messages.NOT_FOUND, {
 				message: "No plan found",
 			});
 		}
 
-		const filePath = join(floorPlansPath, floors[0].planFilename);
+		const filePath = join(floorPlansPath, floor.planFilename);
 
 		if (!fs.existsSync(filePath)) {
 			// remove the filename from the database
-			await updateFloor(
+			await CRUD.update(
+				"floor",
 				{
-					id,
+					where: { id },
+					data: {
+						planFilename: null,
+					},
 				},
-				{
-					planFilename: null,
-				}
+				FloorUpdateArgsSchema
 			);
 
 			return serverResponses.sendError(res, messages.NOT_FOUND, {
@@ -281,39 +327,41 @@ router.delete("/:id/plan", async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		const floors = await getFloors({
-			id,
-		});
+		const floor = await CRUD.findUniqueOrThrow(
+			"floor",
+			{
+				where: { id },
+			},
+			FloorFindUniqueOrThrowArgsSchema
+		);
 
-		if ("error" in floors) {
+		if ("error" in floor) {
 			return serverResponses.sendError(
 				res,
 				messages.BAD_REQUEST,
-				floors.error
+				floor.error
 			);
 		}
 
-		if (floors.length === 0) {
-			return serverResponses.sendError(res, messages.NOT_FOUND, {
-				message: "No floors found",
-			});
-		}
-
-		if (!floors[0].planFilename) {
+		if (!floor.planFilename) {
 			return serverResponses.sendError(res, messages.NOT_FOUND, {
 				message: "No plan found",
 			});
 		}
 
-		const filePath = join(floorPlansPath, floors[0].planFilename);
+		const filePath = join(floorPlansPath, floor.planFilename);
 
-		const result = await updateFloor(
+		const result = await CRUD.update(
+			"floor",
 			{
-				id,
+				where: {
+					id,
+				},
+				data: {
+					planFilename: null,
+				},
 			},
-			{
-				planFilename: null,
-			}
+			FloorUpdateArgsSchema
 		);
 
 		if (!fs.existsSync(filePath)) {
@@ -359,39 +407,41 @@ router.post("/:id/mask", upload.single("mask"), async (req, res) => {
 		}
 
 		// delete any existing file
-		const floors = await getFloors({
-			id,
-		});
+		const floor = await CRUD.findUniqueOrThrow(
+			"floor",
+			{
+				where: { id },
+			},
+			FloorFindUniqueOrThrowArgsSchema
+		);
 
-		if ("error" in floors) {
+		if ("error" in floor) {
 			return serverResponses.sendError(
 				res,
 				messages.BAD_REQUEST,
-				floors.error
+				floor.error
 			);
-		}
-
-		if (floors.length === 0) {
-			return serverResponses.sendError(res, messages.NOT_FOUND, {
-				message: "No floors found",
-			});
 		}
 
 		// if a file already exists, delete it
 		if (
-			floors[0].maskFilename &&
-			fs.existsSync(join(floorMasksPath, floors[0].maskFilename))
+			floor.maskFilename &&
+			fs.existsSync(join(floorMasksPath, floor.maskFilename))
 		) {
-			fs.unlinkSync(join(floorMasksPath, floors[0].maskFilename));
+			fs.unlinkSync(join(floorMasksPath, floor.maskFilename));
 		}
 
-		const result = await updateFloor(
+		const result = await CRUD.update(
+			"floor",
 			{
-				id,
+				where: {
+					id,
+				},
+				data: {
+					maskFilename: req.file?.filename,
+				},
 			},
-			{
-				maskFilename: req.file?.filename,
-			}
+			FloorUpdateArgsSchema
 		);
 
 		if ("error" in result) {
@@ -418,41 +468,43 @@ router.get("/:id/mask", async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		const floors = await getFloors({
-			id,
-		});
+		const floor = await CRUD.findUniqueOrThrow(
+			"floor",
+			{
+				where: { id },
+			},
+			FloorFindUniqueOrThrowArgsSchema
+		);
 
-		if ("error" in floors) {
+		if ("error" in floor) {
 			return serverResponses.sendError(
 				res,
 				messages.BAD_REQUEST,
-				floors.error
+				floor.error
 			);
 		}
 
-		if (floors.length === 0) {
-			return serverResponses.sendError(res, messages.NOT_FOUND, {
-				message: "No floors found",
-			});
-		}
-
-		if (!floors[0].maskFilename) {
+		if (!floor.maskFilename) {
 			return serverResponses.sendError(res, messages.NOT_FOUND, {
 				message: "No mask found",
 			});
 		}
 
-		const filePath = join(floorMasksPath, floors[0].maskFilename);
+		const filePath = join(floorMasksPath, floor.maskFilename);
 
 		if (!fs.existsSync(filePath)) {
 			// remove the filename from the database
-			await updateFloor(
+			await CRUD.update(
+				"floor",
 				{
-					id,
+					where: {
+						id,
+					},
+					data: {
+						maskFilename: null,
+					},
 				},
-				{
-					maskFilename: null,
-				}
+				FloorUpdateArgsSchema
 			);
 
 			return serverResponses.sendError(res, messages.NOT_FOUND, {
@@ -476,9 +528,13 @@ router.delete("/:id/mask", async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		const floors = await getFloors({
-			id,
-		});
+		const floors = await CRUD.findUniqueOrThrow(
+			"floor",
+			{
+				where: { id },
+			},
+			FloorFindUniqueOrThrowArgsSchema
+		);
 
 		if ("error" in floors) {
 			return serverResponses.sendError(
@@ -488,27 +544,25 @@ router.delete("/:id/mask", async (req, res) => {
 			);
 		}
 
-		if (floors.length === 0) {
-			return serverResponses.sendError(res, messages.NOT_FOUND, {
-				message: "No floors found",
-			});
-		}
-
-		if (!floors[0].maskFilename) {
+		if (!floors.maskFilename) {
 			return serverResponses.sendError(res, messages.NOT_FOUND, {
 				message: "No mask found",
 			});
 		}
 
-		const filePath = join(floorMasksPath, floors[0].maskFilename);
+		const filePath = join(floorMasksPath, floors.maskFilename);
 
-		const result = await updateFloor(
+		const result = await CRUD.update(
+			"floor",
 			{
-				id,
+				where: {
+					id,
+				},
+				data: {
+					maskFilename: null,
+				},
 			},
-			{
-				maskFilename: null,
-			}
+			FloorUpdateArgsSchema
 		);
 
 		if (!fs.existsSync(filePath)) {

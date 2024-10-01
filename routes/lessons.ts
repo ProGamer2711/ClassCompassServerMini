@@ -1,15 +1,15 @@
 import { Router } from "express";
 import moment from "moment-timezone";
 
-import {
-	createLesson,
-	deleteLesson,
-	getLessons,
-	updateLesson,
-} from "../helpers/lessons";
+import * as CRUD from "../utils/prisma";
 import * as serverResponses from "../utils/responses";
 import { messages } from "../types/messages";
-// import type { Lesson } from "@prisma/client";
+import {
+	LessonCreateArgsSchema,
+	LessonDeleteArgsSchema,
+	LessonFindUniqueOrThrowArgsSchema,
+	LessonUpdateArgsSchema,
+} from "../prisma/generated/zod";
 
 export const router = Router();
 
@@ -25,7 +25,11 @@ router.post("", async (req, res) => {
 			.add(req.body.endTime, "minutes")
 			.toDate();
 
-		const result = await createLesson(req.body);
+		const result = await CRUD.create(
+			"lesson",
+			{ data: req.body },
+			LessonCreateArgsSchema
+		);
 
 		if ("error" in result) {
 			return serverResponses.sendError(
@@ -47,9 +51,10 @@ router.post("", async (req, res) => {
 	}
 });
 
+// TODO: Make a separate getter for the lessons based on another parent entity
 router.get("", async (_, res) => {
 	try {
-		const result = await getLessons();
+		const result = await CRUD.findMany("lesson");
 
 		if ("error" in result) {
 			return serverResponses.sendError(
@@ -95,15 +100,47 @@ router.get("", async (_, res) => {
 	}
 });
 
+router.get("/:id", async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		const result = await CRUD.findUniqueOrThrow(
+			"lesson",
+			{ where: { id } },
+			LessonFindUniqueOrThrowArgsSchema
+		);
+
+		if ("error" in result) {
+			return serverResponses.sendError(
+				res,
+				messages.BAD_REQUEST,
+				result.error
+			);
+		}
+
+		return serverResponses.sendSuccess(res, messages.OK, result);
+	} catch (error) {
+		console.error(error);
+
+		return serverResponses.sendError(
+			res,
+			messages.INTERNAL_SERVER_ERROR,
+			error
+		);
+	}
+});
+
 router.put("/:id", async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		const result = await updateLesson(
+		const result = await CRUD.update(
+			"lesson",
 			{
-				id,
+				where: { id },
+				data: req.body,
 			},
-			req.body
+			LessonUpdateArgsSchema
 		);
 
 		if ("error" in result) {
@@ -130,9 +167,13 @@ router.delete("/:id", async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		const result = await deleteLesson({
-			id,
-		});
+		const result = await CRUD.delete(
+			"lesson",
+			{
+				where: { id },
+			},
+			LessonDeleteArgsSchema
+		);
 
 		if ("error" in result) {
 			return serverResponses.sendError(
