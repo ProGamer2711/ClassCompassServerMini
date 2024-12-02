@@ -1,7 +1,7 @@
 import type { Teacher } from "@prisma/client";
 import { Schema, Repository } from "redis-om";
 
-import { redisClient } from "..";
+import { redisClient } from "../config/db";
 
 const teachersSchema = new Schema<Teacher>(
 	"teacher",

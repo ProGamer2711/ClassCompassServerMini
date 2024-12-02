@@ -1,7 +1,7 @@
 import type { Floor } from "@prisma/client";
 import { Schema, Repository } from "redis-om";
 
-import { redisClient } from "..";
+import { redisClient } from "../config/db";
 
 const floorsSchema = new Schema<Floor>(
 	"floor",

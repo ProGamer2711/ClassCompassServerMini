@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-import { prismaClient } from "..";
+import { prismaClient } from "../config/db";
 import { handleError } from "./errors";
 import type { Repository } from "redis-om";
 

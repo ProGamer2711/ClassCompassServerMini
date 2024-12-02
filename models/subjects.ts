@@ -1,7 +1,7 @@
 import type { Subject } from "@prisma/client";
 import { Schema, Repository } from "redis-om";
 
-import { redisClient } from "..";
+import { redisClient } from "../config/db";
 
 const subjectsSchema = new Schema<Subject>(
 	"subject",

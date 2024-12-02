@@ -5,7 +5,7 @@ import { Router } from "express";
 
 import * as CRUD from "../utils/prisma";
 import { messages } from "../types/messages";
-import { floorMasksPath, floorPlansPath, upload } from "..";
+import { floorMasksPath, floorPlansPath, upload } from "../config/storage";
 import {
 	FloorCreateArgsSchema,
 	FloorDeleteArgsSchema,

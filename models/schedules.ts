@@ -1,7 +1,7 @@
 import type { Schedule } from "@prisma/client";
 import { Schema, Repository } from "redis-om";
 
-import { redisClient } from "..";
+import { redisClient } from "../config/db";
 
 const schedulesSchema = new Schema<Schedule>(
 	"schedule",
