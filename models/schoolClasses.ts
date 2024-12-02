@@ -3,7 +3,7 @@ import { Schema, Repository } from "redis-om";
 
 import { redisClient } from "..";
 
-const schoolClasssSchema = new Schema<SchoolClass>(
+const schoolClassesSchema = new Schema<SchoolClass>(
 	"schoolClass",
 	{
 		id: {
@@ -27,7 +27,7 @@ const schoolClasssSchema = new Schema<SchoolClass>(
 	}
 );
 
-export const schoolClasssRepository = new Repository<SchoolClass>(
-	schoolClasssSchema,
+export const schoolClassesRepository = new Repository<SchoolClass>(
+	schoolClassesSchema,
 	redisClient
 );

@@ -37,23 +37,50 @@
 					"response": []
 				},
 				{
-					"name": "/:schoolId",
+					"name": "/school/:schoolId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/teachers/:schoolId",
+							"raw": "{{baseUrl}}/teachers/school/:schoolId",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"teachers",
+								"school",
 								":schoolId"
 							],
 							"variable": [
 								{
 									"key": "schoolId",
-									"value": "66d08423d820592065b73bf0"
+									"value": "66c4910e0b65e25ad676243b",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/teachers/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"teachers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c495f34828507c6edb1f89",
+									"type": "string"
 								}
 							]
 						}
@@ -149,23 +176,50 @@
 					"response": []
 				},
 				{
-					"name": "/:classId",
+					"name": "/class/:classId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/students/:classId",
+							"raw": "{{baseUrl}}/students/class/:classId",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"students",
+								"class",
 								":classId"
 							],
 							"variable": [
 								{
 									"key": "classId",
-									"value": "66c494df4828507c6edb1f85"
+									"value": "66c494df4828507c6edb1f85",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/students/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"students",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c495154828507c6edb1f86",
+									"type": "string"
 								}
 							]
 						}
@@ -261,23 +315,50 @@
 					"response": []
 				},
 				{
-					"name": "/:schoolId",
+					"name": "/school/:schoolId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/subjects/:schoolId",
+							"raw": "{{baseUrl}}/subjects/school/:schoolId",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"subjects",
+								"school",
 								":schoolId"
 							],
 							"variable": [
 								{
 									"key": "schoolId",
-									"value": "66d08423d820592065b73bf0"
+									"value": "66c4910e0b65e25ad676243b",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subjects/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subjects",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c495bd4828507c6edb1f88",
+									"type": "string"
 								}
 							]
 						}
@@ -373,23 +454,50 @@
 					"response": []
 				},
 				{
-					"name": "/:schoolId",
+					"name": "/school/:schoolId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/classes/:schoolId",
+							"raw": "{{baseUrl}}/classes/school/:schoolId",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"classes",
+								"school",
 								":schoolId"
 							],
 							"variable": [
 								{
 									"key": "schoolId",
-									"value": "66c4910e0b65e25ad676243b"
+									"value": "66c4910e0b65e25ad676243b",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/classes/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"classes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c494df4828507c6edb1f85",
+									"type": "string"
 								}
 							]
 						}
@@ -504,6 +612,30 @@
 				{
 					"name": "/:id",
 					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c4999ec7f67e35ed0e8248",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -590,23 +722,50 @@
 					"response": []
 				},
 				{
-					"name": "/:classId",
+					"name": "/class/:classId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/schedules/:classId",
+							"raw": "{{baseUrl}}/schedules/class/:classId",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"schedules",
+								"class",
 								":classId"
 							],
 							"variable": [
 								{
 									"key": "classId",
-									"value": "66c494df4828507c6edb1f85"
+									"value": "66c494df4828507c6edb1f85",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/schedules/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"schedules",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c49925c7f67e35ed0e8247",
+									"type": "string"
 								}
 							]
 						}
@@ -721,6 +880,30 @@
 				{
 					"name": "/:id",
 					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/schools/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"schools",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c4910e0b65e25ad676243b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -744,7 +927,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "66c48f49fefad496ad8da800"
+									"value": "66f4e92137ff2f3ea949bf39"
 								}
 							]
 						}
@@ -768,7 +951,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "66c48f49fefad496ad8da800"
+									"value": "66f4e92137ff2f3ea949bf39"
 								}
 							]
 						}
@@ -787,7 +970,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"9 блок\",\r\n    \"school\": {\r\n        \"connect\": {\r\n            \"id\": \"66c4910e0b65e25ad676243b\"\r\n        }\r\n    }\r\n}",
+							"raw": "{\r\n    \"name\": \"8 блок\",\r\n    \"school\": {\r\n        \"connect\": {\r\n            \"id\": \"66c4910e0b65e25ad676243b\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -807,23 +990,50 @@
 					"response": []
 				},
 				{
-					"name": "/:schoolId",
+					"name": "/school/:schoolId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/buildings/:schoolId",
+							"raw": "{{baseUrl}}/buildings/school/:schoolId",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"buildings",
+								"school",
 								":schoolId"
 							],
 							"variable": [
 								{
 									"key": "schoolId",
-									"value": "66c4910e0b65e25ad676243b"
+									"value": "66c4910e0b65e25ad676243b",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/buildings/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"buildings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492103f4e77dc6e327de2",
+									"type": "string"
 								}
 							]
 						}
@@ -899,7 +1109,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"number\": 1,\r\n    \"building\": {\r\n        \"connect\": {\r\n            \"id\": \"66c492103f4e77dc6e327de2\"\r\n        }\r\n    }\r\n}",
+							"raw": "{\r\n    \"number\": 3,\r\n    \"building\": {\r\n        \"connect\": {\r\n            \"id\": \"66c492103f4e77dc6e327de2\"\r\n        }\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -924,18 +1134,45 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/floors/:buildingId",
+							"raw": "{{baseUrl}}/floors/building/:buildingId",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"floors",
+								"building",
 								":buildingId"
 							],
 							"variable": [
 								{
 									"key": "buildingId",
-									"value": "66c492103f4e77dc6e327de2"
+									"value": "66c492103f4e77dc6e327de2",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/floors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"floors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492f42d059d9f621ea683",
+									"type": "string"
 								}
 							]
 						}
@@ -1087,31 +1324,6 @@
 				{
 					"name": "/:id/mask",
 					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/floors/:id/mask",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"floors",
-								":id",
-								"mask"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "66c492f42d059d9f621ea683"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/:id/mask",
-					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -1120,7 +1332,7 @@
 								{
 									"key": "mask",
 									"type": "file",
-									"src": "/C:/Users/User/Downloads/3dgifmaker22902.gif"
+									"src": "/C:/Users/User/Downloads/response.svg"
 								}
 							]
 						},
@@ -1148,6 +1360,31 @@
 					"name": "/:id/mask",
 					"request": {
 						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/floors/:id/mask",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"floors",
+								":id",
+								"mask"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c492f42d059d9f621ea683"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id/mask",
+					"request": {
+						"method": "DELETE",
 						"header": [],
 						"url": {
 							"raw": "{{baseUrl}}/floors/:id/mask",
@@ -1201,23 +1438,49 @@
 					"response": []
 				},
 				{
-					"name": "/:floorId",
+					"name": "/floor/:floorId",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/rooms/:floorId",
+							"raw": "{{baseUrl}}/rooms/floor/:floorId",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"rooms",
+								"floor",
 								":floorId"
 							],
 							"variable": [
 								{
 									"key": "floorId",
-									"value": "66c492f42d059d9f621ea683"
+									"value": "66c492f42d059d9f621ea683",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rooms/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rooms",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66c4940b4828507c6edb1f84"
 								}
 							]
 						}
@@ -1282,6 +1545,28 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "/",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -1310,6 +1595,12 @@
 		{
 			"key": "baseUrl",
 			"value": "http://129.152.16.187:8393",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8393",
 			"type": "string"
 		}
 	]

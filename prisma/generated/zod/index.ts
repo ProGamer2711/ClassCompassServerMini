@@ -523,7 +523,7 @@ export const TeacherWhereInputSchema: z.ZodType<Prisma.TeacherWhereInput> = z.ob
   subjectIds: z.lazy(() => StringNullableListFilterSchema).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  school: z.union([ z.lazy(() => SchoolRelationFilterSchema),z.lazy(() => SchoolWhereInputSchema) ]).optional(),
+  school: z.union([ z.lazy(() => SchoolScalarRelationFilterSchema),z.lazy(() => SchoolWhereInputSchema) ]).optional(),
   lessons: z.lazy(() => LessonListRelationFilterSchema).optional(),
   subjects: z.lazy(() => SubjectListRelationFilterSchema).optional()
 }).strict();
@@ -553,7 +553,7 @@ export const TeacherWhereUniqueInputSchema: z.ZodType<Prisma.TeacherWhereUniqueI
   subjectIds: z.lazy(() => StringNullableListFilterSchema).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  school: z.union([ z.lazy(() => SchoolRelationFilterSchema),z.lazy(() => SchoolWhereInputSchema) ]).optional(),
+  school: z.union([ z.lazy(() => SchoolScalarRelationFilterSchema),z.lazy(() => SchoolWhereInputSchema) ]).optional(),
   lessons: z.lazy(() => LessonListRelationFilterSchema).optional(),
   subjects: z.lazy(() => SubjectListRelationFilterSchema).optional()
 }).strict());
@@ -591,7 +591,7 @@ export const StudentWhereInputSchema: z.ZodType<Prisma.StudentWhereInput> = z.ob
   classId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  class: z.union([ z.lazy(() => SchoolClassRelationFilterSchema),z.lazy(() => SchoolClassWhereInputSchema) ]).optional(),
+  class: z.union([ z.lazy(() => SchoolClassScalarRelationFilterSchema),z.lazy(() => SchoolClassWhereInputSchema) ]).optional(),
 }).strict();
 
 export const StudentOrderByWithRelationInputSchema: z.ZodType<Prisma.StudentOrderByWithRelationInput> = z.object({
@@ -615,7 +615,7 @@ export const StudentWhereUniqueInputSchema: z.ZodType<Prisma.StudentWhereUniqueI
   classId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  class: z.union([ z.lazy(() => SchoolClassRelationFilterSchema),z.lazy(() => SchoolClassWhereInputSchema) ]).optional(),
+  class: z.union([ z.lazy(() => SchoolClassScalarRelationFilterSchema),z.lazy(() => SchoolClassWhereInputSchema) ]).optional(),
 }).strict());
 
 export const StudentOrderByWithAggregationInputSchema: z.ZodType<Prisma.StudentOrderByWithAggregationInput> = z.object({
@@ -650,7 +650,7 @@ export const SubjectWhereInputSchema: z.ZodType<Prisma.SubjectWhereInput> = z.ob
   teacherIds: z.lazy(() => StringNullableListFilterSchema).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  school: z.union([ z.lazy(() => SchoolRelationFilterSchema),z.lazy(() => SchoolWhereInputSchema) ]).optional(),
+  school: z.union([ z.lazy(() => SchoolScalarRelationFilterSchema),z.lazy(() => SchoolWhereInputSchema) ]).optional(),
   lessons: z.lazy(() => LessonListRelationFilterSchema).optional(),
   teachers: z.lazy(() => TeacherListRelationFilterSchema).optional()
 }).strict();
@@ -680,7 +680,7 @@ export const SubjectWhereUniqueInputSchema: z.ZodType<Prisma.SubjectWhereUniqueI
   teacherIds: z.lazy(() => StringNullableListFilterSchema).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  school: z.union([ z.lazy(() => SchoolRelationFilterSchema),z.lazy(() => SchoolWhereInputSchema) ]).optional(),
+  school: z.union([ z.lazy(() => SchoolScalarRelationFilterSchema),z.lazy(() => SchoolWhereInputSchema) ]).optional(),
   lessons: z.lazy(() => LessonListRelationFilterSchema).optional(),
   teachers: z.lazy(() => TeacherListRelationFilterSchema).optional()
 }).strict());
@@ -724,10 +724,10 @@ export const LessonWhereInputSchema: z.ZodType<Prisma.LessonWhereInput> = z.obje
   scheduleId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  room: z.union([ z.lazy(() => RoomRelationFilterSchema),z.lazy(() => RoomWhereInputSchema) ]).optional(),
-  teacher: z.union([ z.lazy(() => TeacherRelationFilterSchema),z.lazy(() => TeacherWhereInputSchema) ]).optional(),
-  subject: z.union([ z.lazy(() => SubjectRelationFilterSchema),z.lazy(() => SubjectWhereInputSchema) ]).optional(),
-  schedule: z.union([ z.lazy(() => ScheduleRelationFilterSchema),z.lazy(() => ScheduleWhereInputSchema) ]).optional(),
+  room: z.union([ z.lazy(() => RoomScalarRelationFilterSchema),z.lazy(() => RoomWhereInputSchema) ]).optional(),
+  teacher: z.union([ z.lazy(() => TeacherScalarRelationFilterSchema),z.lazy(() => TeacherWhereInputSchema) ]).optional(),
+  subject: z.union([ z.lazy(() => SubjectScalarRelationFilterSchema),z.lazy(() => SubjectWhereInputSchema) ]).optional(),
+  schedule: z.union([ z.lazy(() => ScheduleScalarRelationFilterSchema),z.lazy(() => ScheduleWhereInputSchema) ]).optional(),
 }).strict();
 
 export const LessonOrderByWithRelationInputSchema: z.ZodType<Prisma.LessonOrderByWithRelationInput> = z.object({
@@ -776,10 +776,10 @@ export const LessonWhereUniqueInputSchema: z.ZodType<Prisma.LessonWhereUniqueInp
   scheduleId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  room: z.union([ z.lazy(() => RoomRelationFilterSchema),z.lazy(() => RoomWhereInputSchema) ]).optional(),
-  teacher: z.union([ z.lazy(() => TeacherRelationFilterSchema),z.lazy(() => TeacherWhereInputSchema) ]).optional(),
-  subject: z.union([ z.lazy(() => SubjectRelationFilterSchema),z.lazy(() => SubjectWhereInputSchema) ]).optional(),
-  schedule: z.union([ z.lazy(() => ScheduleRelationFilterSchema),z.lazy(() => ScheduleWhereInputSchema) ]).optional(),
+  room: z.union([ z.lazy(() => RoomScalarRelationFilterSchema),z.lazy(() => RoomWhereInputSchema) ]).optional(),
+  teacher: z.union([ z.lazy(() => TeacherScalarRelationFilterSchema),z.lazy(() => TeacherWhereInputSchema) ]).optional(),
+  subject: z.union([ z.lazy(() => SubjectScalarRelationFilterSchema),z.lazy(() => SubjectWhereInputSchema) ]).optional(),
+  schedule: z.union([ z.lazy(() => ScheduleScalarRelationFilterSchema),z.lazy(() => ScheduleWhereInputSchema) ]).optional(),
 }).strict());
 
 export const LessonOrderByWithAggregationInputSchema: z.ZodType<Prisma.LessonOrderByWithAggregationInput> = z.object({
@@ -827,7 +827,7 @@ export const ScheduleWhereInputSchema: z.ZodType<Prisma.ScheduleWhereInput> = z.
   classId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  class: z.union([ z.lazy(() => SchoolClassRelationFilterSchema),z.lazy(() => SchoolClassWhereInputSchema) ]).optional(),
+  class: z.union([ z.lazy(() => SchoolClassScalarRelationFilterSchema),z.lazy(() => SchoolClassWhereInputSchema) ]).optional(),
   lessons: z.lazy(() => LessonListRelationFilterSchema).optional()
 }).strict();
 
@@ -863,7 +863,7 @@ export const ScheduleWhereUniqueInputSchema: z.ZodType<Prisma.ScheduleWhereUniqu
   classId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  class: z.union([ z.lazy(() => SchoolClassRelationFilterSchema),z.lazy(() => SchoolClassWhereInputSchema) ]).optional(),
+  class: z.union([ z.lazy(() => SchoolClassScalarRelationFilterSchema),z.lazy(() => SchoolClassWhereInputSchema) ]).optional(),
   lessons: z.lazy(() => LessonListRelationFilterSchema).optional()
 }).strict());
 
@@ -898,7 +898,7 @@ export const SchoolClassWhereInputSchema: z.ZodType<Prisma.SchoolClassWhereInput
   schoolId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  school: z.union([ z.lazy(() => SchoolRelationFilterSchema),z.lazy(() => SchoolWhereInputSchema) ]).optional(),
+  school: z.union([ z.lazy(() => SchoolScalarRelationFilterSchema),z.lazy(() => SchoolWhereInputSchema) ]).optional(),
   students: z.lazy(() => StudentListRelationFilterSchema).optional(),
   weeklySchedule: z.lazy(() => ScheduleListRelationFilterSchema).optional()
 }).strict();
@@ -936,7 +936,7 @@ export const SchoolClassWhereUniqueInputSchema: z.ZodType<Prisma.SchoolClassWher
   schoolId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  school: z.union([ z.lazy(() => SchoolRelationFilterSchema),z.lazy(() => SchoolWhereInputSchema) ]).optional(),
+  school: z.union([ z.lazy(() => SchoolScalarRelationFilterSchema),z.lazy(() => SchoolWhereInputSchema) ]).optional(),
   students: z.lazy(() => StudentListRelationFilterSchema).optional(),
   weeklySchedule: z.lazy(() => ScheduleListRelationFilterSchema).optional()
 }).strict());
@@ -1043,7 +1043,7 @@ export const BuildingWhereInputSchema: z.ZodType<Prisma.BuildingWhereInput> = z.
   schoolId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  school: z.union([ z.lazy(() => SchoolRelationFilterSchema),z.lazy(() => SchoolWhereInputSchema) ]).optional(),
+  school: z.union([ z.lazy(() => SchoolScalarRelationFilterSchema),z.lazy(() => SchoolWhereInputSchema) ]).optional(),
   floors: z.lazy(() => FloorListRelationFilterSchema).optional()
 }).strict();
 
@@ -1079,7 +1079,7 @@ export const BuildingWhereUniqueInputSchema: z.ZodType<Prisma.BuildingWhereUniqu
   schoolId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  school: z.union([ z.lazy(() => SchoolRelationFilterSchema),z.lazy(() => SchoolWhereInputSchema) ]).optional(),
+  school: z.union([ z.lazy(() => SchoolScalarRelationFilterSchema),z.lazy(() => SchoolWhereInputSchema) ]).optional(),
   floors: z.lazy(() => FloorListRelationFilterSchema).optional()
 }).strict());
 
@@ -1117,7 +1117,7 @@ export const FloorWhereInputSchema: z.ZodType<Prisma.FloorWhereInput> = z.object
   buildingId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  building: z.union([ z.lazy(() => BuildingRelationFilterSchema),z.lazy(() => BuildingWhereInputSchema) ]).optional(),
+  building: z.union([ z.lazy(() => BuildingScalarRelationFilterSchema),z.lazy(() => BuildingWhereInputSchema) ]).optional(),
   rooms: z.lazy(() => RoomListRelationFilterSchema).optional()
 }).strict();
 
@@ -1159,7 +1159,7 @@ export const FloorWhereUniqueInputSchema: z.ZodType<Prisma.FloorWhereUniqueInput
   buildingId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  building: z.union([ z.lazy(() => BuildingRelationFilterSchema),z.lazy(() => BuildingWhereInputSchema) ]).optional(),
+  building: z.union([ z.lazy(() => BuildingScalarRelationFilterSchema),z.lazy(() => BuildingWhereInputSchema) ]).optional(),
   rooms: z.lazy(() => RoomListRelationFilterSchema).optional()
 }).strict());
 
@@ -1202,7 +1202,7 @@ export const RoomWhereInputSchema: z.ZodType<Prisma.RoomWhereInput> = z.object({
   floorId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  floor: z.union([ z.lazy(() => FloorRelationFilterSchema),z.lazy(() => FloorWhereInputSchema) ]).optional(),
+  floor: z.union([ z.lazy(() => FloorScalarRelationFilterSchema),z.lazy(() => FloorWhereInputSchema) ]).optional(),
   lessons: z.lazy(() => LessonListRelationFilterSchema).optional()
 }).strict();
 
@@ -1238,7 +1238,7 @@ export const RoomWhereUniqueInputSchema: z.ZodType<Prisma.RoomWhereUniqueInput> 
   floorId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
-  floor: z.union([ z.lazy(() => FloorRelationFilterSchema),z.lazy(() => FloorWhereInputSchema) ]).optional(),
+  floor: z.union([ z.lazy(() => FloorScalarRelationFilterSchema),z.lazy(() => FloorWhereInputSchema) ]).optional(),
   lessons: z.lazy(() => LessonListRelationFilterSchema).optional()
 }).strict());
 
@@ -1926,7 +1926,7 @@ export const DateTimeFilterSchema: z.ZodType<Prisma.DateTimeFilter> = z.object({
   not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeFilterSchema) ]).optional(),
 }).strict();
 
-export const SchoolRelationFilterSchema: z.ZodType<Prisma.SchoolRelationFilter> = z.object({
+export const SchoolScalarRelationFilterSchema: z.ZodType<Prisma.SchoolScalarRelationFilter> = z.object({
   is: z.lazy(() => SchoolWhereInputSchema).optional(),
   isNot: z.lazy(() => SchoolWhereInputSchema).optional()
 }).strict();
@@ -2008,7 +2008,7 @@ export const DateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeWithAg
   _max: z.lazy(() => NestedDateTimeFilterSchema).optional()
 }).strict();
 
-export const SchoolClassRelationFilterSchema: z.ZodType<Prisma.SchoolClassRelationFilter> = z.object({
+export const SchoolClassScalarRelationFilterSchema: z.ZodType<Prisma.SchoolClassScalarRelationFilter> = z.object({
   is: z.lazy(() => SchoolClassWhereInputSchema).optional(),
   isNot: z.lazy(() => SchoolClassWhereInputSchema).optional()
 }).strict();
@@ -2090,22 +2090,22 @@ export const EnumLessonWeekFilterSchema: z.ZodType<Prisma.EnumLessonWeekFilter> 
   not: z.union([ z.lazy(() => LessonWeekSchema),z.lazy(() => NestedEnumLessonWeekFilterSchema) ]).optional(),
 }).strict();
 
-export const RoomRelationFilterSchema: z.ZodType<Prisma.RoomRelationFilter> = z.object({
+export const RoomScalarRelationFilterSchema: z.ZodType<Prisma.RoomScalarRelationFilter> = z.object({
   is: z.lazy(() => RoomWhereInputSchema).optional(),
   isNot: z.lazy(() => RoomWhereInputSchema).optional()
 }).strict();
 
-export const TeacherRelationFilterSchema: z.ZodType<Prisma.TeacherRelationFilter> = z.object({
+export const TeacherScalarRelationFilterSchema: z.ZodType<Prisma.TeacherScalarRelationFilter> = z.object({
   is: z.lazy(() => TeacherWhereInputSchema).optional(),
   isNot: z.lazy(() => TeacherWhereInputSchema).optional()
 }).strict();
 
-export const SubjectRelationFilterSchema: z.ZodType<Prisma.SubjectRelationFilter> = z.object({
+export const SubjectScalarRelationFilterSchema: z.ZodType<Prisma.SubjectScalarRelationFilter> = z.object({
   is: z.lazy(() => SubjectWhereInputSchema).optional(),
   isNot: z.lazy(() => SubjectWhereInputSchema).optional()
 }).strict();
 
-export const ScheduleRelationFilterSchema: z.ZodType<Prisma.ScheduleRelationFilter> = z.object({
+export const ScheduleScalarRelationFilterSchema: z.ZodType<Prisma.ScheduleScalarRelationFilter> = z.object({
   is: z.lazy(() => ScheduleWhereInputSchema).optional(),
   isNot: z.lazy(() => ScheduleWhereInputSchema).optional()
 }).strict();
@@ -2383,7 +2383,7 @@ export const StringNullableFilterSchema: z.ZodType<Prisma.StringNullableFilter> 
   isSet: z.boolean().optional()
 }).strict();
 
-export const BuildingRelationFilterSchema: z.ZodType<Prisma.BuildingRelationFilter> = z.object({
+export const BuildingScalarRelationFilterSchema: z.ZodType<Prisma.BuildingScalarRelationFilter> = z.object({
   is: z.lazy(() => BuildingWhereInputSchema).optional(),
   isNot: z.lazy(() => BuildingWhereInputSchema).optional()
 }).strict();
@@ -2463,7 +2463,7 @@ export const StringNullableWithAggregatesFilterSchema: z.ZodType<Prisma.StringNu
   isSet: z.boolean().optional()
 }).strict();
 
-export const FloorRelationFilterSchema: z.ZodType<Prisma.FloorRelationFilter> = z.object({
+export const FloorScalarRelationFilterSchema: z.ZodType<Prisma.FloorScalarRelationFilter> = z.object({
   is: z.lazy(() => FloorWhereInputSchema).optional(),
   isNot: z.lazy(() => FloorWhereInputSchema).optional()
 }).strict();

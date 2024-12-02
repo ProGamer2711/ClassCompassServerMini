@@ -13,6 +13,7 @@ import { createClient } from "redis";
 import { messages } from "./types/messages";
 import * as serverResponses from "./utils/responses";
 import { createIndexes } from "./utils/caching";
+import { responseMiddleware } from "./middlewares/response";
 
 dotenv.config();
 
@@ -132,6 +133,8 @@ app.use((req, res, next) => {
 	next();
 });
 
+app.use(responseMiddleware);
+
 // Register Routes
 try {
 	const routeFiles = fs.readdirSync(routesPath);
@@ -145,15 +148,13 @@ try {
 	await Promise.all(routePromises);
 
 	app.all("*", (_, res) => {
-		serverResponses.sendError(res, messages.NOT_FOUND, {
-			message: "Route not found",
-		});
+		res.sendResponse(messages.NOT_FOUND, { message: "Route not found" });
 	});
 } catch (error) {
 	console.error(error);
 
 	app.all("*", (_, res) => {
-		serverResponses.sendError(res, messages.INTERNAL_SERVER_ERROR, {
+		res.sendResponse(messages.INTERNAL_SERVER_ERROR, {
 			message: "An error occurred while loading routes",
 		});
 	});
@@ -172,13 +173,13 @@ redisClient.on("error", err => {
 const port = env.PORT ?? 8393;
 
 (async () => {
-	// await redisClient
-	// 	.on("connect", async () => {
-	// 		console.log("Connected to Redis");
-	// 	})
-	// 	.connect();
+	await redisClient
+		.on("connect", async () => {
+			console.log("Connected to Redis");
+		})
+		.connect();
 
-	// createIndexes(modelsPath);
+	createIndexes(modelsPath);
 
 	app.listen(port, () => {
 		console.log(`Server running on http://localhost:${port}/`);

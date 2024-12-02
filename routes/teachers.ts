@@ -1,14 +1,13 @@
 import { Router } from "express";
 
 import * as CRUD from "../utils/prisma";
-import * as serverResponses from "../utils/responses";
 import { messages } from "../types/messages";
 import {
 	TeacherCreateArgsSchema,
 	TeacherDeleteArgsSchema,
 	TeacherFindManyArgsSchema,
 	TeacherFindUniqueOrThrowArgsSchema,
-    TeacherUpdateArgsSchema,
+	TeacherUpdateArgsSchema,
 } from "../prisma/generated/zod";
 
 export const router = Router();
@@ -22,22 +21,14 @@ router.post("", async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.CREATED, result);
+		return res.sendResponse(messages.CREATED, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -46,18 +37,18 @@ router.post("", async (req, res) => {
 // 		const result = await getTeachers();
 
 // 		if ("error" in result) {
-// 			return serverResponses.sendError(
+// 			return serverResponses.send(
 // 				res,
 // 				messages.BAD_REQUEST,
 // 				result.error
 // 			);
 // 		}
 
-// 		return serverResponses.sendSuccess(res, messages.OK, result);
+// 		return serverResponses.send(res, messages.OK, result);
 // 	} catch (error) {
 // 		console.error(error);
 
-// 		return serverResponses.sendError(
+// 		return serverResponses.send(
 // 			res,
 // 			messages.INTERNAL_SERVER_ERROR,
 // 			error
@@ -76,22 +67,14 @@ router.get("/school/:schoolId", async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -106,22 +89,14 @@ router.get("/:id", async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -139,22 +114,14 @@ router.put("/:id", async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -162,27 +129,23 @@ router.delete("/:id", async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		const result = await CRUD.delete("teacher", {
-			where: {id,}
-		}, TeacherDeleteArgsSchema);
+		const result = await CRUD.delete(
+			"teacher",
+			{
+				where: { id },
+			},
+			TeacherDeleteArgsSchema
+		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 

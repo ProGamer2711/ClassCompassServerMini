@@ -1,6 +1,5 @@
 import { Router } from "express";
 
-import * as serverResponses from "../utils/responses";
 import * as CRUD from "../utils/prisma";
 import {
 	SchoolFindUniqueOrThrowArgsSchema,
@@ -21,22 +20,14 @@ router.post("", async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.CREATED, result);
+		return res.sendResponse(messages.CREATED, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -45,22 +36,14 @@ router.get("", async (_, res) => {
 		const result = await CRUD.findMany("school");
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -77,28 +60,20 @@ router.get("/:id", async (req, res) => {
 		);
 
 		if (!result) {
-			return serverResponses.sendError(res, messages.NOT_FOUND, {
+			return res.sendResponse(messages.NOT_FOUND, {
 				message: "School was not found",
 			});
 		}
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -116,22 +91,14 @@ router.put("/:id", async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -148,22 +115,14 @@ router.delete("/:id", async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 

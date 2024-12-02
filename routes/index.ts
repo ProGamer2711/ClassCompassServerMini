@@ -1,6 +1,7 @@
 import { Router, raw } from "express";
 import crypto from "crypto";
 import { exec } from "child_process";
+import { messages } from "../types/messages";
 
 const webhookSecret = process.env.WEBHOOK_SECRET ?? "";
 const repoPath = process.env.REPO_PATH ?? "";
@@ -8,13 +9,16 @@ const repoPath = process.env.REPO_PATH ?? "";
 export const router = Router();
 
 router.get("/", (_, res) => {
-	res.status(200).json({ message: "Сървърът работи нормално." });
+	res.sendResponse(messages.OK, { message: "Сървърът работи нормално." });
 });
 
 router.post("/webhook", raw({ type: "application/json" }), (req, res) => {
 	const signature = req.headers["x-hub-signature"] as string;
+
 	if (!signature) {
-		return res.status(400).send("Signature header not found");
+		return res.sendResponse(messages.BAD_REQUEST, {
+			message: "Signature header not found",
+		});
 	}
 
 	const payloadBody = JSON.stringify(req.body);
@@ -23,26 +27,33 @@ router.post("/webhook", raw({ type: "application/json" }), (req, res) => {
 		.createHmac("sha1", webhookSecret)
 		.update(payloadBody)
 		.digest("hex");
+
 	const expectedSignature = `sha1=${hash}`;
 
 	if (
 		!crypto.timingSafeEqual(
-			Buffer.from(signature),
-			Buffer.from(expectedSignature)
+			new Uint8Array(Buffer.from(signature)),
+			new Uint8Array(Buffer.from(expectedSignature))
 		)
 	) {
-		return res.status(403).send("Signature verification failed");
+		return res.sendResponse(messages.FORBIDDEN, {
+			message: "Signature verification failed",
+		});
 	}
 
 	// Signature verified, execute git pull
 	exec(`cd ${repoPath} && git pull`, error => {
 		if (error) {
 			console.error("Deployment error:", error);
-			return res.status(500).send("Deployment failed");
+
+			return res.sendResponse(messages.INTERNAL_SERVER_ERROR, {
+				message: "Deployment failed",
+			});
 		}
 
 		console.log("Deployment successful");
-		res.status(200).send("Deployment successful");
+
+		res.sendResponse(messages.OK, { message: "Deployment successful" });
 	});
 });
 

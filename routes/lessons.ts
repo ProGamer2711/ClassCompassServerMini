@@ -2,7 +2,6 @@ import { Router } from "express";
 import moment from "moment-timezone";
 
 import * as CRUD from "../utils/prisma";
-import * as serverResponses from "../utils/responses";
 import { messages } from "../types/messages";
 import {
 	LessonCreateArgsSchema,
@@ -32,22 +31,14 @@ router.post("", async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.CREATED, result);
+		return res.sendResponse(messages.CREATED, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -57,46 +48,14 @@ router.get("", async (_, res) => {
 		const result = await CRUD.findMany("lesson");
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		// // ? Should this be here or in the frontend
-		// // TODO: check if this is the best way to do this
-		// interface ParsedLesson extends Omit<Lesson, "startTime" | "endTime"> {
-		// 	startTime: string;
-		// 	endTime: string;
-		// }
-
-		// let parsedResult: ParsedLesson[] = [];
-
-		// result.forEach(lesson => {
-		// 	parsedResult.push({
-		// 		...lesson,
-		// 		startTime: moment
-		// 			.tz(lesson.startTime, "Europe/Sofia")
-		// 			.format("HH:mm"),
-		// 		endTime: moment
-		// 			.tz(lesson.endTime, "Europe/Sofia")
-		// 			.format("HH:mm"),
-		// 	});
-		// });
-		// // & End of the TODO
-
-		// return serverResponses.sendSuccess(res, messages.OK, parsedResult);
-
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -111,22 +70,14 @@ router.get("/:id", async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -144,22 +95,14 @@ router.put("/:id", async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -176,22 +119,14 @@ router.delete("/:id", async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 

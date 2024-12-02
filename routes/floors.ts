@@ -3,7 +3,6 @@ import { join } from "path";
 
 import { Router } from "express";
 
-import * as serverResponses from "../utils/responses";
 import * as CRUD from "../utils/prisma";
 import { messages } from "../types/messages";
 import { floorMasksPath, floorPlansPath, upload } from "..";
@@ -26,22 +25,14 @@ router.post("", async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.CREATED, result);
+		return res.sendResponse(messages.CREATED, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -50,18 +41,18 @@ router.post("", async (req, res) => {
 // 		const result = await getFloors();
 
 // 		if ("error" in result) {
-// 			return serverResponses.sendError(
+// 			return serverResponses.send(
 // 				res,
 // 				messages.BAD_REQUEST,
 // 				result.error
 // 			);
 // 		}
 
-// 		return serverResponses.sendSuccess(res, messages.OK, result);
+// 		return serverResponses.send(res, messages.OK, result);
 // 	} catch (error) {
 // 		console.error(error);
 
-// 		return serverResponses.sendError(
+// 		return serverResponses.send(
 // 			res,
 // 			messages.INTERNAL_SERVER_ERROR,
 // 			error
@@ -80,22 +71,14 @@ router.get("/building/:buildingId", async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -110,22 +93,14 @@ router.get("/:id", async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -143,22 +118,14 @@ router.put("/:id", async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -175,22 +142,14 @@ router.delete("/:id", async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -201,8 +160,7 @@ router.post("/:id/plan", upload.single("plan"), async (req, res) => {
 
 		// if there is no file, return an error
 		if (!req.file) {
-			return serverResponses.sendError(
-				res,
+			return res.sendResponse(
 				messages.BAD_REQUEST,
 				// TODO: Change this message / make it dynamic
 				"Файлът не можа да бъде качен"
@@ -219,11 +177,7 @@ router.post("/:id/plan", upload.single("plan"), async (req, res) => {
 		);
 
 		if ("error" in floor) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				floor.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, floor.error);
 		}
 
 		// if a file already exists, delete it
@@ -246,22 +200,14 @@ router.post("/:id/plan", upload.single("plan"), async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -278,15 +224,11 @@ router.get("/:id/plan", async (req, res) => {
 		);
 
 		if ("error" in floor) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				floor.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, floor.error);
 		}
 
 		if (!floor.planFilename) {
-			return serverResponses.sendError(res, messages.NOT_FOUND, {
+			return res.sendResponse(messages.NOT_FOUND, {
 				message: "No plan found",
 			});
 		}
@@ -306,7 +248,7 @@ router.get("/:id/plan", async (req, res) => {
 				FloorUpdateArgsSchema
 			);
 
-			return serverResponses.sendError(res, messages.NOT_FOUND, {
+			return res.sendResponse(messages.NOT_FOUND, {
 				message: "File not found",
 			});
 		}
@@ -315,11 +257,7 @@ router.get("/:id/plan", async (req, res) => {
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -336,15 +274,11 @@ router.delete("/:id/plan", async (req, res) => {
 		);
 
 		if ("error" in floor) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				floor.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, floor.error);
 		}
 
 		if (!floor.planFilename) {
-			return serverResponses.sendError(res, messages.NOT_FOUND, {
+			return res.sendResponse(messages.NOT_FOUND, {
 				message: "No plan found",
 			});
 		}
@@ -365,7 +299,7 @@ router.delete("/:id/plan", async (req, res) => {
 		);
 
 		if (!fs.existsSync(filePath)) {
-			return serverResponses.sendError(res, messages.NOT_FOUND, {
+			return res.sendResponse(messages.NOT_FOUND, {
 				message: "File not found",
 			});
 		}
@@ -373,22 +307,14 @@ router.delete("/:id/plan", async (req, res) => {
 		fs.unlinkSync(filePath);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -398,8 +324,7 @@ router.post("/:id/mask", upload.single("mask"), async (req, res) => {
 
 		// if there is no file, return an error
 		if (!req.file) {
-			return serverResponses.sendError(
-				res,
+			return res.sendResponse(
 				messages.BAD_REQUEST,
 				// TODO: Change this message / make it dynamic
 				"Файлът не можа да бъде качен"
@@ -416,11 +341,7 @@ router.post("/:id/mask", upload.single("mask"), async (req, res) => {
 		);
 
 		if ("error" in floor) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				floor.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, floor.error);
 		}
 
 		// if a file already exists, delete it
@@ -445,22 +366,14 @@ router.post("/:id/mask", upload.single("mask"), async (req, res) => {
 		);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -477,15 +390,11 @@ router.get("/:id/mask", async (req, res) => {
 		);
 
 		if ("error" in floor) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				floor.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, floor.error);
 		}
 
 		if (!floor.maskFilename) {
-			return serverResponses.sendError(res, messages.NOT_FOUND, {
+			return res.sendResponse(messages.NOT_FOUND, {
 				message: "No mask found",
 			});
 		}
@@ -507,7 +416,7 @@ router.get("/:id/mask", async (req, res) => {
 				FloorUpdateArgsSchema
 			);
 
-			return serverResponses.sendError(res, messages.NOT_FOUND, {
+			return res.sendResponse(messages.NOT_FOUND, {
 				message: "File not found",
 			});
 		}
@@ -516,11 +425,7 @@ router.get("/:id/mask", async (req, res) => {
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 
@@ -537,15 +442,11 @@ router.delete("/:id/mask", async (req, res) => {
 		);
 
 		if ("error" in floors) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				floors.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, floors.error);
 		}
 
 		if (!floors.maskFilename) {
-			return serverResponses.sendError(res, messages.NOT_FOUND, {
+			return res.sendResponse(messages.NOT_FOUND, {
 				message: "No mask found",
 			});
 		}
@@ -566,7 +467,7 @@ router.delete("/:id/mask", async (req, res) => {
 		);
 
 		if (!fs.existsSync(filePath)) {
-			return serverResponses.sendError(res, messages.NOT_FOUND, {
+			return res.sendResponse(messages.NOT_FOUND, {
 				message: "File not found",
 			});
 		}
@@ -574,22 +475,14 @@ router.delete("/:id/mask", async (req, res) => {
 		fs.unlinkSync(filePath);
 
 		if ("error" in result) {
-			return serverResponses.sendError(
-				res,
-				messages.BAD_REQUEST,
-				result.error
-			);
+			return res.sendResponse(messages.BAD_REQUEST, result.error);
 		}
 
-		return serverResponses.sendSuccess(res, messages.OK, result);
+		return res.sendResponse(messages.OK, result);
 	} catch (error) {
 		console.error(error);
 
-		return serverResponses.sendError(
-			res,
-			messages.INTERNAL_SERVER_ERROR,
-			error
-		);
+		return res.sendResponse(messages.INTERNAL_SERVER_ERROR, error);
 	}
 });
 

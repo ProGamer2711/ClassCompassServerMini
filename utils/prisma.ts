@@ -1,6 +1,15 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { prismaClient } from "..";
 import { handleError } from "./errors";
+import type { Repository } from "redis-om";
+
+function plularizeModelName(modelName: PrismaModelName): string {
+	if (modelName === "schoolClass") {
+		return "schoolClasses";
+	}
+
+	return `${modelName}s`;
+}
 
 type PrismaModelName = Uncapitalize<Prisma.ModelName>;
 
@@ -114,6 +123,24 @@ async function findUniqueOrThrow<
 ): Promise<FindUniqueOrThrowReturnType<ModelName> | { error: any }> {
 	try {
 		findUniqueOrThrowArgsSchema.parse(findUniqueOrThrowArgs);
+
+		// check the redis cache for the document
+		// if it exists, return it
+		// if it doesn't exist, fetch it from the database and store it in the cache
+		// the repository is in a file called models/[MODEL_NAME].ts
+		// it exports a repository object called [MODEL_NAME]Repository
+
+		const modelImport = await import(
+			`../models/${plularizeModelName(model)}`
+		);
+
+		const modelRepository: Repository<
+			FindUniqueOrThrowReturnType<ModelName>
+		> = modelImport[`${plularizeModelName(model)}Repository`];
+
+		if (!modelRepository) {
+			return { error: "Repository not found." };
+		}
 
 		const newDocument = await (
 			prismaClient[model] as any
