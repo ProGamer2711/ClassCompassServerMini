@@ -2,11 +2,11 @@ import type { Request, Response, NextFunction } from "express";
 import type { Message } from "../types/messages";
 import type { Response as ResponseType } from "../types/responses";
 
-export const responseMiddleware = (
+export function responseMiddleware(
 	_: Request,
 	res: Response,
 	next: NextFunction
-) => {
+) {
 	res.sendResponse = function <T>(message: Message, data: T) {
 		if (message.statusCode < 400) {
 			const responseData: ResponseType<T> = {
@@ -26,4 +26,4 @@ export const responseMiddleware = (
 	};
 
 	next();
-};
+}

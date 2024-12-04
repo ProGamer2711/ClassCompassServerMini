@@ -1,2 +1,2 @@
 # configure auto-cr/lf
-* text=lf
+* text eol=lf
