@@ -11,9 +11,10 @@ generator client {
     provider = "prisma-client-js"
 }
 
-generator zod {
-    provider = "zod-prisma-types"
-}
+// ! This generator is not working properly
+// generator zod {
+//     provider = "zod-prisma-types"
+// }
 
 generator typescriptInterfaces {
     provider = "prisma-generator-typescript-interfaces"
