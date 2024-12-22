@@ -1,5 +1,0 @@
-{
-	"watch": ["*.ts", "*.json", "*.prisma"],
-	"ext": "ts,json,prisma",
-	"exec": "bun run index.ts"
-}
