@@ -6,17 +6,12 @@ import {
 	Patch,
 	Param,
 	Delete,
-	NotFoundException,
 } from "@nestjs/common";
 import { SchoolsService } from "./schools.service";
 import { CreateSchoolDto } from "./dto/create-school.dto";
 import { UpdateSchoolDto } from "./dto/update-school.dto";
 import { SchoolEntity } from "./entities/school.entity";
-import {
-	ApiCreatedResponse,
-	ApiNotFoundResponse,
-	ApiOkResponse,
-} from "@nestjs/swagger";
+import { ApiCreatedResponse, ApiOkResponse } from "@nestjs/swagger";
 
 @Controller("schools")
 export class SchoolsController {
@@ -40,15 +35,8 @@ export class SchoolsController {
 
 	@Get(":id")
 	@ApiOkResponse({ type: SchoolEntity })
-	@ApiNotFoundResponse({
-		example: new NotFoundException("School not found").getResponse(),
-	})
 	async findOne(@Param("id") id: string) {
 		const school = await this.schoolsService.findOne(id);
-
-		if (!school) {
-			throw new NotFoundException("School not found");
-		}
 
 		return new SchoolEntity(school);
 	}

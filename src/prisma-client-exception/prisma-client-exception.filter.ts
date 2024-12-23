@@ -1,5 +1,6 @@
 import {
 	ArgumentsHost,
+	BadRequestException,
 	Catch,
 	ConflictException,
 	ExceptionFilter,
@@ -26,6 +27,20 @@ export class PrismaClientExceptionFilter implements ExceptionFilter {
 				const customMessage = `${modelName}: A unique constraint violation occurred. The field "${targetField}" must be unique.`;
 
 				const responseException = new ConflictException(customMessage);
+
+				return response
+					.status(responseException.getStatus())
+					.json(responseException.getResponse());
+			}
+
+			case "P2023": {
+				const message = exception.meta?.message;
+
+				const customMessage = `${modelName}: ${message}`;
+
+				const responseException = new BadRequestException(
+					customMessage
+				);
 
 				return response
 					.status(responseException.getStatus())

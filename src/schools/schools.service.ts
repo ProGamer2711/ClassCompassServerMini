@@ -18,7 +18,7 @@ export class SchoolsService {
 	}
 
 	findOne(id: string) {
-		return this.prisma.school.findUnique({
+		return this.prisma.school.findUniqueOrThrow({
 			where: { id, deletedAt: undefined },
 		});
 	}

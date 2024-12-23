@@ -9,6 +9,7 @@
 	"bracketSameLine": true,
 	"jsxSingleQuote": false,
 	"quoteProps": "consistent",
+	"endOfLine": "lf",
 	"overrides": [
 		{
 			"files": ".prettierrc",
