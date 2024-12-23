@@ -21,27 +21,27 @@ export class BuildingsService {
 
 	findAllBySchool(schoolId: string) {
 		return this.prisma.building.findMany({
-			where: { schoolId, deletedAt: undefined },
+			where: { schoolId, deleted: false },
 		});
 	}
 
 	findOne(id: string) {
 		return this.prisma.building.findUniqueOrThrow({
-			where: { id, deletedAt: undefined },
+			where: { id, deleted: false },
 		});
 	}
 
 	update(id: string, updateBuildingDto: UpdateBuildingDto) {
 		return this.prisma.building.update({
-			where: { id, deletedAt: undefined },
+			where: { id, deleted: false },
 			data: updateBuildingDto,
 		});
 	}
 
 	remove(id: string) {
 		return this.prisma.building.update({
-			where: { id, deletedAt: undefined },
-			data: { deletedAt: new Date() },
+			where: { id, deleted: false },
+			data: { deleted: true, deletedAt: new Date() },
 		});
 	}
 }

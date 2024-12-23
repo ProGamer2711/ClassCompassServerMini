@@ -36,9 +36,7 @@ export class SchoolsController {
 	@Get(":id")
 	@ApiOkResponse({ type: SchoolEntity })
 	async findOne(@Param("id") id: string) {
-		const school = await this.schoolsService.findOne(id);
-
-		return new SchoolEntity(school);
+		return new SchoolEntity(await this.schoolsService.findOne(id));
 	}
 
 	@Patch(":id")

@@ -8,32 +8,34 @@ export class SchoolsService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	create(createSchoolDto: CreateSchoolDto) {
-		return this.prisma.school.create({ data: createSchoolDto });
+		return this.prisma.school.create({
+			data: createSchoolDto,
+		});
 	}
 
 	findAll() {
 		return this.prisma.school.findMany({
-			where: { deletedAt: undefined },
+			where: { deleted: false },
 		});
 	}
 
 	findOne(id: string) {
 		return this.prisma.school.findUniqueOrThrow({
-			where: { id, deletedAt: undefined },
+			where: { id, deleted: false },
 		});
 	}
 
 	update(id: string, updateSchoolDto: UpdateSchoolDto) {
 		return this.prisma.school.update({
-			where: { id, deletedAt: undefined },
+			where: { id, deleted: false },
 			data: updateSchoolDto,
 		});
 	}
 
 	remove(id: string) {
 		return this.prisma.school.update({
-			where: { id, deletedAt: undefined },
-			data: { deletedAt: new Date() },
+			where: { id, deleted: false },
+			data: { deleted: true, deletedAt: new Date() },
 		});
 	}
 }

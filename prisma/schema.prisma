@@ -46,6 +46,7 @@ model School {
 
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
+    deleted   Boolean   @default(false)
     deletedAt DateTime?
     // deletedBy String?
 }
@@ -61,6 +62,7 @@ model Building {
 
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
+    deleted   Boolean   @default(false)
     deletedAt DateTime?
     // deletedBy String?
 
@@ -81,8 +83,11 @@ model Floor {
 
     rooms Room[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deleted   Boolean   @default(false)
+    deletedAt DateTime?
+    // deletedBy String?
 
     // The floor number should be unique within a building
     @@unique([buildingId, number])

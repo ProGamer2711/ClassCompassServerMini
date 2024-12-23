@@ -36,9 +36,7 @@ export class BuildingsController {
 	@Get(":id")
 	@ApiOkResponse({ type: BuildingEntity })
 	async findOne(@Param("id") id: string) {
-		const building = await this.buildingsService.findOne(id);
-
-		return new BuildingEntity(building);
+		return new BuildingEntity(await this.buildingsService.findOne(id));
 	}
 
 	@Patch(":id")

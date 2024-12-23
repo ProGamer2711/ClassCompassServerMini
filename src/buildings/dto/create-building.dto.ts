@@ -8,6 +8,7 @@ export class CreateBuildingDto {
 	name: string;
 
 	@IsString()
+	@IsNotEmpty()
 	@ApiProperty()
 	schoolId: string;
 }
