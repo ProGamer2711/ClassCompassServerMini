@@ -18,6 +18,9 @@ export class SchoolEntity implements School {
 	@ApiProperty()
 	updatedAt: Date;
 
+	@ApiProperty()
+	deleted: boolean;
+
 	@ApiProperty({
 		required: false,
 		nullable: true,

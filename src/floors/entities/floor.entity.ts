@@ -39,6 +39,9 @@ export class FloorEntity implements Floor {
 	@ApiProperty()
 	updatedAt: Date;
 
+	@ApiProperty()
+	deleted: boolean;
+
 	@ApiProperty({
 		required: false,
 		nullable: true,

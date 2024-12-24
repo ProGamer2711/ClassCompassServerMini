@@ -8,7 +8,7 @@ export class BuildingsService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	create(createBuildingDto: CreateBuildingDto) {
-		return this.prisma.building.create({
+		return this.prisma.client.building.create({
 			data: {
 				...createBuildingDto,
 				schoolId: undefined,
@@ -20,28 +20,27 @@ export class BuildingsService {
 	}
 
 	findAllBySchool(schoolId: string) {
-		return this.prisma.building.findMany({
-			where: { schoolId, deleted: false },
+		return this.prisma.client.building.findMany({
+			where: { schoolId },
 		});
 	}
 
 	findOne(id: string) {
-		return this.prisma.building.findUniqueOrThrow({
-			where: { id, deleted: false },
+		return this.prisma.client.building.findUniqueOrThrow({
+			where: { id },
 		});
 	}
 
 	update(id: string, updateBuildingDto: UpdateBuildingDto) {
-		return this.prisma.building.update({
-			where: { id, deleted: false },
+		return this.prisma.client.building.update({
+			where: { id },
 			data: updateBuildingDto,
 		});
 	}
 
 	remove(id: string) {
-		return this.prisma.building.update({
-			where: { id, deleted: false },
-			data: { deleted: true, deletedAt: new Date() },
+		return this.prisma.client.building.softDelete({
+			where: { id },
 		});
 	}
 }

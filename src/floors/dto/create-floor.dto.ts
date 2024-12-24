@@ -1,5 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import {
+	IsMongoId,
+	IsNotEmpty,
+	IsNumber,
+	IsOptional,
+	IsString,
+} from "class-validator";
 
 export class CreateFloorDto {
 	@IsNumber()
@@ -32,6 +38,7 @@ export class CreateFloorDto {
 
 	@IsString()
 	@IsNotEmpty()
+	@IsMongoId()
 	@ApiProperty()
 	buildingId: string;
 }

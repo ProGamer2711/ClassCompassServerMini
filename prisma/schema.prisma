@@ -103,8 +103,11 @@ model Room {
 
     lessons Lesson[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deleted   Boolean   @default(false)
+    deletedAt DateTime?
+    // deletedBy String?
 
     // The room name should be unique within a floor
     @@unique([floorId, name])
@@ -123,8 +126,11 @@ model Teacher {
     subjectIds String[]  @db.ObjectId
     subjects   Subject[] @relation(fields: [subjectIds], references: [id])
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deleted   Boolean   @default(false)
+    deletedAt DateTime?
+    // deletedBy String?
 
     @@index([schoolId])
 }
@@ -142,8 +148,11 @@ model Subject {
     teacherIds String[]  @db.ObjectId
     teachers   Teacher[] @relation(fields: [teacherIds], references: [id])
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deleted   Boolean   @default(false)
+    deletedAt DateTime?
+    // deletedBy String?
 
     @@index([schoolId])
 }
@@ -159,8 +168,11 @@ model SchoolClass {
 
     weeklySchedule DailySchedule[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deleted   Boolean   @default(false)
+    deletedAt DateTime?
+    // deletedBy String?
 
     // The class name should be unique within a school
     @@unique([schoolId, name])
@@ -174,8 +186,11 @@ model Student {
     classId String      @db.ObjectId
     class   SchoolClass @relation(fields: [classId], references: [id])
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deleted   Boolean   @default(false)
+    deletedAt DateTime?
+    // deletedBy String?
 
     @@index([classId])
 }
@@ -189,8 +204,11 @@ model DailySchedule {
 
     lessons Lesson[] @relation("ScheduleLessons")
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deleted   Boolean   @default(false)
+    deletedAt DateTime?
+    // deletedBy String?
 
     // The day should be unique within a class
     @@unique([day, classId])
@@ -217,8 +235,11 @@ model Lesson {
     scheduleId String        @db.ObjectId
     schedule   DailySchedule @relation(fields: [scheduleId], references: [id], name: "ScheduleLessons")
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deleted   Boolean   @default(false)
+    deletedAt DateTime?
+    // deletedBy String?
 
     // The lesson number should be unique within a schedule and week type
     @@unique([lessonNumber, lessonWeeks, scheduleId])

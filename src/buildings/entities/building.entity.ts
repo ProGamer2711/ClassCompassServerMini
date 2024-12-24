@@ -21,6 +21,9 @@ export class BuildingEntity implements Building {
 	@ApiProperty()
 	updatedAt: Date;
 
+	@ApiProperty()
+	deleted: boolean;
+
 	@ApiProperty({
 		required: false,
 		nullable: true,

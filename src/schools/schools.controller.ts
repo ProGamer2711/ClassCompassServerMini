@@ -12,6 +12,7 @@ import { CreateSchoolDto } from "./dto/create-school.dto";
 import { UpdateSchoolDto } from "./dto/update-school.dto";
 import { SchoolEntity } from "./entities/school.entity";
 import { ApiCreatedResponse, ApiOkResponse } from "@nestjs/swagger";
+import { ObjectIdValidationPipe } from "src/object-id-validation/object-id-validation.pipe";
 
 @Controller("schools")
 export class SchoolsController {
@@ -35,14 +36,14 @@ export class SchoolsController {
 
 	@Get(":id")
 	@ApiOkResponse({ type: SchoolEntity })
-	async findOne(@Param("id") id: string) {
+	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new SchoolEntity(await this.schoolsService.findOne(id));
 	}
 
 	@Patch(":id")
 	@ApiOkResponse({ type: SchoolEntity })
 	async update(
-		@Param("id") id: string,
+		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateSchoolDto: UpdateSchoolDto
 	) {
 		return new SchoolEntity(
@@ -52,7 +53,7 @@ export class SchoolsController {
 
 	@Delete(":id")
 	@ApiOkResponse({ type: SchoolEntity })
-	async remove(@Param("id") id: string) {
+	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new SchoolEntity(await this.schoolsService.remove(id));
 	}
 }

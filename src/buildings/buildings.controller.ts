@@ -12,6 +12,7 @@ import { CreateBuildingDto } from "./dto/create-building.dto";
 import { UpdateBuildingDto } from "./dto/update-building.dto";
 import { BuildingEntity } from "./entities/building.entity";
 import { ApiCreatedResponse, ApiOkResponse } from "@nestjs/swagger";
+import { ObjectIdValidationPipe } from "src/object-id-validation/object-id-validation.pipe";
 
 @Controller("buildings")
 export class BuildingsController {
@@ -27,7 +28,9 @@ export class BuildingsController {
 
 	@Get("school/:schoolId")
 	@ApiOkResponse({ type: [BuildingEntity] })
-	async findAllBySchool(@Param("schoolId") schoolId: string) {
+	async findAllBySchool(
+		@Param("schoolId", ObjectIdValidationPipe) schoolId: string
+	) {
 		const buildings = await this.buildingsService.findAllBySchool(schoolId);
 
 		return buildings.map(building => new BuildingEntity(building));
@@ -35,14 +38,14 @@ export class BuildingsController {
 
 	@Get(":id")
 	@ApiOkResponse({ type: BuildingEntity })
-	async findOne(@Param("id") id: string) {
+	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new BuildingEntity(await this.buildingsService.findOne(id));
 	}
 
 	@Patch(":id")
 	@ApiOkResponse({ type: BuildingEntity })
 	async update(
-		@Param("id") id: string,
+		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateBuildingDto: UpdateBuildingDto
 	) {
 		return new BuildingEntity(
@@ -52,7 +55,7 @@ export class BuildingsController {
 
 	@Delete(":id")
 	@ApiOkResponse({ type: BuildingEntity })
-	async remove(@Param("id") id: string) {
+	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new BuildingEntity(await this.buildingsService.remove(id));
 	}
 }

@@ -12,6 +12,7 @@ import { CreateFloorDto } from "./dto/create-floor.dto";
 import { UpdateFloorDto } from "./dto/update-floor.dto";
 import { ApiCreatedResponse } from "@nestjs/swagger";
 import { FloorEntity } from "./entities/floor.entity";
+import { ObjectIdValidationPipe } from "src/object-id-validation/object-id-validation.pipe";
 
 @Controller("floors")
 export class FloorsController {
@@ -24,20 +25,22 @@ export class FloorsController {
 	}
 
 	@Get("building/:buildingId")
-	async findAllByBuilding(@Param("buildingId") buildingId: string) {
+	async findAllByBuilding(
+		@Param("buildingId", ObjectIdValidationPipe) buildingId: string
+	) {
 		const floors = await this.floorsService.findAllByBuilding(buildingId);
 
 		return floors.map(floor => new FloorEntity(floor));
 	}
 
 	@Get(":id")
-	async findOne(@Param("id") id: string) {
+	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new FloorEntity(await this.floorsService.findOne(id));
 	}
 
 	@Patch(":id")
 	async update(
-		@Param("id") id: string,
+		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateFloorDto: UpdateFloorDto
 	) {
 		return new FloorEntity(
@@ -46,7 +49,7 @@ export class FloorsController {
 	}
 
 	@Delete(":id")
-	async remove(@Param("id") id: string) {
+	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new FloorEntity(await this.floorsService.remove(id));
 	}
 }

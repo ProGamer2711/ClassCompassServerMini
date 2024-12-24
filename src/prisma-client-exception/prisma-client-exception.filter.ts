@@ -1,6 +1,6 @@
 import {
 	ArgumentsHost,
-	BadRequestException,
+	// BadRequestException,
 	Catch,
 	ConflictException,
 	ExceptionFilter,
@@ -33,19 +33,19 @@ export class PrismaClientExceptionFilter implements ExceptionFilter {
 					.json(responseException.getResponse());
 			}
 
-			case "P2023": {
-				const message = exception.meta?.message;
+			// case "P2023": {
+			// 	const message = exception.meta?.message;
 
-				const customMessage = `${modelName}: ${message}`;
+			// 	const customMessage = `${modelName}: ${message}`;
 
-				const responseException = new BadRequestException(
-					customMessage
-				);
+			// 	const responseException = new BadRequestException(
+			// 		customMessage
+			// 	);
 
-				return response
-					.status(responseException.getStatus())
-					.json(responseException.getResponse());
-			}
+			// 	return response
+			// 		.status(responseException.getStatus())
+			// 		.json(responseException.getResponse());
+			// }
 
 			case "P2025": {
 				const cause = exception.meta?.cause;
