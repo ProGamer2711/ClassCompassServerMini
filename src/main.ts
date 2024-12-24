@@ -3,6 +3,7 @@ import { AppModule } from "./app.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ClassSerializerInterceptor, ValidationPipe } from "@nestjs/common";
 import { PrismaClientExceptionFilter } from "./prisma-client-exception/prisma-client-exception.filter";
+import { SwaggerTheme, SwaggerThemeNameEnum } from "swagger-themes";
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
@@ -23,10 +24,17 @@ async function bootstrap() {
 		.setTitle("Class Compass API")
 		.setDescription("An API for the Class Compass application")
 		.setVersion("1.0")
+		.addServer("http://localhost:8393")
 		.build();
 
 	const document = SwaggerModule.createDocument(app, config);
-	SwaggerModule.setup("api", app, document);
+
+	const theme = new SwaggerTheme();
+
+	SwaggerModule.setup("api", app, document, {
+		customCss: theme.getBuffer(SwaggerThemeNameEnum.DARK),
+		customSiteTitle: "Class Compass API Docs",
+	});
 
 	app.useGlobalFilters(new PrismaClientExceptionFilter());
 

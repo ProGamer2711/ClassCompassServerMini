@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiSchema } from "@nestjs/swagger";
 import {
 	IsMongoId,
 	IsNotEmpty,
@@ -7,38 +7,50 @@ import {
 	IsString,
 } from "class-validator";
 
+@ApiSchema({
+	description: "The data required to create a new floor.",
+})
 export class CreateFloorDto {
+	/**
+	 * The floor's number.
+	 * @example 1
+	 */
 	@IsNumber()
-	@ApiProperty()
 	number: number;
 
+	/**
+	 * The floor's description.
+	 * @example "First floor"
+	 */
 	@IsString()
 	@IsOptional()
 	@IsNotEmpty()
-	@ApiProperty({
-		required: false,
-	})
 	description?: string;
 
+	/**
+	 * The floor's plan filename.
+	 * @example "floor-plan.png"
+	 */
 	@IsString()
 	@IsOptional()
 	@IsNotEmpty()
-	@ApiProperty({
-		required: false,
-	})
 	planFilename?: string;
 
+	/**
+	 * The floor's mask filename.
+	 * @example "floor-mask.svg"
+	 */
 	@IsString()
 	@IsOptional()
 	@IsNotEmpty()
-	@ApiProperty({
-		required: false,
-	})
 	maskFilename?: string;
 
+	/**
+	 * The floor's building identifier.
+	 * @example "507f191e810c19729de860ea"
+	 */
 	@IsString()
 	@IsNotEmpty()
 	@IsMongoId()
-	@ApiProperty()
 	buildingId: string;
 }

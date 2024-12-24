@@ -11,37 +11,49 @@ import { SchoolsService } from "./schools.service";
 import { CreateSchoolDto } from "./dto/create-school.dto";
 import { UpdateSchoolDto } from "./dto/update-school.dto";
 import { SchoolEntity } from "./entities/school.entity";
-import { ApiCreatedResponse, ApiOkResponse } from "@nestjs/swagger";
 import { ObjectIdValidationPipe } from "src/object-id-validation/object-id-validation.pipe";
+import { ApiResponses } from "src/api-responses/api-responses.decorator";
 
 @Controller("schools")
 export class SchoolsController {
 	constructor(private readonly schoolsService: SchoolsService) {}
 
+	/**
+	 * Create a new school
+	 */
 	@Post()
-	@ApiCreatedResponse({ type: SchoolEntity })
+	@ApiResponses({ type: SchoolEntity, responseType: "created" })
 	async create(@Body() createSchoolDto: CreateSchoolDto) {
 		return new SchoolEntity(
 			await this.schoolsService.create(createSchoolDto)
 		);
 	}
 
+	/**
+	 * Get all schools
+	 */
 	@Get()
-	@ApiOkResponse({ type: [SchoolEntity] })
+	@ApiResponses({ type: [SchoolEntity] })
 	async findAll() {
 		const schools = await this.schoolsService.findAll();
 
 		return schools.map(school => new SchoolEntity(school));
 	}
 
+	/**
+	 * Get a school by ID
+	 */
 	@Get(":id")
-	@ApiOkResponse({ type: SchoolEntity })
+	@ApiResponses({ type: SchoolEntity })
 	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new SchoolEntity(await this.schoolsService.findOne(id));
 	}
 
+	/**
+	 * Update a school by ID
+	 */
 	@Patch(":id")
-	@ApiOkResponse({ type: SchoolEntity })
+	@ApiResponses({ type: SchoolEntity })
 	async update(
 		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateSchoolDto: UpdateSchoolDto
@@ -51,8 +63,11 @@ export class SchoolsController {
 		);
 	}
 
+	/**
+	 * Delete a school by ID
+	 */
 	@Delete(":id")
-	@ApiOkResponse({ type: SchoolEntity })
+	@ApiResponses({ type: SchoolEntity })
 	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new SchoolEntity(await this.schoolsService.remove(id));
 	}
