@@ -96,7 +96,7 @@ model Floor {
 
 model Room {
     id   String @id @default(auto()) @map("_id") @db.ObjectId
-    name String /// @zod.string.min(1, { message: "Името трябва да сърдържа поне 1 символ" })
+    name String
 
     floorId String @db.ObjectId
     floor   Floor  @relation(fields: [floorId], references: [id])
@@ -116,7 +116,7 @@ model Room {
 
 model Teacher {
     id   String @id @default(auto()) @map("_id") @db.ObjectId
-    name String /// @zod.string.min(1, { message: "Името трябва да сърдържа поне 1 символ" })
+    name String
 
     schoolId String @db.ObjectId
     school   School @relation(fields: [schoolId], references: [id])

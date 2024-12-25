@@ -2,7 +2,7 @@ import { NestFactory, Reflector } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ClassSerializerInterceptor, ValidationPipe } from "@nestjs/common";
-import { PrismaClientExceptionFilter } from "./prisma-client-exception/prisma-client-exception.filter";
+import { PrismaClientExceptionFilter } from "@shared/filters/prisma-client-exception/prisma-client-exception.filter";
 import { SwaggerTheme, SwaggerThemeNameEnum } from "swagger-themes";
 
 async function bootstrap() {
@@ -26,7 +26,11 @@ async function bootstrap() {
 		.addServer("http://localhost:8393")
 		.build();
 
-	const document = SwaggerModule.createDocument(app, config);
+	const document = SwaggerModule.createDocument(app, config, {
+		// TODO: create a custom operationIdFactory
+		// operationIdFactory: (controllerKey: string, methodKey: string) =>
+		// 	`${controllerKey}${methodKey}`,
+	});
 
 	const theme = new SwaggerTheme();
 

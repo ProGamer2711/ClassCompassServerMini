@@ -19,6 +19,12 @@
 		// "noFallthroughCasesInSwitch": false,
 
 		"strict": true,
-		"strictPropertyInitialization": false
+		"strictPropertyInitialization": false,
+		"paths": {
+			"@resources/*": ["src/resources/*"],
+			"@shared/*": ["src/shared/*"],
+			"@decorators/*": ["src/shared/decorators/*"],
+			"@prisma/*": ["src/prisma/*"]
+		}
 	}
 }
