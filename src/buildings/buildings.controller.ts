@@ -1,18 +1,13 @@
-import {
-	Controller,
-	Get,
-	Post,
-	Body,
-	Patch,
-	Param,
-	Delete,
-} from "@nestjs/common";
+import { Controller, Body, Param } from "@nestjs/common";
 import { BuildingsService } from "./buildings.service";
 import { CreateBuildingDto } from "./dto/create-building.dto";
 import { UpdateBuildingDto } from "./dto/update-building.dto";
 import { BuildingEntity } from "./entities/building.entity";
 import { ObjectIdValidationPipe } from "src/object-id-validation/object-id-validation.pipe";
-import { ApiResponses } from "src/api-responses/api-responses.decorator";
+import { ApiPost } from "src/api-post/api-post.decorator";
+import { ApiGet } from "src/api-get/api-get.decorator";
+import { ApiPatch } from "src/api-patch/api-patch.decorator";
+import { ApiDelete } from "src/api-delete/api-delete.decorator";
 
 @Controller("buildings")
 export class BuildingsController {
@@ -21,8 +16,7 @@ export class BuildingsController {
 	/**
 	 * Create a new building
 	 */
-	@Post()
-	@ApiResponses({ type: BuildingEntity, responseType: "created" })
+	@ApiPost({ type: BuildingEntity })
 	async create(@Body() createBuildingDto: CreateBuildingDto) {
 		return new BuildingEntity(
 			await this.buildingsService.create(createBuildingDto)
@@ -32,8 +26,10 @@ export class BuildingsController {
 	/**
 	 * Get all buildings for a school
 	 */
-	@Get("school/:schoolId")
-	@ApiResponses({ type: [BuildingEntity] })
+	@ApiGet({
+		type: [BuildingEntity],
+		path: "school/:schoolId",
+	})
 	async findAllBySchool(
 		@Param("schoolId", ObjectIdValidationPipe) schoolId: string
 	) {
@@ -45,8 +41,10 @@ export class BuildingsController {
 	/**
 	 * Get a building by ID
 	 */
-	@Get(":id")
-	@ApiResponses({ type: BuildingEntity })
+	@ApiGet({
+		type: BuildingEntity,
+		path: ":id",
+	})
 	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new BuildingEntity(await this.buildingsService.findOne(id));
 	}
@@ -54,8 +52,7 @@ export class BuildingsController {
 	/**
 	 * Update a building by ID
 	 */
-	@Patch(":id")
-	@ApiResponses({ type: BuildingEntity })
+	@ApiPatch({ type: BuildingEntity, path: ":id" })
 	async update(
 		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateBuildingDto: UpdateBuildingDto
@@ -68,8 +65,7 @@ export class BuildingsController {
 	/**
 	 * Delete a building by ID
 	 */
-	@Delete(":id")
-	@ApiResponses({ type: BuildingEntity })
+	@ApiDelete({ type: BuildingEntity, path: ":id" })
 	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new BuildingEntity(await this.buildingsService.remove(id));
 	}

@@ -1,53 +1,53 @@
 import { ApiSchema } from "@nestjs/swagger";
-import { Building } from "@prisma/client";
+import { Room } from "@prisma/client";
 
 @ApiSchema({
-	description: "A building object",
+	description: "A room object",
 })
-export class BuildingEntity implements Building {
-	constructor(partial: Partial<BuildingEntity>) {
+export class RoomEntity implements Room {
+	constructor(partial: Partial<RoomEntity>) {
 		Object.assign(this, partial);
 	}
 
 	/**
-	 * The building's unique identifier
+	 * The room's unique identifier
 	 * @example "507c7f79bcf86cd7994f6c0e"
 	 */
 	id: string;
 
 	/**
-	 * The building's name
-	 * @example "Building A"
+	 * The room's name
+	 * @example "Room 101"
 	 */
 	name: string;
 
 	/**
-	 * The building's school identifier
+	 * The room's floor identifier
 	 * @example "507f191e810c19729de860ea"
 	 */
-	schoolId: string;
+	floorId: string;
 
 	/**
-	 * The time the building was created
+	 * The time the room was created
 	 * @example "2021-09-01T00:00:00.000Z"
 	 */
 	createdAt: Date;
 
 	/**
-	 * The time the building was last updated
+	 * The time the room was last updated
 	 * @example "2021-09-01T00:00:00.000Z"
 	 */
 	updatedAt: Date;
 
 	/**
-	 * Whether the building has been deleted
+	 * Whether the room has been deleted
 	 * @example false
 	 * @default false
 	 */
 	deleted: boolean = false;
 
 	/**
-	 * The time the building was deleted
+	 * The time the room was deleted
 	 * @example "2021-09-01T00:00:00.000Z"
 	 * @default null
 	 */

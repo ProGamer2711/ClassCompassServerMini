@@ -1,18 +1,13 @@
-import {
-	Controller,
-	Get,
-	Post,
-	Body,
-	Patch,
-	Param,
-	Delete,
-} from "@nestjs/common";
+import { Controller, Body, Param } from "@nestjs/common";
 import { SchoolsService } from "./schools.service";
 import { CreateSchoolDto } from "./dto/create-school.dto";
 import { UpdateSchoolDto } from "./dto/update-school.dto";
 import { SchoolEntity } from "./entities/school.entity";
 import { ObjectIdValidationPipe } from "src/object-id-validation/object-id-validation.pipe";
-import { ApiResponses } from "src/api-responses/api-responses.decorator";
+import { ApiPost } from "src/api-post/api-post.decorator";
+import { ApiGet } from "src/api-get/api-get.decorator";
+import { ApiPatch } from "src/api-patch/api-patch.decorator";
+import { ApiDelete } from "src/api-delete/api-delete.decorator";
 
 @Controller("schools")
 export class SchoolsController {
@@ -21,8 +16,7 @@ export class SchoolsController {
 	/**
 	 * Create a new school
 	 */
-	@Post()
-	@ApiResponses({ type: SchoolEntity, responseType: "created" })
+	@ApiPost({ type: SchoolEntity, errorResponses: { NOT_FOUND: false } })
 	async create(@Body() createSchoolDto: CreateSchoolDto) {
 		return new SchoolEntity(
 			await this.schoolsService.create(createSchoolDto)
@@ -32,8 +26,10 @@ export class SchoolsController {
 	/**
 	 * Get all schools
 	 */
-	@Get()
-	@ApiResponses({ type: [SchoolEntity] })
+	@ApiGet({
+		type: [SchoolEntity],
+		errorResponses: { BAD_REQUEST: false, NOT_FOUND: false },
+	})
 	async findAll() {
 		const schools = await this.schoolsService.findAll();
 
@@ -43,8 +39,7 @@ export class SchoolsController {
 	/**
 	 * Get a school by ID
 	 */
-	@Get(":id")
-	@ApiResponses({ type: SchoolEntity })
+	@ApiGet({ type: SchoolEntity, path: ":id" })
 	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new SchoolEntity(await this.schoolsService.findOne(id));
 	}
@@ -52,8 +47,7 @@ export class SchoolsController {
 	/**
 	 * Update a school by ID
 	 */
-	@Patch(":id")
-	@ApiResponses({ type: SchoolEntity })
+	@ApiPatch({ type: SchoolEntity, path: ":id" })
 	async update(
 		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateSchoolDto: UpdateSchoolDto
@@ -66,8 +60,7 @@ export class SchoolsController {
 	/**
 	 * Delete a school by ID
 	 */
-	@Delete(":id")
-	@ApiResponses({ type: SchoolEntity })
+	@ApiDelete({ type: SchoolEntity, path: ":id" })
 	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new SchoolEntity(await this.schoolsService.remove(id));
 	}

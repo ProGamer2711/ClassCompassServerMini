@@ -11,34 +11,58 @@ import {
 	ApiNotFoundResponse,
 	ApiOkResponse,
 } from "@nestjs/swagger";
-
-type ResponseType = "ok" | "created";
-
-interface ApiResponsesOptions {
-	type: any;
-	responseType?: ResponseType;
-}
+import {
+	ApiResponsesOptions,
+	ErrorType,
+} from "./api-responses-options.interface";
 
 export function ApiResponses({
 	type,
-	responseType = "ok",
+	successResponse = "OK",
+	errorResponses,
 }: ApiResponsesOptions) {
+	// If we have a create we use 201 status code instead of 200
 	const ResponseDecorator =
-		responseType === "ok" ? ApiOkResponse : ApiCreatedResponse;
+		successResponse === "CREATED" ? ApiCreatedResponse : ApiOkResponse;
 
-	return applyDecorators(
-		ResponseDecorator({ type }),
-		ApiBadRequestResponse({
-			description: "Invalid data was provided.",
-			example: new BadRequestException("Message").getResponse(),
-		}),
-		ApiNotFoundResponse({
-			description: "A resource was not found.",
-			example: new NotFoundException("Message").getResponse(),
-		}),
-		ApiConflictResponse({
-			description: "A unique constraint violation occurred.",
-			example: new ConflictException("Message").getResponse(),
-		})
-	);
+	const errorResponsesDefaults: Record<ErrorType, boolean> = {
+		BAD_REQUEST: true,
+		NOT_FOUND: true,
+		CONFLICT: true,
+	};
+
+	// add all the errors in an array and spread it in applyDecorators
+	const errorDecorators = Object.entries({
+		...errorResponsesDefaults,
+		...errorResponses,
+	})
+		.filter(([, isEnabled]) => isEnabled)
+		.map(([error]) => {
+			switch (error as ErrorType) {
+				case "BAD_REQUEST":
+					return ApiBadRequestResponse({
+						description: "Invalid data was provided.",
+						example: new BadRequestException(
+							"Message"
+						).getResponse(),
+					});
+
+				case "NOT_FOUND":
+					return ApiNotFoundResponse({
+						description: "A resource was not found.",
+						example: new NotFoundException("Message").getResponse(),
+					});
+
+				case "CONFLICT":
+					return ApiConflictResponse({
+						description: "A unique constraint violation occurred.",
+						example: new ConflictException("Message").getResponse(),
+					});
+
+				default:
+					throw new Error(`Unsupported error type: ${error}`);
+			}
+		});
+
+	return applyDecorators(ResponseDecorator({ type }), ...errorDecorators);
 }

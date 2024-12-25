@@ -8,18 +8,18 @@ import {
 } from "class-validator";
 
 @ApiSchema({
-	description: "The data required to create a new floor.",
+	description: "The data required to create a new floor",
 })
 export class CreateFloorDto {
 	/**
-	 * The floor's number.
+	 * The floor's number
 	 * @example 1
 	 */
 	@IsNumber()
 	number: number;
 
 	/**
-	 * The floor's description.
+	 * The floor's description
 	 * @example "First floor"
 	 */
 	@IsString()
@@ -28,7 +28,7 @@ export class CreateFloorDto {
 	description?: string;
 
 	/**
-	 * The floor's plan filename.
+	 * The floor's plan filename
 	 * @example "floor-plan.png"
 	 */
 	@IsString()
@@ -37,7 +37,7 @@ export class CreateFloorDto {
 	planFilename?: string;
 
 	/**
-	 * The floor's mask filename.
+	 * The floor's mask filename
 	 * @example "floor-mask.svg"
 	 */
 	@IsString()
@@ -46,7 +46,7 @@ export class CreateFloorDto {
 	maskFilename?: string;
 
 	/**
-	 * The floor's building identifier.
+	 * The floor's building identifier
 	 * @example "507f191e810c19729de860ea"
 	 */
 	@IsString()

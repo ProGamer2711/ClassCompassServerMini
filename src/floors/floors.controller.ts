@@ -1,18 +1,13 @@
-import {
-	Controller,
-	Get,
-	Post,
-	Body,
-	Patch,
-	Param,
-	Delete,
-} from "@nestjs/common";
+import { Controller, Body, Param } from "@nestjs/common";
 import { FloorsService } from "./floors.service";
 import { CreateFloorDto } from "./dto/create-floor.dto";
 import { UpdateFloorDto } from "./dto/update-floor.dto";
 import { FloorEntity } from "./entities/floor.entity";
 import { ObjectIdValidationPipe } from "src/object-id-validation/object-id-validation.pipe";
-import { ApiResponses } from "src/api-responses/api-responses.decorator";
+import { ApiPost } from "src/api-post/api-post.decorator";
+import { ApiGet } from "src/api-get/api-get.decorator";
+import { ApiPatch } from "src/api-patch/api-patch.decorator";
+import { ApiDelete } from "src/api-delete/api-delete.decorator";
 
 @Controller("floors")
 export class FloorsController {
@@ -21,8 +16,7 @@ export class FloorsController {
 	/**
 	 * Create a new floor
 	 */
-	@Post()
-	@ApiResponses({ type: FloorEntity, responseType: "created" })
+	@ApiPost({ type: FloorEntity })
 	async create(@Body() createFloorDto: CreateFloorDto) {
 		return new FloorEntity(await this.floorsService.create(createFloorDto));
 	}
@@ -30,8 +24,7 @@ export class FloorsController {
 	/**
 	 * Get all floors for a building
 	 */
-	@Get("building/:buildingId")
-	@ApiResponses({ type: [FloorEntity] })
+	@ApiGet({ type: [FloorEntity], path: "building/:buildingId" })
 	async findAllByBuilding(
 		@Param("buildingId", ObjectIdValidationPipe) buildingId: string
 	) {
@@ -43,8 +36,7 @@ export class FloorsController {
 	/**
 	 * Get a floor by ID
 	 */
-	@Get(":id")
-	@ApiResponses({ type: FloorEntity })
+	@ApiGet({ type: FloorEntity, path: ":id" })
 	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new FloorEntity(await this.floorsService.findOne(id));
 	}
@@ -52,8 +44,7 @@ export class FloorsController {
 	/**
 	 * Update a floor by ID
 	 */
-	@Patch(":id")
-	@ApiResponses({ type: FloorEntity })
+	@ApiPatch({ type: FloorEntity, path: ":id" })
 	async update(
 		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateFloorDto: UpdateFloorDto
@@ -66,8 +57,7 @@ export class FloorsController {
 	/**
 	 * Remove a floor by ID
 	 */
-	@Delete(":id")
-	@ApiResponses({ type: FloorEntity })
+	@ApiDelete({ type: FloorEntity, path: ":id" })
 	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new FloorEntity(await this.floorsService.remove(id));
 	}

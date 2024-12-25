@@ -8,5 +8,6 @@ import { BuildingsModule } from "src/buildings/buildings.module";
 	controllers: [FloorsController],
 	providers: [FloorsService],
 	imports: [PrismaModule, BuildingsModule],
+	exports: [FloorsService],
 })
 export class FloorsModule {}
