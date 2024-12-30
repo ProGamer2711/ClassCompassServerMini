@@ -36,7 +36,7 @@ model School {
     id   String @id @default(auto()) @map("_id") @db.ObjectId
     name String @unique
 
-    classes SchoolClass[]
+    classes Class[]
 
     subjects Subject[]
 
@@ -157,7 +157,7 @@ model Subject {
     @@index([schoolId])
 }
 
-model SchoolClass {
+model Class {
     id   String @id @default(auto()) @map("_id") @db.ObjectId
     name String /// @zod.string.min(1, { message: "Името трябва да сърдържа поне 1 символ" })
 
@@ -183,8 +183,8 @@ model Student {
     id   String @id @default(auto()) @map("_id") @db.ObjectId
     name String /// @zod.string.min(1, { message: "Името трябва да сърдържа поне 1 символ" })
 
-    classId String      @db.ObjectId
-    class   SchoolClass @relation(fields: [classId], references: [id])
+    classId String @db.ObjectId
+    class   Class  @relation(fields: [classId], references: [id])
 
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
@@ -199,8 +199,8 @@ model DailySchedule {
     id  String @id @default(auto()) @map("_id") @db.ObjectId
     day Day
 
-    classId String      @db.ObjectId
-    class   SchoolClass @relation(fields: [classId], references: [id])
+    classId String @db.ObjectId
+    class   Class  @relation(fields: [classId], references: [id])
 
     lessons Lesson[] @relation("ScheduleLessons")
 

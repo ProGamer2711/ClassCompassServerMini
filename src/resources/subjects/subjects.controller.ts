@@ -11,38 +11,66 @@ import { SubjectsService } from "./subjects.service";
 import { CreateSubjectDto } from "./dto/create-subject.dto";
 import { UpdateSubjectDto } from "./dto/update-subject.dto";
 import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
+import { ApiDelete, ApiGet, ApiPatch, ApiPost } from "@shared/decorators";
+import { SubjectEntity } from "./entities/subject.entity";
 
 @Controller("subjects")
 export class SubjectsController {
 	constructor(private readonly subjectsService: SubjectsService) {}
 
+	/**
+	 * Create a new subject
+	 */
 	@Post()
-	create(@Body() createSubjectDto: CreateSubjectDto) {
-		return this.subjectsService.create(createSubjectDto);
+	@ApiPost({ type: SubjectEntity })
+	async create(@Body() createSubjectDto: CreateSubjectDto) {
+		return new SubjectEntity(
+			await this.subjectsService.create(createSubjectDto)
+		);
 	}
 
+	/**
+	 * Get all subjects for a school
+	 */
 	@Get("school/:schoolId")
-	findAllBySchool(
+	@ApiGet({ type: [SubjectEntity] })
+	async findAllBySchool(
 		@Param("schoolId", ObjectIdValidationPipe) schoolId: string
 	) {
-		return this.subjectsService.findAllBySchool(schoolId);
+		const subjects = await this.subjectsService.findAllBySchool(schoolId);
+
+		return subjects.map(subject => new SubjectEntity(subject));
 	}
 
+	/**
+	 * Get a subject by ID
+	 */
 	@Get(":id")
-	findOne(@Param("id", ObjectIdValidationPipe) id: string) {
-		return this.subjectsService.findOne(id);
+	@ApiGet({ type: SubjectEntity })
+	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
+		return new SubjectEntity(await this.subjectsService.findOne(id));
 	}
 
+	/**
+	 * Update a subject by ID
+	 */
 	@Patch(":id")
-	update(
+	@ApiPatch({ type: SubjectEntity })
+	async update(
 		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateSubjectDto: UpdateSubjectDto
 	) {
-		return this.subjectsService.update(id, updateSubjectDto);
+		return new SubjectEntity(
+			await this.subjectsService.update(id, updateSubjectDto)
+		);
 	}
 
+	/**
+	 * Remove a subject by ID
+	 */
 	@Delete(":id")
-	remove(@Param("id", ObjectIdValidationPipe) id: string) {
-		return this.subjectsService.remove(id);
+	@ApiDelete({ type: SubjectEntity })
+	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
+		return new SubjectEntity(await this.subjectsService.remove(id));
 	}
 }
