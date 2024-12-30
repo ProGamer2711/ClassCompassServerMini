@@ -12,9 +12,7 @@ export class RoomsService {
 	) {}
 
 	async create(createRoomDto: CreateRoomDto) {
-		// check the floor exists
-		// if it doesn't, Prisma will throw an error
-		await this.floorsService.findOne(createRoomDto.floorId);
+		await this.floorsService.ensureExists(createRoomDto.floorId);
 
 		return this.prisma.client.room.create({
 			data: createRoomDto,
@@ -22,9 +20,7 @@ export class RoomsService {
 	}
 
 	async findAllByFloor(floorId: string) {
-		// check the floor exists
-		// if it doesn't, Prisma will throw an error
-		await this.floorsService.findOne(floorId);
+		await this.floorsService.ensureExists(floorId);
 
 		return this.prisma.client.room.findMany({
 			where: { floorId },
@@ -39,9 +35,7 @@ export class RoomsService {
 
 	async update(id: string, updateRoomDto: UpdateRoomDto) {
 		if (updateRoomDto.floorId) {
-			// check the floor exists
-			// if it doesn't, Prisma will throw an error
-			await this.floorsService.findOne(updateRoomDto.floorId);
+			await this.floorsService.ensureExists(updateRoomDto.floorId);
 		}
 
 		return this.prisma.client.room.update({
@@ -54,5 +48,9 @@ export class RoomsService {
 		return this.prisma.client.room.softDelete({
 			where: { id },
 		});
+	}
+
+	async ensureExists(id: string) {
+		await this.prisma.client.room.ensureExists(id);
 	}
 }

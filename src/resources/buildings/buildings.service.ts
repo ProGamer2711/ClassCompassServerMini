@@ -12,9 +12,7 @@ export class BuildingsService {
 	) {}
 
 	async create(createBuildingDto: CreateBuildingDto) {
-		// check the school exists
-		// if it doesn't, Prisma will throw an error
-		await this.schoolsService.findOne(createBuildingDto.schoolId);
+		await this.schoolsService.ensureExists(createBuildingDto.schoolId);
 
 		return this.prisma.client.building.create({
 			data: createBuildingDto,
@@ -22,9 +20,7 @@ export class BuildingsService {
 	}
 
 	async findAllBySchool(schoolId: string) {
-		// check the school exists
-		// if it doesn't, Prisma will throw an error
-		await this.schoolsService.findOne(schoolId);
+		await this.schoolsService.ensureExists(schoolId);
 
 		return this.prisma.client.building.findMany({
 			where: { schoolId },
@@ -39,9 +35,7 @@ export class BuildingsService {
 
 	async update(id: string, updateBuildingDto: UpdateBuildingDto) {
 		if (updateBuildingDto.schoolId) {
-			// check the school exists
-			// if it doesn't, Prisma will throw an error
-			await this.schoolsService.findOne(updateBuildingDto.schoolId);
+			await this.schoolsService.ensureExists(updateBuildingDto.schoolId);
 		}
 
 		return this.prisma.client.building.update({
@@ -54,5 +48,9 @@ export class BuildingsService {
 		return this.prisma.client.building.softDelete({
 			where: { id },
 		});
+	}
+
+	async ensureExists(id: string) {
+		await this.prisma.client.building.ensureExists(id);
 	}
 }

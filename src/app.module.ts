@@ -4,6 +4,7 @@ import { BuildingsModule } from "@resources/buildings/buildings.module";
 import { FloorsModule } from "@resources/floors/floors.module";
 import { RoomsModule } from "@resources/rooms/rooms.module";
 import { TeachersModule } from "./resources/teachers/teachers.module";
+import { SubjectsModule } from "./resources/subjects/subjects.module";
 
 @Module({
 	imports: [
@@ -12,6 +13,7 @@ import { TeachersModule } from "./resources/teachers/teachers.module";
 		FloorsModule,
 		RoomsModule,
 		TeachersModule,
+		SubjectsModule,
 	],
 })
 export class AppModule {}

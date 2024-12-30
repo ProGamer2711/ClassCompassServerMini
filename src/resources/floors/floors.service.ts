@@ -12,9 +12,7 @@ export class FloorsService {
 	) {}
 
 	async create(createFloorDto: CreateFloorDto) {
-		// check the building exists
-		// if it doesn't, Prisma will throw an error
-		await this.buildingsService.findOne(createFloorDto.buildingId);
+		await this.buildingsService.ensureExists(createFloorDto.buildingId);
 
 		return this.prisma.client.floor.create({
 			data: createFloorDto,
@@ -22,9 +20,7 @@ export class FloorsService {
 	}
 
 	async findAllByBuilding(buildingId: string) {
-		// check the building exists
-		// if it doesn't, Prisma will throw an error
-		await this.buildingsService.findOne(buildingId);
+		await this.buildingsService.ensureExists(buildingId);
 
 		return this.prisma.client.floor.findMany({
 			where: { buildingId },
@@ -39,9 +35,7 @@ export class FloorsService {
 
 	async update(id: string, updateFloorDto: UpdateFloorDto) {
 		if (updateFloorDto.buildingId) {
-			// check the building exists
-			// if it doesn't, Prisma will throw an error
-			await this.buildingsService.findOne(updateFloorDto.buildingId);
+			await this.buildingsService.ensureExists(updateFloorDto.buildingId);
 		}
 
 		return this.prisma.client.floor.update({
@@ -54,6 +48,10 @@ export class FloorsService {
 		return this.prisma.client.floor.softDelete({
 			where: { id },
 		});
+	}
+
+	async ensureExists(id: string) {
+		await this.prisma.client.floor.ensureExists(id);
 	}
 
 	// TODO: add floor plans and masks

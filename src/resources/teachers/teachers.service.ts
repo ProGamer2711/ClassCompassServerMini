@@ -1,21 +1,27 @@
-import { Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { CreateTeacherDto } from "./dto/create-teacher.dto";
 import { UpdateTeacherDto } from "./dto/update-teacher.dto";
 import { PrismaService } from "@prisma/prisma.service";
 import { SchoolsService } from "@resources/schools/schools.service";
+import { SubjectsService } from "@resources/subjects/subjects.service";
 
 @Injectable()
 export class TeachersService {
 	constructor(
 		private readonly prisma: PrismaService,
-		private readonly schoolsService: SchoolsService
-		// TODO: add subjects service
+		private readonly schoolsService: SchoolsService,
+		@Inject(forwardRef(() => SubjectsService))
+		private readonly subjectsService: SubjectsService
 	) {}
 
 	async create(createTeacherDto: CreateTeacherDto) {
-		// check the school exists
-		// if it doesn't, Prisma will throw an error
-		await this.schoolsService.findOne(createTeacherDto.schoolId);
+		await this.schoolsService.ensureExists(createTeacherDto.schoolId);
+
+		if (createTeacherDto.subjectIds) {
+			await this.subjectsService.ensureExistsMany(
+				createTeacherDto.subjectIds
+			);
+		}
 
 		return this.prisma.client.teacher.create({
 			data: createTeacherDto,
@@ -23,9 +29,7 @@ export class TeachersService {
 	}
 
 	async findAllBySchool(schoolId: string) {
-		// check the school exists
-		// if it doesn't, Prisma will throw an error
-		await this.schoolsService.findOne(schoolId);
+		await this.schoolsService.ensureExists(schoolId);
 
 		return this.prisma.client.teacher.findMany({
 			where: { schoolId },
@@ -40,9 +44,13 @@ export class TeachersService {
 
 	async update(id: string, updateTeacherDto: UpdateTeacherDto) {
 		if (updateTeacherDto.schoolId) {
-			// check the school exists
-			// if it doesn't, Prisma will throw an error
-			await this.schoolsService.findOne(updateTeacherDto.schoolId);
+			await this.schoolsService.ensureExists(updateTeacherDto.schoolId);
+		}
+
+		if (updateTeacherDto.subjectIds) {
+			await this.subjectsService.ensureExistsMany(
+				updateTeacherDto.subjectIds
+			);
 		}
 
 		return this.prisma.client.teacher.update({
@@ -51,9 +59,17 @@ export class TeachersService {
 		});
 	}
 
-	async remove(id: string) {
+	remove(id: string) {
 		return this.prisma.client.teacher.softDelete({
 			where: { id },
 		});
+	}
+
+	async ensureExists(id: string) {
+		await this.prisma.client.teacher.ensureExists(id);
+	}
+
+	async ensureExistsMany(ids: string[]) {
+		await this.prisma.client.teacher.ensureExistsMany(ids);
 	}
 }

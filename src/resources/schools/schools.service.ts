@@ -35,4 +35,8 @@ export class SchoolsService {
 			where: { id },
 		});
 	}
+
+	async ensureExists(id: string) {
+		await this.prisma.client.school.ensureExists(id);
+	}
 }
