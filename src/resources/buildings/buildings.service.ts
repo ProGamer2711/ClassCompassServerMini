@@ -1,8 +1,11 @@
 import { Injectable } from "@nestjs/common";
+
+import { SchoolsService } from "@resources/schools/schools.service";
+
+import { PrismaService } from "@prisma/prisma.service";
+
 import { CreateBuildingDto } from "./dto/create-building.dto";
 import { UpdateBuildingDto } from "./dto/update-building.dto";
-import { PrismaService } from "@prisma/prisma.service";
-import { SchoolsService } from "@resources/schools/schools.service";
 
 @Injectable()
 export class BuildingsService {

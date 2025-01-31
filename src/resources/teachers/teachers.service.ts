@@ -1,9 +1,12 @@
 import { forwardRef, Inject, Injectable } from "@nestjs/common";
-import { CreateTeacherDto } from "./dto/create-teacher.dto";
-import { UpdateTeacherDto } from "./dto/update-teacher.dto";
-import { PrismaService } from "@prisma/prisma.service";
+
 import { SchoolsService } from "@resources/schools/schools.service";
 import { SubjectsService } from "@resources/subjects/subjects.service";
+
+import { PrismaService } from "@prisma/prisma.service";
+
+import { CreateTeacherDto } from "./dto/create-teacher.dto";
+import { UpdateTeacherDto } from "./dto/update-teacher.dto";
 
 @Injectable()
 export class TeachersService {

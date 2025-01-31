@@ -7,12 +7,17 @@ import {
 	Patch,
 	Delete,
 } from "@nestjs/common";
-import { RoomsService } from "./rooms.service";
+
+import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
+
+import { ApiPost, ApiGet, ApiPatch, ApiDelete } from "@decorators/index";
+
 import { CreateRoomDto } from "./dto/create-room.dto";
 import { UpdateRoomDto } from "./dto/update-room.dto";
+
 import { RoomEntity } from "./entities/room.entity";
-import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
-import { ApiPost, ApiGet, ApiPatch, ApiDelete } from "@decorators/index";
+
+import { RoomsService } from "./rooms.service";
 
 @Controller("rooms")
 export class RoomsController {

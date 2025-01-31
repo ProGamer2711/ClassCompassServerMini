@@ -7,12 +7,17 @@ import {
 	Patch,
 	Delete,
 } from "@nestjs/common";
-import { SchoolsService } from "./schools.service";
+
+import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
+
+import { ApiPost, ApiGet, ApiPatch, ApiDelete } from "@decorators/index";
+
 import { CreateSchoolDto } from "./dto/create-school.dto";
 import { UpdateSchoolDto } from "./dto/update-school.dto";
+
 import { SchoolEntity } from "./entities/school.entity";
-import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
-import { ApiPost, ApiGet, ApiPatch, ApiDelete } from "@decorators/index";
+
+import { SchoolsService } from "./schools.service";
 
 @Controller("schools")
 export class SchoolsController {

@@ -11,10 +11,8 @@ import {
 	ApiNotFoundResponse,
 	ApiOkResponse,
 } from "@nestjs/swagger";
-import {
-	ApiResponsesOptions,
-	ErrorType,
-} from "./api-responses-options.interface";
+
+import { ApiResponsesOptions, ErrorType } from "./api-responses-options.types";
 
 export function ApiResponses({
 	type,

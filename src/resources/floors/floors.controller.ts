@@ -7,12 +7,17 @@ import {
 	Patch,
 	Delete,
 } from "@nestjs/common";
-import { FloorsService } from "./floors.service";
+
+import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
+
+import { ApiPost, ApiGet, ApiPatch, ApiDelete } from "@decorators/index";
+
 import { CreateFloorDto } from "./dto/create-floor.dto";
 import { UpdateFloorDto } from "./dto/update-floor.dto";
+
 import { FloorEntity } from "./entities/floor.entity";
-import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
-import { ApiPost, ApiGet, ApiPatch, ApiDelete } from "@decorators/index";
+
+import { FloorsService } from "./floors.service";
 
 @Controller("floors")
 export class FloorsController {

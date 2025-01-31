@@ -1,4 +1,5 @@
 import { ApiSchema, PartialType } from "@nestjs/swagger";
+
 import { CreateClassDto } from "./create-class.dto";
 
 @ApiSchema({

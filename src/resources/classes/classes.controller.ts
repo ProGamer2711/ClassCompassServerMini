@@ -7,12 +7,17 @@ import {
 	Param,
 	Delete,
 } from "@nestjs/common";
-import { ClassesService } from "./classes.service";
+
+import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
+
+import { ApiDelete, ApiGet, ApiPatch, ApiPost } from "@decorators/index";
+
 import { CreateClassDto } from "./dto/create-class.dto";
 import { UpdateClassDto } from "./dto/update-class.dto";
+
 import { ClassEntity } from "./entities/class.entity";
-import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
-import { ApiDelete, ApiGet, ApiPatch, ApiPost } from "@shared/decorators";
+
+import { ClassesService } from "./classes.service";
 
 @Controller("classes")
 export class ClassesController {

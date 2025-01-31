@@ -1,8 +1,11 @@
 import { Injectable } from "@nestjs/common";
+
+import { BuildingsService } from "@resources/buildings/buildings.service";
+
+import { PrismaService } from "@prisma/prisma.service";
+
 import { CreateFloorDto } from "./dto/create-floor.dto";
 import { UpdateFloorDto } from "./dto/update-floor.dto";
-import { PrismaService } from "@prisma/prisma.service";
-import { BuildingsService } from "@resources/buildings/buildings.service";
 
 @Injectable()
 export class FloorsService {
