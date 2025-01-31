@@ -66,7 +66,7 @@ export class SubjectsController {
 	}
 
 	/**
-	 * Remove a subject by ID
+	 * Delete a subject by ID
 	 */
 	@Delete(":id")
 	@ApiDelete({ type: SubjectEntity })

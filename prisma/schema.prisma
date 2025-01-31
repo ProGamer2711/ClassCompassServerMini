@@ -138,7 +138,7 @@ model Teacher {
 model Subject {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
-    name String /// @zod.string.min(1, { message: "Името трябва да сърдържа поне 1 символ" })
+    name String
 
     schoolId String @db.ObjectId
     school   School @relation(fields: [schoolId], references: [id])
@@ -159,7 +159,7 @@ model Subject {
 
 model Class {
     id   String @id @default(auto()) @map("_id") @db.ObjectId
-    name String /// @zod.string.min(1, { message: "Името трябва да сърдържа поне 1 символ" })
+    name String
 
     schoolId String @db.ObjectId
     school   School @relation(fields: [schoolId], references: [id])
@@ -181,7 +181,7 @@ model Class {
 
 model Student {
     id   String @id @default(auto()) @map("_id") @db.ObjectId
-    name String /// @zod.string.min(1, { message: "Името трябва да сърдържа поне 1 символ" })
+    name String
 
     classId String @db.ObjectId
     class   Class  @relation(fields: [classId], references: [id])

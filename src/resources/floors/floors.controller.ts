@@ -64,7 +64,7 @@ export class FloorsController {
 	}
 
 	/**
-	 * Remove a floor by ID
+	 * Delete a floor by ID
 	 */
 	@Delete(":id")
 	@ApiDelete({ type: FloorEntity })

@@ -7,18 +7,16 @@ import {
 	Param,
 	Delete,
 } from "@nestjs/common";
-import { ClassService } from "./class.service";
+import { ClassesService } from "./classes.service";
 import { CreateClassDto } from "./dto/create-class.dto";
 import { UpdateClassDto } from "./dto/update-class.dto";
+import { ClassEntity } from "./entities/class.entity";
 import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
 import { ApiDelete, ApiGet, ApiPatch, ApiPost } from "@shared/decorators";
-import { ClassEntity } from "./entities/class.entity";
-import { ApiTags } from "@nestjs/swagger";
 
 @Controller("classes")
-@ApiTags("Classes")
-export class ClassController {
-	constructor(private readonly classService: ClassService) {}
+export class ClassesController {
+	constructor(private readonly classService: ClassesService) {}
 
 	/**
 	 * Create a new class

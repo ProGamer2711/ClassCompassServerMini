@@ -5,7 +5,7 @@ import { PrismaService } from "@prisma/prisma.service";
 import { SchoolsService } from "@resources/schools/schools.service";
 
 @Injectable()
-export class ClassService {
+export class ClassesService {
 	constructor(
 		private readonly prisma: PrismaService,
 		private readonly schoolsService: SchoolsService
