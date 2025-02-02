@@ -65,6 +65,23 @@ export default [
 			"@typescript-eslint/explicit-function-return-type": "off",
 			"@typescript-eslint/explicit-module-boundary-types": "off",
 			"@typescript-eslint/no-explicit-any": "off",
+
+			// Sort named imports alphabetically
+			"sort-imports": [
+				"error",
+				{
+					ignoreCase: true, // Case-insensitive sorting
+					ignoreDeclarationSort: true, // Let `import/order` handle the overall import order
+					ignoreMemberSort: false, // Ensure named imports are sorted
+					memberSyntaxSortOrder: [
+						"none",
+						"all",
+						"multiple",
+						"single",
+					], // Sort order for import syntax
+				},
+			],
+
 			"import/no-duplicates": "error",
 
 			"import/order": [

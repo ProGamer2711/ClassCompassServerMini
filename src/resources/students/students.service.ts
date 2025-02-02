@@ -11,11 +11,11 @@ import { UpdateStudentDto } from "./dto/update-student.dto";
 export class StudentsService {
 	constructor(
 		private readonly prisma: PrismaService,
-		private readonly classService: ClassesService
+		private readonly classesService: ClassesService
 	) {}
 
 	async create(createStudentDto: CreateStudentDto) {
-		await this.classService.ensureExists(createStudentDto.classId);
+		await this.classesService.ensureExists(createStudentDto.classId);
 
 		return this.prisma.client.student.create({
 			data: createStudentDto,
@@ -23,14 +23,14 @@ export class StudentsService {
 	}
 
 	async findAllByClass(classId: string) {
-		await this.classService.ensureExists(classId);
+		await this.classesService.ensureExists(classId);
 
 		return this.prisma.client.student.findMany({
 			where: { classId },
 		});
 	}
 
-	findOne(id: string) {
+	async findOne(id: string) {
 		return this.prisma.client.student.findUniqueOrThrow({
 			where: { id },
 		});
@@ -38,7 +38,7 @@ export class StudentsService {
 
 	async update(id: string, updateStudentDto: UpdateStudentDto) {
 		if (updateStudentDto.classId) {
-			await this.classService.ensureExists(updateStudentDto.classId);
+			await this.classesService.ensureExists(updateStudentDto.classId);
 		}
 
 		return this.prisma.client.student.update({
@@ -47,7 +47,7 @@ export class StudentsService {
 		});
 	}
 
-	remove(id: string) {
+	async remove(id: string) {
 		return this.prisma.client.student.softDelete({
 			where: { id },
 		});

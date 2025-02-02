@@ -1,11 +1,11 @@
 import {
-	Controller,
-	Get,
-	Post,
 	Body,
-	Patch,
-	Param,
+	Controller,
 	Delete,
+	Get,
+	Param,
+	Patch,
+	Post,
 } from "@nestjs/common";
 
 import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
@@ -21,7 +21,7 @@ import { ClassesService } from "./classes.service";
 
 @Controller("classes")
 export class ClassesController {
-	constructor(private readonly classService: ClassesService) {}
+	constructor(private readonly classesService: ClassesService) {}
 
 	/**
 	 * Create a new class
@@ -29,7 +29,9 @@ export class ClassesController {
 	@Post()
 	@ApiPost({ type: ClassEntity })
 	async create(@Body() createClassDto: CreateClassDto) {
-		return new ClassEntity(await this.classService.create(createClassDto));
+		return new ClassEntity(
+			await this.classesService.create(createClassDto)
+		);
 	}
 
 	/**
@@ -40,7 +42,7 @@ export class ClassesController {
 	async findAllBySchool(
 		@Param("schoolId", ObjectIdValidationPipe) schoolId: string
 	) {
-		const classes = await this.classService.findAllBySchool(schoolId);
+		const classes = await this.classesService.findAllBySchool(schoolId);
 
 		return classes.map(classEntity => new ClassEntity(classEntity));
 	}
@@ -51,7 +53,7 @@ export class ClassesController {
 	@Get(":id")
 	@ApiGet({ type: ClassEntity })
 	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
-		return new ClassEntity(await this.classService.findOne(id));
+		return new ClassEntity(await this.classesService.findOne(id));
 	}
 
 	/**
@@ -64,7 +66,7 @@ export class ClassesController {
 		@Body() updateClassDto: UpdateClassDto
 	) {
 		return new ClassEntity(
-			await this.classService.update(id, updateClassDto)
+			await this.classesService.update(id, updateClassDto)
 		);
 	}
 
@@ -74,6 +76,6 @@ export class ClassesController {
 	@Delete(":id")
 	@ApiDelete({ type: ClassEntity })
 	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
-		return new ClassEntity(await this.classService.remove(id));
+		return new ClassEntity(await this.classesService.remove(id));
 	}
 }

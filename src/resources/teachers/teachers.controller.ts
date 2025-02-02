@@ -1,11 +1,11 @@
 import {
-	Controller,
 	Body,
-	Param,
-	Get,
-	Post,
-	Patch,
+	Controller,
 	Delete,
+	Get,
+	Param,
+	Patch,
+	Post,
 } from "@nestjs/common";
 
 import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";

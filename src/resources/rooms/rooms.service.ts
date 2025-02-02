@@ -30,7 +30,7 @@ export class RoomsService {
 		});
 	}
 
-	findOne(id: string) {
+	async findOne(id: string) {
 		return this.prisma.client.room.findUniqueOrThrow({
 			where: { id },
 		});
@@ -47,7 +47,7 @@ export class RoomsService {
 		});
 	}
 
-	remove(id: string) {
+	async remove(id: string) {
 		return this.prisma.client.room.softDelete({
 			where: { id },
 		});

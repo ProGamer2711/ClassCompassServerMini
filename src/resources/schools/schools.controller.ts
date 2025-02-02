@@ -1,16 +1,16 @@
 import {
-	Controller,
 	Body,
-	Param,
-	Get,
-	Post,
-	Patch,
+	Controller,
 	Delete,
+	Get,
+	Param,
+	Patch,
+	Post,
 } from "@nestjs/common";
 
 import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
 
-import { ApiPost, ApiGet, ApiPatch, ApiDelete } from "@decorators/index";
+import { ApiDelete, ApiGet, ApiPatch, ApiPost } from "@decorators/index";
 
 import { CreateSchoolDto } from "./dto/create-school.dto";
 import { UpdateSchoolDto } from "./dto/update-school.dto";

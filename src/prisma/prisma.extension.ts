@@ -8,10 +8,10 @@ export const softDelete = Prisma.defineExtension({
 	name: "softDelete",
 	model: {
 		$allModels: {
-			softDelete<M, A>(
-				this: M,
-				args: Prisma.Args<M, "delete">
-			): Promise<Prisma.Result<M, A, "update">> {
+			softDelete<TModel, TArgs>(
+				this: TModel,
+				args: Prisma.Args<TModel, "delete">
+			): Promise<Prisma.Result<TModel, TArgs, "update">> {
 				const context = Prisma.getExtensionContext(this);
 
 				// @ts-expect-error - We have no way of knowing which model we are working with
@@ -90,15 +90,18 @@ export const filterSoftDeleted = Prisma.defineExtension({
 	},
 });
 
-type ModelId<M, O extends Operation> = Prisma.Args<M, O>["where"]["id"];
+type ModelId<TModel, TOperation extends Operation> = Prisma.Args<
+	TModel,
+	TOperation
+>["where"]["id"];
 
 export const ensureExists = Prisma.defineExtension({
 	name: "ensureExists",
 	model: {
 		$allModels: {
-			async ensureExists<M>(
-				this: M,
-				id: ModelId<M, "findUnique">
+			async ensureExists<TModel>(
+				this: TModel,
+				id: ModelId<TModel, "findUnique">
 			): Promise<void> {
 				const context = Prisma.getExtensionContext(this);
 

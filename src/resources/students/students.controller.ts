@@ -1,11 +1,11 @@
 import {
-	Controller,
-	Get,
-	Post,
 	Body,
-	Patch,
-	Param,
+	Controller,
 	Delete,
+	Get,
+	Param,
+	Patch,
+	Post,
 } from "@nestjs/common";
 
 import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
@@ -21,7 +21,7 @@ import { StudentsService } from "./students.service";
 
 @Controller("students")
 export class StudentsController {
-	constructor(private readonly studentService: StudentsService) {}
+	constructor(private readonly studentsService: StudentsService) {}
 
 	/**
 	 * Create a new student
@@ -30,7 +30,7 @@ export class StudentsController {
 	@ApiPost({ type: StudentEntity, errorResponses: { CONFLICT: false } })
 	async create(@Body() createStudentDto: CreateStudentDto) {
 		return new StudentEntity(
-			await this.studentService.create(createStudentDto)
+			await this.studentsService.create(createStudentDto)
 		);
 	}
 
@@ -40,7 +40,7 @@ export class StudentsController {
 	@Get("class/:classId")
 	@ApiGet({ type: [StudentEntity] })
 	async findAll(@Param("classId", ObjectIdValidationPipe) classId: string) {
-		const students = await this.studentService.findAllByClass(classId);
+		const students = await this.studentsService.findAllByClass(classId);
 
 		return students.map(student => new StudentEntity(student));
 	}
@@ -51,7 +51,7 @@ export class StudentsController {
 	@Get(":id")
 	@ApiGet({ type: StudentEntity })
 	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
-		return new StudentEntity(await this.studentService.findOne(id));
+		return new StudentEntity(await this.studentsService.findOne(id));
 	}
 
 	/**
@@ -64,7 +64,7 @@ export class StudentsController {
 		@Body() updateStudentDto: UpdateStudentDto
 	) {
 		return new StudentEntity(
-			await this.studentService.update(id, updateStudentDto)
+			await this.studentsService.update(id, updateStudentDto)
 		);
 	}
 
@@ -74,6 +74,6 @@ export class StudentsController {
 	@Delete(":id")
 	@ApiDelete({ type: StudentEntity })
 	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
-		return new StudentEntity(await this.studentService.remove(id));
+		return new StudentEntity(await this.studentsService.remove(id));
 	}
 }

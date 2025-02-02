@@ -6,6 +6,7 @@ import { RoomsModule } from "@resources/rooms/rooms.module";
 import { SchoolsModule } from "@resources/schools/schools.module";
 
 import { ClassesModule } from "./resources/classes/classes.module";
+import { DailySchedulesModule } from "./resources/daily-schedules/daily-schedules.module";
 import { StudentsModule } from "./resources/students/students.module";
 import { SubjectsModule } from "./resources/subjects/subjects.module";
 import { TeachersModule } from "./resources/teachers/teachers.module";
@@ -20,6 +21,7 @@ import { TeachersModule } from "./resources/teachers/teachers.module";
 		SubjectsModule,
 		ClassesModule,
 		StudentsModule,
+		DailySchedulesModule,
 	],
 })
 export class AppModule {}

@@ -30,7 +30,7 @@ export class FloorsService {
 		});
 	}
 
-	findOne(id: string) {
+	async findOne(id: string) {
 		return this.prisma.client.floor.findUniqueOrThrow({
 			where: { id },
 		});
@@ -47,7 +47,7 @@ export class FloorsService {
 		});
 	}
 
-	remove(id: string) {
+	async remove(id: string) {
 		return this.prisma.client.floor.softDelete({
 			where: { id },
 		});
