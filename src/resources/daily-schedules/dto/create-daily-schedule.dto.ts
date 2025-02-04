@@ -8,7 +8,7 @@ import { IsEnum, IsMongoId, IsNotEmpty, IsString } from "class-validator";
 export class CreateDailyScheduleDto {
 	/**
 	 * The daily schedule's day.
-	 * @example "MONDAY"
+	 * @example "monday"
 	 */
 	@IsString()
 	@IsNotEmpty()

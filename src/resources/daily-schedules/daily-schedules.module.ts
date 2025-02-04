@@ -11,5 +11,6 @@ import { DailySchedulesService } from "./daily-schedules.service";
 	controllers: [DailySchedulesController],
 	providers: [DailySchedulesService],
 	imports: [PrismaModule, ClassesModule],
+	exports: [DailySchedulesService],
 })
 export class DailySchedulesModule {}

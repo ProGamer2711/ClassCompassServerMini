@@ -23,7 +23,7 @@ export class DailyScheduleEntity implements DailySchedule {
 
 	/**
 	 * The daily schedule's day
-	 * @example "MONDAY"
+	 * @example "monday"
 	 */
 	@ApiProperty({ enum: $Enums.Day })
 	day: $Enums.Day;

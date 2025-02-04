@@ -17,19 +17,19 @@ datasource db {
 }
 
 enum LessonWeek {
-    ODD
-    EVEN
-    BOTH
+    odd
+    even
+    all
 }
 
 enum Day {
-    MONDAY
-    TUESDAY
-    WEDNESDAY
-    THURSDAY
-    FRIDAY
-    SATURDAY
-    SUNDAY
+    monday
+    tuesday
+    wednesday
+    thursday
+    friday
+    saturday
+    sunday
 }
 
 model School {
@@ -221,7 +221,7 @@ model Lesson {
     lessonNumber Int /// @zod.number.gte(0, { message: "Номерът на часа не може да бъде отрицателно число" })
     startTime    DateTime
     endTime      DateTime
-    lessonWeeks  LessonWeek @default(BOTH)
+    lessonWeeks  LessonWeek @default(all)
 
     roomId String @db.ObjectId
     room   Room   @relation(fields: [roomId], references: [id])
@@ -232,8 +232,8 @@ model Lesson {
     subjectId String  @db.ObjectId
     subject   Subject @relation(fields: [subjectId], references: [id], name: "SubjectLessons")
 
-    scheduleId String        @db.ObjectId
-    schedule   DailySchedule @relation(fields: [scheduleId], references: [id], name: "ScheduleLessons")
+    dailyScheduleId String        @db.ObjectId
+    dailySchedule   DailySchedule @relation(fields: [dailyScheduleId], references: [id], name: "ScheduleLessons")
 
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
@@ -241,13 +241,13 @@ model Lesson {
     deletedAt DateTime?
     // deletedBy String?
 
-    // The lesson number should be unique within a schedule and week type
-    @@unique([lessonNumber, lessonWeeks, scheduleId])
+    // The lesson number should be unique within a daily schedule and week type
+    @@unique([lessonNumber, lessonWeeks, dailyScheduleId])
     // ? maybe add these indexes?
     // @@index([lessonNumber])
     // @@index([lessonWeeks])
     // @@index([roomId])
     @@index([teacherId])
     @@index([subjectId])
-    @@index([scheduleId])
+    @@index([dailyScheduleId])
 }

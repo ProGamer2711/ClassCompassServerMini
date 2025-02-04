@@ -50,7 +50,7 @@ export class RoomsController {
 	 */
 	@Get(":id")
 	@ApiGet({ type: RoomEntity })
-	async findOne(@Param("id") id: string) {
+	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new RoomEntity(await this.roomsService.findOne(id));
 	}
 
@@ -60,7 +60,7 @@ export class RoomsController {
 	@Patch(":id")
 	@ApiPatch({ type: RoomEntity })
 	async update(
-		@Param("id") id: string,
+		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateRoomDto: UpdateRoomDto
 	) {
 		return new RoomEntity(
@@ -73,7 +73,7 @@ export class RoomsController {
 	 */
 	@Delete(":id")
 	@ApiDelete({ type: RoomEntity })
-	async remove(@Param("id") id: string) {
+	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new RoomEntity(await this.roomsService.remove(id));
 	}
 }
