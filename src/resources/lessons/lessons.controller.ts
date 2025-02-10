@@ -6,6 +6,7 @@ import {
 	Param,
 	Patch,
 	Post,
+	Query,
 } from "@nestjs/common";
 
 import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
@@ -13,6 +14,7 @@ import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/objec
 import { ApiDelete, ApiGet, ApiPatch, ApiPost } from "@decorators/index";
 
 import { CreateLessonDto } from "./dto/create-lesson.dto";
+import { LessonsQueryDto } from "./dto/lessons-query.dto";
 import { UpdateLessonDto } from "./dto/update-lesson.dto";
 
 import { LessonEntity } from "./entities/lesson.entity";
@@ -28,8 +30,10 @@ export class LessonsController {
 	 */
 	@Post()
 	@ApiPost({ type: LessonEntity })
-	create(@Body() createLessonDto: CreateLessonDto) {
-		return this.lessonsService.create(createLessonDto);
+	async create(@Body() createLessonDto: CreateLessonDto) {
+		return new LessonEntity(
+			await this.lessonsService.create(createLessonDto)
+		);
 	}
 
 	/**
@@ -37,11 +41,25 @@ export class LessonsController {
 	 */
 	@Get("daily-schedule/:dailyScheduleId")
 	@ApiGet({ type: [LessonEntity] })
-	findAllByDailySchedule(
+	async findAllByDailySchedule(
 		@Param("dailyScheduleId", ObjectIdValidationPipe)
 		dailyScheduleId: string
 	) {
-		return this.lessonsService.findAllByDailySchedule(dailyScheduleId);
+		const lessons =
+			await this.lessonsService.findAllByDailySchedule(dailyScheduleId);
+
+		return lessons.map(lesson => new LessonEntity(lesson));
+	}
+
+	/**
+	 * Get a lesson by time and room/teacher/class ID as query parameters
+	 */
+	@Get()
+	@ApiGet({ type: LessonEntity })
+	async findAllByQuery(@Query() query: LessonsQueryDto) {
+		const lessons = await this.lessonsService.findAllByQuery(query);
+
+		return lessons.map(lesson => new LessonEntity(lesson));
 	}
 
 	/**
@@ -49,8 +67,8 @@ export class LessonsController {
 	 */
 	@Get(":id")
 	@ApiGet({ type: LessonEntity })
-	findOne(@Param("id", ObjectIdValidationPipe) id: string) {
-		return this.lessonsService.findOne(id);
+	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
+		return new LessonEntity(await this.lessonsService.findOne(id));
 	}
 
 	/**
@@ -58,11 +76,13 @@ export class LessonsController {
 	 */
 	@Patch(":id")
 	@ApiPatch({ type: LessonEntity })
-	update(
+	async update(
 		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateLessonDto: UpdateLessonDto
 	) {
-		return this.lessonsService.update(id, updateLessonDto);
+		return new LessonEntity(
+			await this.lessonsService.update(id, updateLessonDto)
+		);
 	}
 
 	/**
@@ -70,7 +90,7 @@ export class LessonsController {
 	 */
 	@Delete(":id")
 	@ApiDelete({ type: LessonEntity })
-	remove(@Param("id", ObjectIdValidationPipe) id: string) {
-		return this.lessonsService.remove(id);
+	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
+		return new LessonEntity(await this.lessonsService.remove(id));
 	}
 }

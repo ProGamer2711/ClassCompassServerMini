@@ -1,4 +1,6 @@
 import { Injectable } from "@nestjs/common";
+import { $Enums } from "@prisma/client";
+import { format, set } from "date-fns";
 
 import { DailySchedulesService } from "@resources/daily-schedules/daily-schedules.service";
 import { RoomsService } from "@resources/rooms/rooms.service";
@@ -8,6 +10,7 @@ import { TeachersService } from "@resources/teachers/teachers.service";
 import { PrismaService } from "@prisma/prisma.service";
 
 import { CreateLessonDto } from "./dto/create-lesson.dto";
+import { LessonsQueryDto } from "./dto/lessons-query.dto";
 import { UpdateLessonDto } from "./dto/update-lesson.dto";
 
 @Injectable()
@@ -38,6 +41,37 @@ export class LessonsService {
 
 		return this.prisma.client.lesson.findMany({
 			where: { dailyScheduleId },
+		});
+	}
+
+	async findAllByQuery({ time, ...parameters }: LessonsQueryDto) {
+		console.log({ time });
+
+		const baseTimeDate = set(new Date(0), {
+			hours: time.getHours(),
+			minutes: time.getMinutes(),
+			seconds: time.getSeconds(),
+		});
+
+		const day = format(time, "EEEE").toLowerCase() as $Enums.Day;
+
+		console.log({ baseTimeDate, day });
+
+		// TODO: Odd/Even week logic may be needed here
+
+		return this.prisma.client.lesson.findMany({
+			where: {
+				startTime: {
+					lte: baseTimeDate,
+				},
+				endTime: {
+					gte: baseTimeDate,
+				},
+				dailySchedule: {
+					day,
+				},
+				...parameters,
+			},
 		});
 	}
 
