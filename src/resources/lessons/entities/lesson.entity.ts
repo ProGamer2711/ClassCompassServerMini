@@ -43,7 +43,7 @@ export class LessonEntity implements Lesson {
 	 * @default "all"
 	 */
 	@ApiProperty({ enum: $Enums.LessonWeek })
-	lessonWeeks: $Enums.LessonWeek = "all";
+	lessonWeek: $Enums.LessonWeek = "all";
 
 	/**
 	 * The lesson's room identifier

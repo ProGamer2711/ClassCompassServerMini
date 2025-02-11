@@ -1,6 +1,13 @@
-import { Injectable } from "@nestjs/common";
+import {
+	BadRequestException,
+	forwardRef,
+	Inject,
+	Injectable,
+} from "@nestjs/common";
+import { $Enums } from "@prisma/client";
 
 import { FloorsService } from "@resources/floors/floors.service";
+import { LessonsService } from "@resources/lessons/lessons.service";
 
 import { PrismaService } from "@prisma/prisma.service";
 
@@ -11,7 +18,9 @@ import { UpdateRoomDto } from "./dto/update-room.dto";
 export class RoomsService {
 	constructor(
 		private readonly prisma: PrismaService,
-		private readonly floorsService: FloorsService
+		private readonly floorsService: FloorsService,
+		@Inject(forwardRef(() => LessonsService))
+		private readonly lessonsService: LessonsService
 	) {}
 
 	async create(createRoomDto: CreateRoomDto) {
@@ -55,5 +64,44 @@ export class RoomsService {
 
 	async ensureExists(id: string) {
 		await this.prisma.client.room.ensureExists(id);
+	}
+
+	async ensureFreeAtTimeRange({
+		roomId,
+		startTime,
+		endTime,
+		lessonWeek = "all",
+	}: {
+		roomId: string;
+		startTime: Date;
+		endTime: Date;
+		lessonWeek?: $Enums.LessonWeek;
+		[key: string]: any;
+	}) {
+		const lessonsOverlappingStartTime =
+			await this.lessonsService.findAllByQuery({
+				time: startTime,
+				roomId,
+				lessonWeek,
+			});
+
+		if (lessonsOverlappingStartTime.length > 0) {
+			throw new BadRequestException(
+				"Room is already busy at the specified start time"
+			);
+		}
+
+		const lessonsOverlappingEndTime =
+			await this.lessonsService.findAllByQuery({
+				time: endTime,
+				roomId,
+				lessonWeek,
+			});
+
+		if (lessonsOverlappingEndTime.length > 0) {
+			throw new BadRequestException(
+				"Room is already busy at the specified end time"
+			);
+		}
 	}
 }

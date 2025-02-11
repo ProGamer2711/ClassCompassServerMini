@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 
 import { DailySchedulesModule } from "@resources/daily-schedules/daily-schedules.module";
 import { RoomsModule } from "@resources/rooms/rooms.module";
@@ -15,10 +15,11 @@ import { LessonsService } from "./lessons.service";
 	providers: [LessonsService],
 	imports: [
 		PrismaModule,
-		RoomsModule,
-		TeachersModule,
+		forwardRef(() => RoomsModule),
+		forwardRef(() => TeachersModule),
 		SubjectsModule,
-		DailySchedulesModule,
+		forwardRef(() => DailySchedulesModule),
 	],
+	exports: [LessonsService],
 })
 export class LessonsModule {}

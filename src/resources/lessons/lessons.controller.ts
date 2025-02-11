@@ -57,6 +57,7 @@ export class LessonsController {
 	@Get()
 	@ApiGet({ type: LessonEntity })
 	async findAllByQuery(@Query() query: LessonsQueryDto) {
+		// ! Might be better to replace classId with dailyScheduleId
 		const lessons = await this.lessonsService.findAllByQuery(query);
 
 		return lessons.map(lesson => new LessonEntity(lesson));

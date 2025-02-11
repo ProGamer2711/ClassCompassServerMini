@@ -1,7 +1,9 @@
-import { ApiSchema } from "@nestjs/swagger";
+import { ApiProperty, ApiSchema } from "@nestjs/swagger";
+import { $Enums } from "@prisma/client";
 import { Type } from "class-transformer";
 import {
 	IsDate,
+	IsEnum,
 	IsMongoId,
 	IsNotEmpty,
 	IsOptional,
@@ -19,6 +21,7 @@ export class LessonsQueryDto {
 	 */
 	@IsDate()
 	@IsNotEmpty()
+	@ApiProperty()
 	@Type(() => Date)
 	time: Date;
 
@@ -30,6 +33,7 @@ export class LessonsQueryDto {
 	@IsString()
 	@IsNotEmpty()
 	@IsMongoId()
+	@ApiProperty()
 	roomId?: string;
 
 	/**
@@ -40,7 +44,19 @@ export class LessonsQueryDto {
 	@IsString()
 	@IsNotEmpty()
 	@IsMongoId()
+	@ApiProperty()
 	teacherId?: string;
+
+	/**
+	 * The lesson's daily schedule identifier
+	 * @example "507c7f79bcf86cd7994f6c0e"
+	 */
+	@IsOptional()
+	@IsString()
+	@IsNotEmpty()
+	@IsMongoId()
+	@ApiProperty()
+	dailyScheduleId?: string;
 
 	/**
 	 * The lesson's class identifier
@@ -50,5 +66,17 @@ export class LessonsQueryDto {
 	@IsString()
 	@IsNotEmpty()
 	@IsMongoId()
+	@ApiProperty()
 	classId?: string;
+
+	/**
+	 * The lesson's weeks
+	 * @example "odd"
+	 */
+	@IsOptional()
+	@IsString()
+	@IsNotEmpty()
+	@IsEnum($Enums.LessonWeek)
+	@ApiProperty({ enum: $Enums.LessonWeek })
+	lessonWeek?: $Enums.LessonWeek;
 }

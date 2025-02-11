@@ -1,6 +1,13 @@
-import { Injectable } from "@nestjs/common";
+import {
+	BadRequestException,
+	forwardRef,
+	Inject,
+	Injectable,
+} from "@nestjs/common";
+import { $Enums } from "@prisma/client";
 
 import { ClassesService } from "@resources/classes/classes.service";
+import { LessonsService } from "@resources/lessons/lessons.service";
 
 import { PrismaService } from "@prisma/prisma.service";
 
@@ -11,7 +18,9 @@ import { UpdateDailyScheduleDto } from "./dto/update-daily-schedule.dto";
 export class DailySchedulesService {
 	constructor(
 		private readonly prisma: PrismaService,
-		private readonly classesService: ClassesService
+		private readonly classesService: ClassesService,
+		@Inject(forwardRef(() => LessonsService))
+		private readonly lessonsService: LessonsService
 	) {}
 
 	async create(createDailyScheduleDto: CreateDailyScheduleDto) {
@@ -57,5 +66,44 @@ export class DailySchedulesService {
 
 	async ensureExists(id: string) {
 		await this.prisma.client.dailySchedule.ensureExists(id);
+	}
+
+	async ensureFreeAtTimeRange({
+		dailyScheduleId,
+		startTime,
+		endTime,
+		lessonWeek = "all",
+	}: {
+		dailyScheduleId: string;
+		startTime: Date;
+		endTime: Date;
+		lessonWeek?: $Enums.LessonWeek;
+		[key: string]: any;
+	}) {
+		const lessonsOverlappingStartTime =
+			await this.lessonsService.findAllByQuery({
+				time: startTime,
+				dailyScheduleId,
+				lessonWeek,
+			});
+
+		if (lessonsOverlappingStartTime.length > 0) {
+			throw new BadRequestException(
+				"Class is already busy at the specified start time"
+			);
+		}
+
+		const lessonsOverlappingEndTime =
+			await this.lessonsService.findAllByQuery({
+				time: endTime,
+				dailyScheduleId,
+				lessonWeek,
+			});
+
+		if (lessonsOverlappingEndTime.length > 0) {
+			throw new BadRequestException(
+				"Class is already busy at the specified end time"
+			);
+		}
 	}
 }

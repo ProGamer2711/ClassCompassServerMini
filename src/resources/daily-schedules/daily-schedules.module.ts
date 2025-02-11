@@ -1,6 +1,7 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 
 import { ClassesModule } from "@resources/classes/classes.module";
+import { LessonsModule } from "@resources/lessons/lessons.module";
 
 import { PrismaModule } from "@prisma/prisma.module";
 
@@ -10,7 +11,7 @@ import { DailySchedulesService } from "./daily-schedules.service";
 @Module({
 	controllers: [DailySchedulesController],
 	providers: [DailySchedulesService],
-	imports: [PrismaModule, ClassesModule],
+	imports: [PrismaModule, ClassesModule, forwardRef(() => LessonsModule)],
 	exports: [DailySchedulesService],
 })
 export class DailySchedulesModule {}

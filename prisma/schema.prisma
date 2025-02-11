@@ -218,10 +218,10 @@ model DailySchedule {
 
 model Lesson {
     id           String     @id @default(auto()) @map("_id") @db.ObjectId
-    lessonNumber Int /// @zod.number.gte(0, { message: "Номерът на часа не може да бъде отрицателно число" })
+    lessonNumber Int
     startTime    DateTime
     endTime      DateTime
-    lessonWeeks  LessonWeek @default(all)
+    lessonWeek   LessonWeek @default(all)
 
     roomId String @db.ObjectId
     room   Room   @relation(fields: [roomId], references: [id])
@@ -242,10 +242,10 @@ model Lesson {
     // deletedBy String?
 
     // The lesson number should be unique within a daily schedule and week type
-    @@unique([lessonNumber, lessonWeeks, dailyScheduleId])
+    @@unique([lessonNumber, lessonWeek, dailyScheduleId])
     // ? maybe add these indexes?
     // @@index([lessonNumber])
-    // @@index([lessonWeeks])
+    // @@index([lessonWeek])
     // @@index([roomId])
     @@index([teacherId])
     @@index([subjectId])
