@@ -1,12 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
-// TODO: Administrator and login info on models
-// TODO: Add referential actions
-
 generator client {
     provider = "prisma-client-js"
 }
@@ -16,102 +7,18 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-enum LessonWeek {
-    odd
-    even
-    all
-}
-
-enum Day {
-    monday
-    tuesday
-    wednesday
-    thursday
-    friday
-    saturday
-    sunday
-}
-
 model School {
     id   String @id @default(auto()) @map("_id") @db.ObjectId
     name String @unique
 
-    classes Class[]
-
-    subjects Subject[]
-
+    classes  Class[]
     teachers Teacher[]
 
-    buildings Building[]
-
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
     deleted   Boolean   @default(false)
     deletedAt DateTime?
     // deletedBy String?
-}
-
-model Building {
-    id   String @id @default(auto()) @map("_id") @db.ObjectId
-    name String
-
-    schoolId String @db.ObjectId
-    school   School @relation(fields: [schoolId], references: [id])
-
-    floors Floor[]
-
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
-    deleted   Boolean   @default(false)
-    deletedAt DateTime?
-    // deletedBy String?
-
-    // The building name should be unique within a school
-    @@unique([schoolId, name])
-    @@index([schoolId])
-}
-
-model Floor {
-    id           String  @id @default(auto()) @map("_id") @db.ObjectId
-    number       Int
-    description  String?
-    planFilename String?
-    maskFilename String?
-
-    buildingId String   @db.ObjectId
-    building   Building @relation(fields: [buildingId], references: [id])
-
-    rooms Room[]
-
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
-    deleted   Boolean   @default(false)
-    deletedAt DateTime?
-    // deletedBy String?
-
-    // The floor number should be unique within a building
-    @@unique([buildingId, number])
-    @@index([buildingId])
-}
-
-model Room {
-    id   String @id @default(auto()) @map("_id") @db.ObjectId
-    name String
-
-    floorId String @db.ObjectId
-    floor   Floor  @relation(fields: [floorId], references: [id])
-
-    lessons Lesson[]
-
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
-    deleted   Boolean   @default(false)
-    deletedAt DateTime?
-    // deletedBy String?
-
-    // The room name should be unique within a floor
-    @@unique([floorId, name])
-    @@index([floorId])
 }
 
 model Teacher {
@@ -120,33 +27,6 @@ model Teacher {
 
     schoolId String @db.ObjectId
     school   School @relation(fields: [schoolId], references: [id])
-
-    lessons Lesson[] @relation("TeacherLessons")
-
-    subjectIds String[]  @db.ObjectId
-    subjects   Subject[] @relation(fields: [subjectIds], references: [id])
-
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
-    deleted   Boolean   @default(false)
-    deletedAt DateTime?
-    // deletedBy String?
-
-    @@index([schoolId])
-}
-
-model Subject {
-    id String @id @default(auto()) @map("_id") @db.ObjectId
-
-    name String
-
-    schoolId String @db.ObjectId
-    school   School @relation(fields: [schoolId], references: [id])
-
-    lessons Lesson[] @relation("SubjectLessons")
-
-    teacherIds String[]  @db.ObjectId
-    teachers   Teacher[] @relation(fields: [teacherIds], references: [id])
 
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
@@ -165,8 +45,6 @@ model Class {
     school   School @relation(fields: [schoolId], references: [id])
 
     students Student[]
-
-    weeklySchedule DailySchedule[]
 
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
@@ -193,61 +71,4 @@ model Student {
     // deletedBy String?
 
     @@index([classId])
-}
-
-model DailySchedule {
-    id  String @id @default(auto()) @map("_id") @db.ObjectId
-    day Day
-
-    classId String @db.ObjectId
-    class   Class  @relation(fields: [classId], references: [id])
-
-    lessons Lesson[] @relation("ScheduleLessons")
-
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
-    deleted   Boolean   @default(false)
-    deletedAt DateTime?
-    // deletedBy String?
-
-    // The day should be unique within a class
-    @@unique([day, classId])
-    @@index([day])
-    @@index([classId])
-}
-
-model Lesson {
-    id           String     @id @default(auto()) @map("_id") @db.ObjectId
-    lessonNumber Int
-    startTime    DateTime
-    endTime      DateTime
-    lessonWeek   LessonWeek @default(all)
-
-    roomId String @db.ObjectId
-    room   Room   @relation(fields: [roomId], references: [id])
-
-    teacherId String  @db.ObjectId
-    teacher   Teacher @relation(fields: [teacherId], references: [id], name: "TeacherLessons")
-
-    subjectId String  @db.ObjectId
-    subject   Subject @relation(fields: [subjectId], references: [id], name: "SubjectLessons")
-
-    dailyScheduleId String        @db.ObjectId
-    dailySchedule   DailySchedule @relation(fields: [dailyScheduleId], references: [id], name: "ScheduleLessons")
-
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
-    deleted   Boolean   @default(false)
-    deletedAt DateTime?
-    // deletedBy String?
-
-    // The lesson number should be unique within a daily schedule and week type
-    @@unique([lessonNumber, lessonWeek, dailyScheduleId])
-    // ? maybe add these indexes?
-    // @@index([lessonNumber])
-    // @@index([lessonWeek])
-    // @@index([roomId])
-    @@index([teacherId])
-    @@index([subjectId])
-    @@index([dailyScheduleId])
 }
