@@ -28,12 +28,6 @@ export class TeacherEntity implements Teacher {
 	schoolId: string;
 
 	/**
-	 * The teacher's subject identifiers
-	 * @example ["507f191e810c19729de860ea", "507f191e810c19729de860eb"]
-	 */
-	subjectIds: string[];
-
-	/**
 	 * The time the teacher was created
 	 * @example "2021-09-01T00:00:00.000Z"
 	 */
