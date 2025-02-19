@@ -49,8 +49,6 @@ export default [
 
 			parserOptions: {
 				project: "tsconfig.json",
-				tsconfigRootDir:
-					"/mnt/external/Programming/JSAndTS/ClassCompass/server",
 			},
 		},
 
