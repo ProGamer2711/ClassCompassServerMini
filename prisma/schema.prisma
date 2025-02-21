@@ -7,12 +7,57 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model Role {
+    id         String   @id @default(auto()) @map("_id") @db.ObjectId
+    name       String   @unique
+    attributes String[] @default([])
+
+    schoolId String @db.ObjectId
+    school   School @relation(fields: [schoolId], references: [id])
+
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deleted   Boolean   @default(false)
+    deletedAt DateTime?
+    User      User?     @relation(fields: [userId], references: [id])
+    userId    String?   @db.ObjectId
+
+    // The role name should be unique within a school
+    @@unique([schoolId, name])
+    @@index([schoolId])
+}
+
+model User {
+    id       String @id @default(auto()) @map("_id") @db.ObjectId
+    name     String
+    email    String @unique
+    password String
+
+    schoolId String @db.ObjectId
+    school   School @relation(fields: [schoolId], references: [id])
+
+    roles Role[]
+
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deleted   Boolean   @default(false)
+    deletedAt DateTime?
+    // deletedBy String?
+
+    @@index([schoolId])
+}
+
 model School {
     id   String @id @default(auto()) @map("_id") @db.ObjectId
     name String @unique
 
-    classes  Class[]
+    classes Class[]
+
     teachers Teacher[]
+
+    roles Role[]
+
+    users User[]
 
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
@@ -21,6 +66,10 @@ model School {
     // deletedBy String?
 }
 
+/**
+ * TODO: Remove the schoolId and name from the teacher and student models
+ * TODO: since they are already associated with a school through the class model
+ */
 model Teacher {
     id   String @id @default(auto()) @map("_id") @db.ObjectId
     name String
