@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
 import { ClassesService } from "@resources/classes/classes.service";
+import { UsersService } from "@resources/users/users.service";
 
 import { PrismaService } from "@prisma/prisma.service";
 
@@ -11,10 +12,12 @@ import { UpdateStudentDto } from "./dto/update-student.dto";
 export class StudentsService {
 	constructor(
 		private readonly prisma: PrismaService,
+		private readonly usersService: UsersService,
 		private readonly classesService: ClassesService
 	) {}
 
 	async create(createStudentDto: CreateStudentDto) {
+		await this.usersService.ensureExists(createStudentDto.userId);
 		await this.classesService.ensureExists(createStudentDto.classId);
 
 		return this.prisma.client.student.create({
@@ -37,6 +40,10 @@ export class StudentsService {
 	}
 
 	async update(id: string, updateStudentDto: UpdateStudentDto) {
+		if (updateStudentDto.userId) {
+			await this.usersService.ensureExists(updateStudentDto.userId);
+		}
+
 		if (updateStudentDto.classId) {
 			await this.classesService.ensureExists(updateStudentDto.classId);
 		}

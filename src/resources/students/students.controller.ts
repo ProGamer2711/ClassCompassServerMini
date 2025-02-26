@@ -27,7 +27,7 @@ export class StudentsController {
 	 * Create a new student
 	 */
 	@Post()
-	@ApiPost({ type: StudentEntity, errorResponses: { CONFLICT: false } })
+	@ApiPost({ type: StudentEntity })
 	async create(@Body() createStudentDto: CreateStudentDto) {
 		return new StudentEntity(
 			await this.studentsService.create(createStudentDto)
@@ -58,7 +58,7 @@ export class StudentsController {
 	 * Update a student by ID
 	 */
 	@Patch(":id")
-	@ApiPatch({ type: StudentEntity, errorResponses: { CONFLICT: false } })
+	@ApiPatch({ type: StudentEntity })
 	async update(
 		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateStudentDto: UpdateStudentDto

@@ -1,13 +1,17 @@
 import { applyDecorators } from "@nestjs/common";
 
-import { ApiMethodOptions } from "@decorators/api-responses/api-responses-options.types";
+import { ApiResponsesOptions } from "@decorators/api-responses/api-responses-options.types";
 import { ApiResponses } from "@decorators/api-responses/api-responses.decorator";
 
-export function ApiPost({ type, errorResponses }: ApiMethodOptions) {
+export function ApiPost({
+	type,
+	successResponse,
+	errorResponses,
+}: ApiResponsesOptions) {
 	return applyDecorators(
 		ApiResponses({
 			type,
-			successResponse: "CREATED",
+			successResponse: successResponse ?? "CREATED",
 			errorResponses,
 		})
 	);

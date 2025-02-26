@@ -11,7 +11,7 @@ export class ClassEntity implements Class {
 
 	/**
 	 * The class's unique identifier
-	 * @example "507c7f79bcf86cd7994f6c0e"
+	 * @example "507f191e810c19729de860ea"
 	 */
 	id: string;
 

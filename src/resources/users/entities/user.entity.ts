@@ -12,7 +12,7 @@ export class UserEntity implements User {
 
 	/**
 	 * The user's unique identifier
-	 * @example "507c7f79bcf86cd7994f6c0e"
+	 * @example "507f191e810c19729de860ea"
 	 */
 	id: string;
 
@@ -40,6 +40,13 @@ export class UserEntity implements User {
 	 * @example "507f191e810c19729de860ea"
 	 */
 	schoolId: string;
+
+	/**
+	 * The user's role identifiers
+	 * @example ["507f191e810c19729de860ea", "507f191e810c19729de860eb"]
+	 * @default []
+	 */
+	roleIds: string[] = [];
 
 	/**
 	 * The time the user was created

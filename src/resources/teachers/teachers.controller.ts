@@ -27,24 +27,11 @@ export class TeachersController {
 	 * Create a new teacher
 	 */
 	@Post()
-	@ApiPost({ type: TeacherEntity, errorResponses: { CONFLICT: false } })
+	@ApiPost({ type: TeacherEntity })
 	async create(@Body() createTeacherDto: CreateTeacherDto) {
 		return new TeacherEntity(
 			await this.teachersService.create(createTeacherDto)
 		);
-	}
-
-	/**
-	 * Get all teachers for a school
-	 */
-	@Get("school/:schoolId")
-	@ApiGet({ type: [TeacherEntity] })
-	async findAllBySchool(
-		@Param("schoolId", ObjectIdValidationPipe) schoolId: string
-	) {
-		const teachers = await this.teachersService.findAllBySchool(schoolId);
-
-		return teachers.map(teacher => new TeacherEntity(teacher));
 	}
 
 	/**
@@ -60,7 +47,7 @@ export class TeachersController {
 	 * Update a teacher by ID
 	 */
 	@Patch(":id")
-	@ApiPatch({ type: TeacherEntity, errorResponses: { CONFLICT: false } })
+	@ApiPatch({ type: TeacherEntity })
 	async update(
 		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateTeacherDto: UpdateTeacherDto

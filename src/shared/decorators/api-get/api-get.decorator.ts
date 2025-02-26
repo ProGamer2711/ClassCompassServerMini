@@ -1,13 +1,17 @@
 import { applyDecorators } from "@nestjs/common";
 
-import { ApiMethodOptions } from "@decorators/api-responses/api-responses-options.types";
+import { ApiResponsesOptions } from "@decorators/api-responses/api-responses-options.types";
 import { ApiResponses } from "@decorators/api-responses/api-responses.decorator";
 
-export function ApiGet({ type, errorResponses }: ApiMethodOptions) {
+export function ApiGet({
+	type,
+	successResponse,
+	errorResponses,
+}: ApiResponsesOptions) {
 	return applyDecorators(
 		ApiResponses({
 			type,
-			successResponse: "OK",
+			successResponse: successResponse ?? "OK",
 			errorResponses: {
 				CONFLICT: false,
 				...errorResponses,

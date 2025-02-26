@@ -3,6 +3,7 @@ import {
 	IsEmail,
 	IsMongoId,
 	IsNotEmpty,
+	IsOptional,
 	IsString,
 	IsStrongPassword,
 } from "class-validator";
@@ -51,4 +52,14 @@ export class CreateUserDto {
 	@IsNotEmpty()
 	@IsMongoId()
 	schoolId: string;
+
+	/**
+	 * The user's role identifiers
+	 * @example ["507f191e810c19729de860ea", "507f191e810c19729de860eb"]
+	 */
+	@IsOptional()
+	@IsString({ each: true })
+	@IsNotEmpty({ each: true })
+	@IsMongoId({ each: true })
+	roleIds?: string[];
 }

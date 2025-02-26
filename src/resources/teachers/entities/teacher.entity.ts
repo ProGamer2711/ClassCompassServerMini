@@ -11,21 +11,15 @@ export class TeacherEntity implements Teacher {
 
 	/**
 	 * The teacher's unique identifier
-	 * @example "507c7f79bcf86cd7994f6c0e"
+	 * @example "507f191e810c19729de860ea"
 	 */
 	id: string;
 
 	/**
-	 * The teacher's name
-	 * @example "John Doe"
-	 */
-	name: string;
-
-	/**
-	 * The teacher's school identifier
+	 * The teacher's user identifier
 	 * @example "507f191e810c19729de860ea"
 	 */
-	schoolId: string;
+	userId: string;
 
 	/**
 	 * The time the teacher was created

@@ -1,6 +1,7 @@
-import { Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { hash } from "bcryptjs";
 
+import { RolesService } from "@resources/roles/roles.service";
 import { SchoolsService } from "@resources/schools/schools.service";
 
 import { PrismaService } from "@prisma/prisma.service";
@@ -12,11 +13,17 @@ import { UpdateUserDto } from "./dto/update-user.dto";
 export class UsersService {
 	constructor(
 		private readonly prisma: PrismaService,
-		private readonly schoolsService: SchoolsService
+		private readonly schoolsService: SchoolsService,
+		@Inject(forwardRef(() => RolesService))
+		private readonly rolesService: RolesService
 	) {}
 
 	async create(createUserDto: CreateUserDto) {
 		await this.schoolsService.ensureExists(createUserDto.schoolId);
+
+		if (createUserDto.roleIds) {
+			await this.rolesService.ensureExistsMany(createUserDto.roleIds);
+		}
 
 		// hash the user's password with 11 rounds of salt
 		createUserDto.password = await hash(createUserDto.password, 11);
@@ -45,6 +52,10 @@ export class UsersService {
 			await this.schoolsService.ensureExists(updateUserDto.schoolId);
 		}
 
+		if (updateUserDto.roleIds) {
+			await this.rolesService.ensureExistsMany(updateUserDto.roleIds);
+		}
+
 		return this.prisma.client.user.update({
 			where: { id },
 			data: updateUserDto,
@@ -55,5 +66,19 @@ export class UsersService {
 		return this.prisma.client.user.softDelete({
 			where: { id },
 		});
+	}
+
+	async findOneByEmail(email: string) {
+		return this.prisma.client.user.findUniqueOrThrow({
+			where: { email },
+		});
+	}
+
+	async ensureExists(id: string) {
+		await this.prisma.client.user.ensureExists(id);
+	}
+
+	async ensureExistsMany(ids: string[]) {
+		await this.prisma.client.user.ensureExistsMany(ids);
 	}
 }

@@ -14,6 +14,7 @@ import {
 
 import { ApiResponsesOptions, ErrorType } from "./api-responses-options.types";
 
+// TODO: Maybe use an object for the success response to allow for easier addition of more success responses
 export function ApiResponses({
 	type,
 	successResponse = "OK",

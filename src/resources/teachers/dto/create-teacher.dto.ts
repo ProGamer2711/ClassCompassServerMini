@@ -6,19 +6,11 @@ import { IsMongoId, IsNotEmpty, IsString } from "class-validator";
 })
 export class CreateTeacherDto {
 	/**
-	 * The teacher's name
-	 * @example "John Doe"
-	 */
-	@IsString()
-	@IsNotEmpty()
-	name: string;
-
-	/**
-	 * The teacher's school identifier
+	 * The teacher's user identifier
 	 * @example "507f191e810c19729de860ea"
 	 */
 	@IsString()
 	@IsNotEmpty()
 	@IsMongoId()
-	schoolId: string;
+	userId: string;
 }

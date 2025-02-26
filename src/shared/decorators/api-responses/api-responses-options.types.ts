@@ -6,8 +6,3 @@ export class ApiResponsesOptions {
 	successResponse?: ResponseType;
 	errorResponses?: Partial<Record<ErrorType, boolean>>;
 }
-
-export class ApiMethodOptions {
-	type: any;
-	errorResponses?: Partial<Record<ErrorType, boolean>>;
-}

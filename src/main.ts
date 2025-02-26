@@ -1,6 +1,7 @@
 import { ClassSerializerInterceptor, ValidationPipe } from "@nestjs/common";
 import { NestFactory, Reflector } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import * as cookieParser from "cookie-parser";
 import { SwaggerTheme, SwaggerThemeNameEnum } from "swagger-themes";
 
 import { PrismaClientExceptionFilter } from "@shared/filters/prisma-client-exception/prisma-client-exception.filter";
@@ -17,6 +18,8 @@ async function bootstrap() {
 		})
 	);
 
+	app.use(cookieParser());
+
 	app.useGlobalInterceptors(
 		new ClassSerializerInterceptor(app.get(Reflector))
 	);
@@ -26,6 +29,22 @@ async function bootstrap() {
 		.setDescription("An API for the Class Compass application")
 		.setVersion("1.0")
 		.addServer("http://localhost:8393")
+		.addBearerAuth(
+			{
+				type: "http",
+				scheme: "bearer",
+				bearerFormat: "JWT",
+			},
+			"Access Token"
+		)
+		.addBearerAuth(
+			{
+				type: "http",
+				scheme: "bearer",
+				bearerFormat: "JWT",
+			},
+			"Refresh Token"
+		)
 		.build();
 
 	const document = SwaggerModule.createDocument(app, config, {
