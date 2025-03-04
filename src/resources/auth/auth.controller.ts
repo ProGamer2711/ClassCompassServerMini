@@ -1,16 +1,22 @@
-import { Controller, Post, UseGuards } from "@nestjs/common";
+import {
+	Controller,
+	HttpCode,
+	HttpStatus,
+	Post,
+	UseGuards,
+} from "@nestjs/common";
 import { ApiBearerAuth, ApiBody } from "@nestjs/swagger";
-import { User } from "@prisma/client";
+import { Session, User } from "@prisma/client";
+
+import { CurrentUser } from "@resources/access-tokens/current-user.decorator";
+import { CurrentSession } from "@resources/refresh-tokens/current-session.decorator";
+import { TokensEntity } from "@resources/sessions/entities/tokens.entity";
 
 import { ApiPost } from "@decorators/index";
 
 import { LoginDto } from "./dto/login.dto";
 
-import { TokensEntity } from "./entities/tokens.entity";
-
 import { AuthService } from "./auth.service";
-import { CurrentUser } from "./current-user/current-user.decorator";
-import { AccessTokenGuard } from "./guards/access-token.guard";
 import { LocalAuthGuard } from "./guards/local-auth.guard";
 import { RefreshTokenGuard } from "./guards/refresh-token.guard";
 
@@ -21,6 +27,8 @@ export class AuthController {
 	/**
 	 * Logs a user in
 	 */
+	// TODO: Fix the reponse types
+	@HttpCode(HttpStatus.OK)
 	@Post("login")
 	@ApiPost({
 		type: TokensEntity,
@@ -35,16 +43,6 @@ export class AuthController {
 		return this.authService.login(currentUser);
 	}
 
-	@Post("test")
-	@ApiPost({
-		type: TokensEntity,
-		successResponse: "OK",
-		errorResponses: { CONFLICT: false },
-	})
-	@ApiBearerAuth("Access Token")
-	@UseGuards(AccessTokenGuard)
-	test() {}
-
 	/**
 	 * Refreshes a user's access token
 	 */
@@ -54,6 +52,24 @@ export class AuthController {
 		successResponse: "OK",
 		errorResponses: { CONFLICT: false },
 	})
+	@ApiBearerAuth("Refresh Token")
 	@UseGuards(RefreshTokenGuard)
-	refresh() {}
+	refresh(@CurrentSession() currentSession: Session) {
+		return this.authService.refresh(currentSession);
+	}
+
+	/**
+	 * Logs a user out
+	 */
+	@Post("logout")
+	@ApiPost({
+		type: null,
+		successResponse: "OK",
+		errorResponses: { CONFLICT: false },
+	})
+	@ApiBearerAuth("Refresh Token")
+	@UseGuards(RefreshTokenGuard)
+	logout(@CurrentSession() currentSession: Session) {
+		return this.authService.logout(currentSession);
+	}
 }

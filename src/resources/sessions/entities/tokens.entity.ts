@@ -4,10 +4,6 @@ import { ApiSchema } from "@nestjs/swagger";
 	description: "A object containing the access and refresh tokens for a user",
 })
 export class TokensEntity {
-	constructor(partial: Partial<TokensEntity>) {
-		Object.assign(this, partial);
-	}
-
 	/**
 	 * The jwt access token
 	 */

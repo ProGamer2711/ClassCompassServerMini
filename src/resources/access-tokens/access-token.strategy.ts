@@ -1,12 +1,16 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
+import { plainToInstance } from "class-transformer";
 import { validateOrReject } from "class-validator";
 import { ExtractJwt, Strategy } from "passport-jwt";
 
 import { UsersService } from "@resources/users/users.service";
 
-import { TokenPayloadDto } from "../dto/token-payload.dto";
+import {
+	AccessTokenPayload,
+	AccessTokenPayloadEntity,
+} from "../sessions/entities/access-token-payload.entity";
 
 @Injectable()
 export class AccessTokenStrategy extends PassportStrategy(
@@ -25,15 +29,19 @@ export class AccessTokenStrategy extends PassportStrategy(
 		});
 	}
 
-	async validate(payload: TokenPayloadDto) {
-		const dto = new TokenPayloadDto(payload);
+	async validate(accessTokenPayload: AccessTokenPayload) {
+		const accessTokenPayloadEntity = plainToInstance(
+			AccessTokenPayloadEntity,
+			accessTokenPayload
+		);
 
-		await validateOrReject(dto).catch(() => {
-			console.error("Invalid access token payload", payload);
+		// TODO: Move the error handling to a global exception filter
+		await validateOrReject(accessTokenPayloadEntity).catch(() => {
+			console.error("Invalid access token payload", accessTokenPayload);
 
 			throw new UnauthorizedException("Invalid access token payload");
 		});
 
-		return this.usersService.findOne(payload.sub);
+		return this.usersService.findOne(accessTokenPayloadEntity.userId);
 	}
 }

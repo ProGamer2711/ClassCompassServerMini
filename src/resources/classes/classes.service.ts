@@ -17,7 +17,7 @@ export class ClassesService {
 	async create(createClassDto: CreateClassDto) {
 		await this.schoolsService.ensureExists(createClassDto.schoolId);
 
-		return this.prisma.class.create({
+		return this.prisma.client.class.create({
 			data: createClassDto,
 		});
 	}

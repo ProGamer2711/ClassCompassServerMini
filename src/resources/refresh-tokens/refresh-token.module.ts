@@ -1,9 +1,14 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 
+import { SessionsModule } from "@resources/sessions/sessions.module";
+
+import { RefreshTokenStrategy } from "./refresh-token.strategy";
+
 @Module({
 	imports: [
+		forwardRef(() => SessionsModule),
 		JwtModule.registerAsync({
 			imports: [ConfigModule],
 			useFactory: (configService: ConfigService) => ({
@@ -24,6 +29,7 @@ import { JwtModule, JwtService } from "@nestjs/jwt";
 			provide: "JWT_REFRESH_TOKEN_SERVICE",
 			useExisting: JwtService,
 		},
+		RefreshTokenStrategy,
 	],
 	exports: ["JWT_REFRESH_TOKEN_SERVICE"],
 })

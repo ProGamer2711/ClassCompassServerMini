@@ -4,6 +4,7 @@ import {
 	IsNotEmpty,
 	IsString,
 	IsStrongPassword,
+	MaxLength,
 } from "class-validator";
 
 @ApiSchema({
@@ -32,5 +33,6 @@ export class LoginDto {
 		minNumbers: 1,
 		minSymbols: 1,
 	})
+	@MaxLength(64)
 	password: string;
 }

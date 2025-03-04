@@ -28,6 +28,26 @@ export const softDelete = Prisma.defineExtension({
 				});
 			},
 
+			softDeleteMany<TModel, TArgs>(
+				this: TModel,
+				args: Prisma.Args<TModel, "deleteMany">
+			): Promise<Prisma.Result<TModel, TArgs, "updateMany">> {
+				const context = Prisma.getExtensionContext(this);
+
+				// @ts-expect-error - We have no way of knowing which model we are working with
+				return context.updateMany({
+					...args,
+					where: {
+						...args.where,
+						deleted: false,
+					},
+					data: {
+						deleted: true,
+						deletedAt: new Date(),
+					},
+				});
+			},
+
 			// cancelSoftDelete<M, A>(
 			// 	this: M,
 			// 	args: Prisma.Args<M, "delete">

@@ -7,6 +7,23 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+// TODO: Add more fields for things like ip address, user agent, etc.
+model Session {
+    id           String   @id @default(auto()) @map("_id") @db.ObjectId
+    refreshToken String   @unique
+    expiresAt    DateTime
+
+    userId String @db.ObjectId
+    user   User   @relation(fields: [userId], references: [id])
+
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deleted   Boolean   @default(false)
+    deletedAt DateTime?
+
+    @@index([userId])
+}
+
 model Role {
     id         String   @id @default(auto()) @map("_id") @db.ObjectId
     name       String   @unique
@@ -42,6 +59,8 @@ model User {
 
     roleIds String[] @default([]) @db.ObjectId
     roles   Role[]   @relation(fields: [roleIds], references: [id])
+
+    sessions Session[]
 
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt

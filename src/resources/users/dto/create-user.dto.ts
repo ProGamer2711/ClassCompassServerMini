@@ -6,6 +6,7 @@ import {
 	IsOptional,
 	IsString,
 	IsStrongPassword,
+	MaxLength,
 } from "class-validator";
 
 @ApiSchema({
@@ -42,6 +43,8 @@ export class CreateUserDto {
 		minNumbers: 1,
 		minSymbols: 1,
 	})
+	// TODO: Test this with a password that is too long and check if hashes might match (only the first 72 bytes are hashed)
+	@MaxLength(64)
 	password: string;
 
 	/**
