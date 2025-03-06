@@ -1,7 +1,6 @@
 import { ClassSerializerInterceptor, ValidationPipe } from "@nestjs/common";
 import { NestFactory, Reflector } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import * as cookieParser from "cookie-parser";
 import { SwaggerTheme, SwaggerThemeNameEnum } from "swagger-themes";
 
 import { PrismaClientExceptionFilter } from "@shared/filters/prisma-client-exception/prisma-client-exception.filter";
@@ -17,8 +16,6 @@ async function bootstrap() {
 			forbidNonWhitelisted: true,
 		})
 	);
-
-	app.use(cookieParser());
 
 	app.useGlobalInterceptors(
 		new ClassSerializerInterceptor(app.get(Reflector))

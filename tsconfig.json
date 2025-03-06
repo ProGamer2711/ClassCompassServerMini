@@ -23,6 +23,9 @@
 			"@resources/*": [
 				"src/resources/*"
 			],
+			"@decorators": [
+				"src/shared/decorators"
+			],
 			"@decorators/*": [
 				"src/shared/decorators/*"
 			],

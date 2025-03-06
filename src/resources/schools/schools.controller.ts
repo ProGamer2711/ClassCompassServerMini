@@ -10,12 +10,12 @@ import {
 
 import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
 
-import { ApiDelete, ApiGet, ApiPatch, ApiPost } from "@decorators/index";
-
 import { CreateSchoolDto } from "./dto/create-school.dto";
 import { UpdateSchoolDto } from "./dto/update-school.dto";
 
 import { SchoolEntity } from "./entities/school.entity";
+
+import { ApiDelete, ApiGet, ApiPatch, ApiPost } from "@decorators";
 
 import { SchoolsService } from "./schools.service";
 

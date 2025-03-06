@@ -12,9 +12,9 @@ import { CurrentUser } from "@resources/access-tokens/current-user.decorator";
 import { CurrentSession } from "@resources/refresh-tokens/current-session.decorator";
 import { TokensEntity } from "@resources/sessions/entities/tokens.entity";
 
-import { ApiPost } from "@decorators/index";
-
 import { LoginDto } from "./dto/login.dto";
+
+import { ApiPost } from "@decorators";
 
 import { AuthService } from "./auth.service";
 import { LocalAuthGuard } from "./guards/local-auth.guard";
