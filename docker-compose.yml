@@ -1,0 +1,11 @@
+services:
+  class-compass-server:
+    container_name: class-compass-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "8393:8393"
+    restart: unless-stopped
