@@ -17,6 +17,7 @@ import { LoginDto } from "./dto/login.dto";
 import { ApiPost } from "@decorators";
 
 import { AuthService } from "./auth.service";
+import { Unprotected } from "./decorators/unprotected.decorator";
 import { LocalAuthGuard } from "./guards/local-auth.guard";
 import { RefreshTokenGuard } from "./guards/refresh-token.guard";
 
@@ -28,6 +29,7 @@ export class AuthController {
 	 * Logs a user in
 	 */
 	// TODO: Fix the reponse types
+	@Unprotected()
 	@HttpCode(HttpStatus.OK)
 	@Post("login")
 	@ApiPost({
@@ -46,6 +48,8 @@ export class AuthController {
 	/**
 	 * Refreshes a user's access token
 	 */
+	@Unprotected()
+	@HttpCode(HttpStatus.OK)
 	@Post("refresh")
 	@ApiPost({
 		type: TokensEntity,
@@ -61,6 +65,8 @@ export class AuthController {
 	/**
 	 * Logs a user out
 	 */
+	@Unprotected()
+	@HttpCode(HttpStatus.OK)
 	@Post("logout")
 	@ApiPost({
 		type: null,

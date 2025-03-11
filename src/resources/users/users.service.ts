@@ -1,6 +1,7 @@
 import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { hash } from "bcryptjs";
 
+import { Attribute, isAttribute } from "@resources/auth/types/attributes";
 import { RolesService } from "@resources/roles/roles.service";
 import { SchoolsService } from "@resources/schools/schools.service";
 
@@ -72,6 +73,18 @@ export class UsersService {
 		return this.prisma.client.user.findUniqueOrThrow({
 			where: { email },
 		});
+	}
+
+	async getAttributes(id: string) {
+		const user = await this.findOne(id);
+
+		const roles = await Promise.all(
+			user.roleIds.map(roleId => this.rolesService.findOne(roleId))
+		);
+
+		return roles.reduce((attributes: Attribute[], role) => {
+			return [...attributes, ...role.attributes.filter(isAttribute)];
+		}, []);
 	}
 
 	async ensureExists(id: string) {
