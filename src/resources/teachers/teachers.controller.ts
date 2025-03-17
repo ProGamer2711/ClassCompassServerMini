@@ -7,6 +7,9 @@ import {
 	Patch,
 	Post,
 } from "@nestjs/common";
+import { ApiBearerAuth } from "@nestjs/swagger";
+
+import { Attributes } from "@resources/auth/decorators/attributes.decorator";
 
 import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
 
@@ -28,6 +31,10 @@ export class TeachersController {
 	 */
 	@Post()
 	@ApiPost({ type: TeacherEntity })
+	@Attributes({
+		OR: ["teacher:create", "teacher:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async create(@Body() createTeacherDto: CreateTeacherDto) {
 		return new TeacherEntity(
 			await this.teachersService.create(createTeacherDto)
@@ -39,6 +46,10 @@ export class TeachersController {
 	 */
 	@Get(":id")
 	@ApiGet({ type: TeacherEntity })
+	@Attributes({
+		OR: ["teacher:read", "teacher:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new TeacherEntity(await this.teachersService.findOne(id));
 	}
@@ -48,6 +59,10 @@ export class TeachersController {
 	 */
 	@Patch(":id")
 	@ApiPatch({ type: TeacherEntity })
+	@Attributes({
+		OR: ["teacher:update", "teacher:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async update(
 		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateTeacherDto: UpdateTeacherDto
@@ -62,6 +77,10 @@ export class TeachersController {
 	 */
 	@Delete(":id")
 	@ApiDelete({ type: TeacherEntity })
+	@Attributes({
+		OR: ["teacher:delete", "teacher:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new TeacherEntity(await this.teachersService.remove(id));
 	}
