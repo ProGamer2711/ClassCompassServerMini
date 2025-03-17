@@ -7,6 +7,9 @@ import {
 	Patch,
 	Post,
 } from "@nestjs/common";
+import { ApiBearerAuth } from "@nestjs/swagger";
+
+import { Attributes } from "@resources/auth/decorators/attributes.decorator";
 
 import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
 
@@ -28,6 +31,10 @@ export class RolesController {
 	 */
 	@Post()
 	@ApiPost({ type: RoleEntity })
+	@Attributes({
+		OR: ["role:create", "role:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async create(@Body() createRoleDto: CreateRoleDto) {
 		return new RoleEntity(await this.rolesService.create(createRoleDto));
 	}
@@ -37,6 +44,10 @@ export class RolesController {
 	 */
 	@Get("school/:schoolId")
 	@ApiGet({ type: [RoleEntity] })
+	@Attributes({
+		OR: ["role:read", "role:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async findAllBySchool(
 		@Param("schoolId", ObjectIdValidationPipe) schoolId: string
 	) {
@@ -50,6 +61,10 @@ export class RolesController {
 	 */
 	@Get(":id")
 	@ApiGet({ type: RoleEntity })
+	@Attributes({
+		OR: ["role:read", "role:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new RoleEntity(await this.rolesService.findOne(id));
 	}
@@ -59,6 +74,10 @@ export class RolesController {
 	 */
 	@Patch(":id")
 	@ApiPatch({ type: RoleEntity })
+	@Attributes({
+		OR: ["role:update", "role:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async update(
 		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateRoleDto: UpdateRoleDto
@@ -73,6 +92,10 @@ export class RolesController {
 	 */
 	@Delete(":id")
 	@ApiDelete({ type: RoleEntity })
+	@Attributes({
+		OR: ["role:delete", "role:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new RoleEntity(await this.rolesService.remove(id));
 	}

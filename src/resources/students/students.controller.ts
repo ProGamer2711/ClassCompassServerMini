@@ -7,6 +7,9 @@ import {
 	Patch,
 	Post,
 } from "@nestjs/common";
+import { ApiBearerAuth } from "@nestjs/swagger";
+
+import { Attributes } from "@resources/auth/decorators/attributes.decorator";
 
 import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
 
@@ -28,6 +31,10 @@ export class StudentsController {
 	 */
 	@Post()
 	@ApiPost({ type: StudentEntity })
+	@Attributes({
+		OR: ["student:create", "student:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async create(@Body() createStudentDto: CreateStudentDto) {
 		return new StudentEntity(
 			await this.studentsService.create(createStudentDto)
@@ -39,6 +46,10 @@ export class StudentsController {
 	 */
 	@Get("class/:classId")
 	@ApiGet({ type: [StudentEntity] })
+	@Attributes({
+		OR: ["student:read", "student:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async findAll(@Param("classId", ObjectIdValidationPipe) classId: string) {
 		const students = await this.studentsService.findAllByClass(classId);
 
@@ -50,6 +61,10 @@ export class StudentsController {
 	 */
 	@Get(":id")
 	@ApiGet({ type: StudentEntity })
+	@Attributes({
+		OR: ["student:read", "student:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new StudentEntity(await this.studentsService.findOne(id));
 	}
@@ -59,6 +74,10 @@ export class StudentsController {
 	 */
 	@Patch(":id")
 	@ApiPatch({ type: StudentEntity })
+	@Attributes({
+		OR: ["student:update", "student:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async update(
 		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateStudentDto: UpdateStudentDto
@@ -73,6 +92,10 @@ export class StudentsController {
 	 */
 	@Delete(":id")
 	@ApiDelete({ type: StudentEntity })
+	@Attributes({
+		OR: ["student:delete", "student:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new StudentEntity(await this.studentsService.remove(id));
 	}
