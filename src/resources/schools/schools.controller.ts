@@ -7,6 +7,9 @@ import {
 	Patch,
 	Post,
 } from "@nestjs/common";
+import { ApiBearerAuth } from "@nestjs/swagger";
+
+import { Attributes } from "@resources/auth/decorators/attributes.decorator";
 
 import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
 
@@ -28,6 +31,10 @@ export class SchoolsController {
 	 */
 	@Post()
 	@ApiPost({ type: SchoolEntity, errorResponses: { NOT_FOUND: false } })
+	@Attributes({
+		OR: ["school:create", "school:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async create(@Body() createSchoolDto: CreateSchoolDto) {
 		return new SchoolEntity(
 			await this.schoolsService.create(createSchoolDto)
@@ -42,6 +49,10 @@ export class SchoolsController {
 		type: [SchoolEntity],
 		errorResponses: { BAD_REQUEST: false, NOT_FOUND: false },
 	})
+	@Attributes({
+		OR: ["school:read", "school:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async findAll() {
 		const schools = await this.schoolsService.findAll();
 
@@ -53,6 +64,10 @@ export class SchoolsController {
 	 */
 	@Get(":id")
 	@ApiGet({ type: SchoolEntity })
+	@Attributes({
+		OR: ["school:read", "school:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new SchoolEntity(await this.schoolsService.findOne(id));
 	}
@@ -62,6 +77,10 @@ export class SchoolsController {
 	 */
 	@Patch(":id")
 	@ApiPatch({ type: SchoolEntity })
+	@Attributes({
+		OR: ["school:update", "school:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async update(
 		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateSchoolDto: UpdateSchoolDto
@@ -76,6 +95,10 @@ export class SchoolsController {
 	 */
 	@Delete(":id")
 	@ApiDelete({ type: SchoolEntity })
+	@Attributes({
+		OR: ["school:delete", "school:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new SchoolEntity(await this.schoolsService.remove(id));
 	}
