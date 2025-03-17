@@ -7,6 +7,9 @@ import {
 	Patch,
 	Post,
 } from "@nestjs/common";
+import { ApiBearerAuth } from "@nestjs/swagger";
+
+import { Attributes } from "@resources/auth/decorators/attributes.decorator";
 
 import { ObjectIdValidationPipe } from "@shared/pipes/object-id-validation/object-id-validation.pipe";
 
@@ -25,9 +28,14 @@ export class ClassesController {
 
 	/**
 	 * Create a new class
+	 * (Required attributes: "class:create" or "class:*")
 	 */
 	@Post()
 	@ApiPost({ type: ClassEntity })
+	@Attributes({
+		OR: ["class:create", "class:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async create(@Body() createClassDto: CreateClassDto) {
 		return new ClassEntity(
 			await this.classesService.create(createClassDto)
@@ -39,6 +47,10 @@ export class ClassesController {
 	 */
 	@Get("school/:schoolId")
 	@ApiGet({ type: [ClassEntity] })
+	@Attributes({
+		OR: ["class:read", "class:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async findAllBySchool(
 		@Param("schoolId", ObjectIdValidationPipe) schoolId: string
 	) {
@@ -52,6 +64,10 @@ export class ClassesController {
 	 */
 	@Get(":id")
 	@ApiGet({ type: ClassEntity })
+	@Attributes({
+		OR: ["class:read", "class:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async findOne(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new ClassEntity(await this.classesService.findOne(id));
 	}
@@ -61,6 +77,10 @@ export class ClassesController {
 	 */
 	@Patch(":id")
 	@ApiPatch({ type: ClassEntity })
+	@Attributes({
+		OR: ["class:update", "class:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async update(
 		@Param("id", ObjectIdValidationPipe) id: string,
 		@Body() updateClassDto: UpdateClassDto
@@ -75,6 +95,10 @@ export class ClassesController {
 	 */
 	@Delete(":id")
 	@ApiDelete({ type: ClassEntity })
+	@Attributes({
+		OR: ["class:delete", "class:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async remove(@Param("id", ObjectIdValidationPipe) id: string) {
 		return new ClassEntity(await this.classesService.remove(id));
 	}
