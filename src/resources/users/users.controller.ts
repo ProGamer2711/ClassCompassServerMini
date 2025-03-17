@@ -7,6 +7,9 @@ import {
 	Patch,
 	Post,
 } from "@nestjs/common";
+import { ApiBearerAuth } from "@nestjs/swagger";
+
+import { Attributes } from "@resources/auth/decorators/attributes.decorator";
 
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
@@ -26,6 +29,10 @@ export class UsersController {
 	 */
 	@Post()
 	@ApiPost({ type: UserEntity })
+	@Attributes({
+		OR: ["user:create", "user:*"],
+	})
+	@ApiBearerAuth("Access Token")
 	async create(@Body() createUserDto: CreateUserDto) {
 		return new UserEntity(await this.usersService.create(createUserDto));
 	}
@@ -35,6 +42,9 @@ export class UsersController {
 	 */
 	@Get("school/:schoolId")
 	@ApiGet({ type: [UserEntity] })
+	@Attributes({
+		OR: ["user:read", "user:*"],
+	})
 	async findAllBySchool(@Param("schoolId") schoolId: string) {
 		const users = await this.usersService.findAllBySchool(schoolId);
 
@@ -46,6 +56,9 @@ export class UsersController {
 	 */
 	@Get(":id")
 	@ApiGet({ type: UserEntity })
+	@Attributes({
+		OR: ["user:read", "user:*"],
+	})
 	async findOne(@Param("id") id: string) {
 		return new UserEntity(await this.usersService.findOne(id));
 	}
@@ -55,6 +68,9 @@ export class UsersController {
 	 */
 	@Patch(":id")
 	@ApiPatch({ type: UserEntity })
+	@Attributes({
+		OR: ["user:update", "user:*"],
+	})
 	async update(
 		@Param("id") id: string,
 		@Body() updateUserDto: UpdateUserDto
@@ -69,6 +85,9 @@ export class UsersController {
 	 */
 	@Delete(":id")
 	@ApiDelete({ type: UserEntity })
+	@Attributes({
+		OR: ["user:delete", "user:*"],
+	})
 	async remove(@Param("id") id: string) {
 		return new UserEntity(await this.usersService.remove(id));
 	}
