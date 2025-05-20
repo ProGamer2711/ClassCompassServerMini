@@ -3,6 +3,7 @@ import {
 	Controller,
 	Delete,
 	Get,
+	HttpStatus,
 	Param,
 	Patch,
 	Post,
@@ -30,7 +31,10 @@ export class SchoolsController {
 	 * Create a new school
 	 */
 	@Post()
-	@ApiPost({ type: SchoolEntity, errorResponses: { NOT_FOUND: false } })
+	@ApiPost({
+		type: SchoolEntity,
+		errorResponses: [HttpStatus.BAD_REQUEST, HttpStatus.CONFLICT],
+	})
 	@Attributes({
 		OR: ["school:create", "school:*"],
 	})
@@ -47,7 +51,7 @@ export class SchoolsController {
 	@Get()
 	@ApiGet({
 		type: [SchoolEntity],
-		errorResponses: { BAD_REQUEST: false, NOT_FOUND: false },
+		errorResponses: [],
 	})
 	@Attributes({
 		OR: ["school:read", "school:*"],

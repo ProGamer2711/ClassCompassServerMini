@@ -1,8 +1,8 @@
-export type ErrorType = "BAD_REQUEST" | "NOT_FOUND" | "CONFLICT";
-type ResponseType = "CREATED" | "OK";
+import { HttpStatus } from "@nestjs/common";
+import { ErrorHttpStatusCode } from "@nestjs/common/utils/http-error-by-code.util";
 
 export class ApiResponsesOptions {
 	type: any;
-	successResponse?: ResponseType;
-	errorResponses?: Partial<Record<ErrorType, boolean>>;
+	successResponse?: HttpStatus;
+	errorResponses?: ErrorHttpStatusCode[];
 }

@@ -21,7 +21,7 @@ export class AuthService {
 	}
 
 	async logout(session: Session) {
-		return this.sessionsService.revoke(session.id);
+		this.sessionsService.revoke(session.id);
 	}
 
 	async verifyUser(email: string, password: string) {
