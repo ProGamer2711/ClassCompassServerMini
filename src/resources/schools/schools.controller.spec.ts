@@ -1,10 +1,13 @@
 import { NotFoundException } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
+import { plainToInstance } from "class-transformer";
 
 import { CreateSchoolDto } from "./dto/create-school.dto";
 import { UpdateSchoolDto } from "./dto/update-school.dto";
 
 import { SchoolEntity } from "./entities/school.entity";
+
+import { MockedService } from "test/utils/mocked-service.type";
 
 import { SchoolsController } from "./schools.controller";
 import { SchoolsService } from "./schools.service";
@@ -12,62 +15,64 @@ import { SchoolsService } from "./schools.service";
 describe("SchoolsController", () => {
 	let controller: SchoolsController;
 	let schoolsServiceMock: Pick<
-		Record<keyof SchoolsService, jest.Mock>,
+		MockedService<SchoolsService>,
 		"create" | "findAll" | "findOne" | "update" | "remove"
 	>;
 
 	beforeEach(async () => {
 		schoolsServiceMock = {
-			create: jest.fn((dto: CreateSchoolDto) => ({
-				id: "1",
-				...dto,
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				deleted: false,
-				deletedAt: null,
-			})),
-			findAll: jest.fn(() => [
-				{
+			create: jest.fn().mockImplementation((dto: CreateSchoolDto) =>
+				plainToInstance(SchoolEntity, {
 					id: "1",
-					name: "School One",
+					...dto,
 					createdAt: new Date(),
 					updatedAt: new Date(),
-					deleted: false,
-					deletedAt: null,
-				},
-				{
-					id: "2",
-					name: "School Two",
+				})
+			),
+			findAll: jest.fn().mockImplementation(() =>
+				[
+					{
+						id: "1",
+						name: "School One",
+						createdAt: new Date(),
+						updatedAt: new Date(),
+					},
+					{
+						id: "2",
+						name: "School Two",
+						createdAt: new Date(),
+						updatedAt: new Date(),
+					},
+				].map(school => plainToInstance(SchoolEntity, school))
+			),
+			findOne: jest.fn().mockImplementation((id: string) =>
+				plainToInstance(SchoolEntity, {
+					id,
+					name: "Single School",
 					createdAt: new Date(),
 					updatedAt: new Date(),
-					deleted: false,
-					deletedAt: null,
-				},
-			]),
-			findOne: jest.fn((id: string) => ({
-				id,
-				name: "Single School",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				deleted: false,
-				deletedAt: null,
-			})),
-			update: jest.fn((id: string, dto: UpdateSchoolDto) => ({
-				id,
-				...dto,
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				deleted: false,
-				deletedAt: null,
-			})),
-			remove: jest.fn((id: string) => ({
-				id,
-				name: "Deleted School",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				deleted: true,
-				deletedAt: new Date(),
-			})),
+				})
+			),
+			update: jest
+				.fn()
+				.mockImplementation((id: string, dto: UpdateSchoolDto) =>
+					plainToInstance(SchoolEntity, {
+						id,
+						...dto,
+						createdAt: new Date(),
+						updatedAt: new Date(),
+					})
+				),
+			remove: jest.fn().mockImplementation((id: string) =>
+				plainToInstance(SchoolEntity, {
+					id,
+					name: "Deleted School",
+					createdAt: new Date(),
+					updatedAt: new Date(),
+					deleted: true,
+					deletedAt: new Date(),
+				})
+			),
 		};
 
 		const module: TestingModule = await Test.createTestingModule({
