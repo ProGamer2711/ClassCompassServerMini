@@ -28,14 +28,13 @@ export class AuthController {
 	/**
 	 * Logs a user in
 	 */
-	// TODO: Fix the reponse types
 	@Unprotected()
 	@HttpCode(HttpStatus.OK)
 	@Post("login")
 	@ApiPost({
 		type: TokensEntity,
-		successResponse: "OK",
-		errorResponses: { CONFLICT: false },
+		successResponse: HttpStatus.OK,
+		errorResponses: [HttpStatus.BAD_REQUEST, HttpStatus.NOT_FOUND],
 	})
 	@ApiBody({
 		type: LoginDto,
@@ -53,8 +52,8 @@ export class AuthController {
 	@Post("refresh")
 	@ApiPost({
 		type: TokensEntity,
-		successResponse: "OK",
-		errorResponses: { CONFLICT: false },
+		successResponse: HttpStatus.OK,
+		errorResponses: [HttpStatus.BAD_REQUEST, HttpStatus.NOT_FOUND],
 	})
 	@ApiBearerAuth("Refresh Token")
 	@UseGuards(RefreshTokenGuard)
@@ -66,16 +65,16 @@ export class AuthController {
 	 * Logs a user out
 	 */
 	@Unprotected()
-	@HttpCode(HttpStatus.OK)
+	@HttpCode(HttpStatus.NO_CONTENT)
 	@Post("logout")
 	@ApiPost({
 		type: null,
-		successResponse: "OK",
-		errorResponses: { CONFLICT: false },
+		successResponse: HttpStatus.NO_CONTENT,
+		errorResponses: [HttpStatus.BAD_REQUEST, HttpStatus.NOT_FOUND],
 	})
 	@ApiBearerAuth("Refresh Token")
 	@UseGuards(RefreshTokenGuard)
 	logout(@CurrentSession() currentSession: Session) {
-		return this.authService.logout(currentSession);
+		this.authService.logout(currentSession);
 	}
 }
