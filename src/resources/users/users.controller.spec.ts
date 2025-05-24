@@ -81,6 +81,8 @@ describe("UsersController", () => {
 					schoolId: "school-123",
 					createdAt: new Date(),
 					updatedAt: new Date(),
+					deleted: true,
+					deletedAt: new Date(),
 				})
 			),
 		};
@@ -109,6 +111,7 @@ describe("UsersController", () => {
 				roleIds: ["role1"],
 				schoolId: "school-123",
 			};
+
 			const expected = new UserEntity({
 				id: "1",
 				...createUserDto,
@@ -128,6 +131,7 @@ describe("UsersController", () => {
 	describe("findAllBySchool", () => {
 		it("should return an array of users for a school", async () => {
 			const schoolId = "school-123";
+
 			const result = await controller.findAllBySchool(schoolId);
 
 			expect(Array.isArray(result)).toBe(true);
@@ -172,12 +176,14 @@ describe("UsersController", () => {
 	describe("update", () => {
 		it("should update a user by ID", async () => {
 			const id = "123";
+
 			const updateUserDto: UpdateUserDto = {
 				name: "Updated User",
 				email: "updateduser@example.com",
 				roleIds: ["role3"],
 				schoolId: "school-456",
 			};
+
 			const expected = new UserEntity({
 				id,
 				...updateUserDto,
@@ -198,6 +204,7 @@ describe("UsersController", () => {
 	describe("remove", () => {
 		it("should remove a user by ID", async () => {
 			const id = "123";
+
 			const expected = new UserEntity({
 				id,
 				name: "Deleted User",

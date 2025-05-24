@@ -93,6 +93,7 @@ describe("SchoolsController", () => {
 	describe("create", () => {
 		it("should create a school", async () => {
 			const createSchoolDto: CreateSchoolDto = { name: "Test School" };
+
 			const expected = new SchoolEntity({
 				id: "1",
 				...createSchoolDto,
@@ -123,6 +124,7 @@ describe("SchoolsController", () => {
 	describe("findOne", () => {
 		it("should return a single school by ID", async () => {
 			const id = "123";
+
 			const expected = new SchoolEntity({
 				id,
 				name: "Single School",
@@ -138,6 +140,7 @@ describe("SchoolsController", () => {
 
 		it("should throw NotFoundException if school not found", async () => {
 			const id = "nonexistent-id";
+
 			schoolsServiceMock.findOne.mockImplementation(() => {
 				throw new NotFoundException(`School with ID ${id} not found`);
 			});
@@ -152,7 +155,9 @@ describe("SchoolsController", () => {
 	describe("update", () => {
 		it("should update a school by ID", async () => {
 			const id = "123";
+
 			const updateSchoolDto: UpdateSchoolDto = { name: "Updated School" };
+
 			const expected = new SchoolEntity({
 				id,
 				...updateSchoolDto,
@@ -175,6 +180,7 @@ describe("SchoolsController", () => {
 	describe("remove", () => {
 		it("should remove (soft delete) a school by ID", async () => {
 			const id = "123";
+
 			const expected = new SchoolEntity({
 				id,
 				name: "Deleted School",
