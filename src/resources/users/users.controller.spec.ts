@@ -213,6 +213,8 @@ describe("UsersController", () => {
 				schoolId: "school-123",
 				createdAt: expect.any(Date),
 				updatedAt: expect.any(Date),
+				deleted: true,
+				deletedAt: expect.any(Date),
 			});
 
 			expect(await controller.remove(id)).toEqual(expected);
