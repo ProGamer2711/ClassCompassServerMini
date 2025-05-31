@@ -1,8 +1,10 @@
 name: Build & Push Docker image to GHCR
 
 on:
-    push:
-        branches: [main] # or your default branch
+    workflow_run:
+        workflows: ["CI - Test"]
+        types:
+            - completed
     workflow_dispatch: # allow manual trigger
 
 permissions:
@@ -26,8 +28,10 @@ jobs:
 
             - name: Build Docker image
               run: |
-                  docker build -t ghcr.io/${{ github.repository_owner }}/class-compass-server-mini:latest .
+                  LOWER_OWNER=$(echo "${GITHUB_REPOSITORY_OWNER}" | tr '[:upper:]' '[:lower:]')
+                  docker build -t ghcr.io/$LOWER_OWNER/class-compass-server-mini:latest .
 
             - name: Push image to GHCR
               run: |
-                  docker push ghcr.io/${{ github.repository_owner }}/class-compass-server-mini:latest
+                  LOWER_OWNER=$(echo "${GITHUB_REPOSITORY_OWNER}" | tr '[:upper:]' '[:lower:]')
+                  docker push ghcr.io/$LOWER_OWNER/class-compass-server-mini:latest
