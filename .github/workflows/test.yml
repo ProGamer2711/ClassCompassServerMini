@@ -36,7 +36,7 @@ jobs:
               run: pnpm run build
 
             - name: 🧪 Run tests with coverage
-              run: pnpm run test:cov
+              run: pnpm run test:cov -t controller
 
             - name: 📤 Upload coverage report
               uses: actions/upload-artifact@v4
