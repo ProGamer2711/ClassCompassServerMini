@@ -1,39 +1,83 @@
 terraform {
   required_providers {
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "~> 3.0"
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 4.31.0"
     }
   }
 }
 
-provider "docker" {}
-
-resource "docker_image" "app_image" {
-  name         = var.image_name
-  keep_locally = true
+provider "azurerm" {
+  features {}
+  subscription_id = var.subscription_id
 }
 
-resource "docker_container" "app_container" {
-  name    = var.container_name
-  image   = docker_image.app_image.image_id
-  restart = "unless-stopped"
+resource "azurerm_resource_group" "rg" {
+  name     = "${var.app_name}-rg"
+  location = var.location
+}
 
-  dynamic "ports" {
-    for_each = var.ports
-    content {
-      internal = ports.value.internal
-      external = ports.value.external
+resource "azurerm_log_analytics_workspace" "log" {
+  name                = "${var.app_name}-log"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  retention_in_days   = 30
+}
+
+resource "azurerm_container_app_environment" "env" {
+  name                       = "${var.app_name}-env"
+  location                   = azurerm_resource_group.rg.location
+  resource_group_name        = azurerm_resource_group.rg.name
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.log.id
+}
+
+resource "azurerm_container_app" "app" {
+  name                         = "${var.app_name}-app"
+  resource_group_name          = azurerm_resource_group.rg.name
+  container_app_environment_id = azurerm_container_app_environment.env.id
+  revision_mode                = "Single"
+
+  registry {
+    server               = "ghcr.io"
+    username             = var.registry_username
+    password_secret_name = "ghcr-pat"
+  }
+
+  secret {
+    name  = "ghcr-pat"
+    value = var.registry_password_secret
+  }
+
+  template {
+    container {
+      name   = var.container_name
+      image  = var.image_name
+      cpu    = 1.0
+      memory = "2.0Gi"
+
+      dynamic "env" {
+        for_each = var.env_vars
+        content {
+          name  = env.value["name"]
+          value = env.value["value"]
+        }
+      }
+
+      # Override the PORT environment variable to ensure the app listens on port 80
+      env {
+        name  = "PORT"
+        value = "80"
+      }
     }
   }
 
-  env = var.env_vars
-
-  dynamic "volumes" {
-    for_each = var.volumes
-    content {
-      host_path      = volumes.value.host_path
-      container_path = volumes.value.container_path
+  ingress {
+    allow_insecure_connections = false
+    external_enabled           = true
+    target_port                = 80
+    traffic_weight {
+      percentage      = 100
+      latest_revision = true
     }
   }
 }
