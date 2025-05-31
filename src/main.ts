@@ -26,6 +26,7 @@ async function bootstrap() {
 		.setDescription("An API for the Class Compass application")
 		.setVersion("1.0")
 		.addServer("http://localhost:8393")
+		.addServer("/")
 		.addBearerAuth(
 			{
 				type: "http",
