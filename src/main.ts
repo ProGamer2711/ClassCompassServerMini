@@ -59,6 +59,8 @@ async function bootstrap() {
 
 	app.useGlobalFilters(new PrismaClientExceptionFilter());
 
+	app.enableCors();
+
 	await app.listen(process.env.PORT ?? 8393);
 }
 
