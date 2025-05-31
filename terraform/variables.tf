@@ -1,33 +1,46 @@
+variable "subscription_id" {
+  description = "Azure subscription ID"
+  type        = string
+}
+
+variable "app_name" {
+  description = "Name of the application"
+  type        = string
+}
+
+variable "location" {
+  description = "Azure region for the resources"
+  type        = string
+  default     = "Italy North"
+}
+
+variable "registry_username" {
+  description = "Username for the container registry"
+  type        = string
+}
+
+variable "registry_password_secret" {
+  description = "Secret for the container registry password"
+  type        = string
+  sensitive   = true
+}
+
+variable "container_name" {
+  description = "Server's docker container name"
+  type        = string
+  default     = "server"
+}
+
 variable "image_name" {
   description = "Docker image name with tag"
   type        = string
 }
 
-variable "container_name" {
-  description = "Docker container name"
-  type        = string
-}
-
-variable "ports" {
-  description = "List of ports to expose"
-  type = list(object({
-    internal = number
-    external = number
-  }))
-  default = []
-}
-
 variable "env_vars" {
   description = "Environment variables"
-  type        = list(string)
-  default     = []
-}
-
-variable "volumes" {
-  description = "Volumes to mount"
   type = list(object({
-    host_path      = string
-    container_path = string
+    name  = string
+    value = string
   }))
   default = []
 }
