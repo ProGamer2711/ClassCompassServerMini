@@ -54,7 +54,7 @@ async function bootstrap() {
 	const theme = new SwaggerTheme();
 
 	SwaggerModule.setup("api", app, document, {
-		customCss: theme.getBuffer(SwaggerThemeNameEnum.DARK_MONOKAI),
+		customCss: theme.getBuffer(SwaggerThemeNameEnum.DARK),
 		customSiteTitle: "Class Compass API Docs",
 	});
 
