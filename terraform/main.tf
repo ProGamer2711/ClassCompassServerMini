@@ -10,12 +10,7 @@ terraform {
 provider "docker" {}
 
 resource "docker_image" "app_image" {
-  name = var.image_name
-  #   we could also make the image build automatically but this causes issues with the tfstate file
-  #   build {
-  #     context    = path.module
-  #     dockerfile = "Dockerfile"
-  #   }
+  name         = var.image_name
   keep_locally = true
 }
 
