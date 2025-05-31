@@ -1,6 +1,11 @@
 name: CI - Test
 
-on: [push, pull_request]
+on:
+    workflow_dispatch:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
 
 jobs:
     build:
@@ -32,4 +37,10 @@ jobs:
               run: pnpm run build
 
             - name: 🧪 Run tests
-              run: pnpm run test
+              run: pnpm run test:cov
+
+            - name: 📤 Upload coverage report
+              uses: actions/upload-artifact@v4
+              with:
+                  name: coverage-report
+                  path: coverage/

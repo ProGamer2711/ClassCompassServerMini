@@ -22,7 +22,6 @@ const jestConfig: Config = {
 	roots: ["src"],
 	testEnvironment: "node",
 	moduleNameMapper: aliasPaths,
-	collectCoverage: true,
 	coverageDirectory: "coverage",
 	coverageReporters: ["text", "lcov"],
 	collectCoverageFrom: [
