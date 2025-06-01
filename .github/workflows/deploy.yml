@@ -45,7 +45,7 @@ jobs:
 
             - name: Terraform Taint
               run: |
-                  terraform taint azurerm_container_group.app
+                  terraform taint azurerm_container_app.app
     plan:
         name: "Terraform Plan"
         runs-on: ubuntu-latest
