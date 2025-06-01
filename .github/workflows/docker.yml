@@ -1,8 +1,8 @@
-name: Build & Push Docker image to GHCR
+name: Build and push Docker image to GHCR
 
 on:
     workflow_run:
-        workflows: ["CI - Test"]
+        workflows: ["Run tests"]
         types:
             - completed
     workflow_dispatch: # allow manual trigger

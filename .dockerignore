@@ -20,13 +20,7 @@ tests/
 *.spec.ts
 
 # Terraform files and secrets
-*.tf
-*.tfvars
-*.tfstate
-*.tfstate.*
-.terraform/
-terraform.tfstate
-terraform.tfstate.*
+terraform/
 
 # Misc
 Dockerfile*
