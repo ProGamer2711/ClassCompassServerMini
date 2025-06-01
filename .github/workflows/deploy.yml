@@ -16,6 +16,36 @@ env:
     REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
 
 jobs:
+    taint:
+        name: "Terraform Taint"
+        runs-on: ubuntu-latest
+        environment: default
+        defaults:
+            run:
+                working-directory: terraform/production
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Azure Login
+              uses: azure/login@v1
+              with:
+                  creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+            - name: Setup Terraform
+              uses: hashicorp/setup-terraform@v2
+              with:
+                  terraform_wrapper: false
+                  terraform_version: 1.9.4
+
+            - name: Terraform Init
+              run: |
+                  terraform init -backend-config=backend.tfvars
+
+            - name: Terraform Taint
+              run: |
+                  terraform taint azurerm_container_group.app
     plan:
         name: "Terraform Plan"
         runs-on: ubuntu-latest
