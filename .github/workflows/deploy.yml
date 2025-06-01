@@ -48,6 +48,7 @@ jobs:
                   terraform taint azurerm_container_app.app
     plan:
         name: "Terraform Plan"
+        needs: [taint]
         runs-on: ubuntu-latest
         environment: default
         defaults:
