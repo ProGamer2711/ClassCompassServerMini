@@ -160,3 +160,9 @@ terraform.rc
 # to change depending on the environment.
 *.tfvars
 *.tfvars.json
+
+# Include public.auto.tfvars
+!public.auto.tfvars
+
+# Include backend.tfvars
+!backend.tfvars

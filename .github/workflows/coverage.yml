@@ -1,4 +1,4 @@
-name: CI - Coverage Report
+name: Create coverage report
 
 on:
     workflow_dispatch:

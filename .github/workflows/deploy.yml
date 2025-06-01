@@ -1,0 +1,72 @@
+name: Deploy to Azure using Terraform
+
+on:
+    workflow_run:
+        workflows: ["Run tests", "Build and push Docker image to GHCR"]
+        types:
+            - completed
+    workflow_dispatch: # allow manual trigger
+
+env:
+    ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+    ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+    ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+
+jobs:
+    plan:
+        name: "Terraform Plan"
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Azure Login
+              uses: azure/login@v1
+              with:
+                  client-id: ${{ secrets.AZURE_CLIENT_ID }}
+                  tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+                  subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+            - name: Setup Terraform
+              uses: hashicorp/setup-terraform@v2
+              with:
+                  terraform_wrapper: false
+
+            - name: Terraform Init
+              run: terraform init -backend-config=terraform/backend/backend.tfvars
+
+            - name: Terraform Plan
+              id: tf-plan
+              run: terraform plan -var-file=terraform/backend/backend.tfvars -out=tfplan
+
+            - name: Publish Terraform Plan
+              uses: actions/upload-artifact@v3
+              with:
+                  name: tfplan
+                  path: tfplan
+    apply:
+        name: "Terraform Apply"
+        needs: [plan]
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Setup Terraform
+              uses: hashicorp/setup-terraform@v2
+              with:
+                  terraform_wrapper: false
+
+            - name: Terraform Init
+              run: terraform init -backend-config=terraform/backend/backend.tfvars
+
+            - name: Download Terraform Plan
+              uses: actions/download-artifact@v3
+              with:
+                  name: tfplan
+
+            - name: Terraform Apply
+              run: terraform apply -var-file=terraform/backend/backend.tfvars -auto-approve tfplan
