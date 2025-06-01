@@ -22,7 +22,7 @@ async function bootstrap() {
 	);
 
 	const config = new DocumentBuilder()
-		.setTitle("Class Compass API")
+		.setTitle("Class Compass API Docs")
 		.setDescription("An API for the Class Compass application")
 		.setVersion("1.0")
 		.addServer("http://localhost:8393")
