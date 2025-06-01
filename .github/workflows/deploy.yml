@@ -49,7 +49,7 @@ jobs:
                   -out=tfplan
 
             - name: Publish Terraform Plan
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: tfplan
                   path: tfplan
@@ -71,7 +71,7 @@ jobs:
               run: terraform init -backend-config=terraform/backend/backend.tfvars
 
             - name: Download Terraform Plan
-              uses: actions/download-artifact@v3
+              uses: actions/download-artifact@v4
               with:
                   name: tfplan
 
