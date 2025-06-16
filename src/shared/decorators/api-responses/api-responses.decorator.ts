@@ -10,6 +10,8 @@ import {
 	ApiConflictResponse,
 	ApiNotFoundResponse,
 	ApiResponse,
+	ApiUnauthorizedResponse,
+	ApiForbiddenResponse,
 } from "@nestjs/swagger";
 
 import { ApiResponsesOptions } from "./api-responses-options.types";
@@ -22,6 +24,8 @@ export function ApiResponses({
 		HttpStatus.BAD_REQUEST,
 		HttpStatus.NOT_FOUND,
 		HttpStatus.CONFLICT,
+		HttpStatus.UNAUTHORIZED,
+		HttpStatus.FORBIDDEN,
 	],
 }: ApiResponsesOptions) {
 	const ResponseDecorator = ApiResponse({
@@ -49,6 +53,19 @@ export function ApiResponses({
 					description: "A unique constraint violation occurred.",
 					example: new ConflictException("Message").getResponse(),
 				});
+
+			case HttpStatus.UNAUTHORIZED:
+				return ApiUnauthorizedResponse({
+					description: "Authentication credentials were missing or invalid.",
+					example: { statusCode: 401, message: "Unauthorized" },
+				});
+
+			case HttpStatus.FORBIDDEN:
+				return ApiForbiddenResponse({
+					description: "You do not have permission to access this resource.",
+					example: { statusCode: 403, message: "Forbidden" },
+				});
+
 			default:
 				throw new Error(`Unsupported error type: ${errorResponse}`);
 		}

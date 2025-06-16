@@ -28,7 +28,11 @@ export class ClassesController {
 
 	/**
 	 * Create a new class
-	 * (Required attributes: "class:create" or "class:*")
+	 * Required attributes: "class:create" or "class:*"
+	 * Requires a valid access token. The user must have the required attributes to perform this action.
+	 *
+	 * Possible 401 Unauthorized: Missing or invalid access token.
+	 * Possible 403 Forbidden: Insufficient permissions (missing required attributes).
 	 */
 	@Post()
 	@ApiPost({ type: ClassEntity })
@@ -44,6 +48,11 @@ export class ClassesController {
 
 	/**
 	 * Get all classes for a school
+	 * Required attributes: "class:read" or "class:*"
+	 * Requires a valid access token. The user must have the required attributes to access this resource.
+	 *
+	 * Possible 401 Unauthorized: Missing or invalid access token.
+	 * Possible 403 Forbidden: Insufficient permissions (missing required attributes).
 	 */
 	@Get("school/:schoolId")
 	@ApiGet({ type: [ClassEntity] })
@@ -61,6 +70,11 @@ export class ClassesController {
 
 	/**
 	 * Get a class by ID
+	 * Required attributes: "class:read" or "class:*"
+	 * Requires a valid access token. The user must have the required attributes to access this resource.
+	 *
+	 * Possible 401 Unauthorized: Missing or invalid access token.
+	 * Possible 403 Forbidden: Insufficient permissions (missing required attributes).
 	 */
 	@Get(":id")
 	@ApiGet({ type: ClassEntity })
@@ -74,6 +88,11 @@ export class ClassesController {
 
 	/**
 	 * Update a class by ID
+	 * Required attributes: "class:update" or "class:*"
+	 * Requires a valid access token. The user must have the required attributes to perform this action.
+	 *
+	 * Possible 401 Unauthorized: Missing or invalid access token.
+	 * Possible 403 Forbidden: Insufficient permissions (missing required attributes).
 	 */
 	@Patch(":id")
 	@ApiPatch({ type: ClassEntity })
@@ -92,6 +111,11 @@ export class ClassesController {
 
 	/**
 	 * Delete a class by ID
+	 * Required attributes: "class:delete" or "class:*"
+	 * Requires a valid access token. The user must have the required attributes to perform this action.
+	 *
+	 * Possible 401 Unauthorized: Missing or invalid access token.
+	 * Possible 403 Forbidden: Insufficient permissions (missing required attributes).
 	 */
 	@Delete(":id")
 	@ApiDelete({ type: ClassEntity })

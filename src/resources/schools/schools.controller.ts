@@ -29,6 +29,11 @@ export class SchoolsController {
 
 	/**
 	 * Create a new school
+	 * Required attributes: "school:create" or "school:*"
+	 * Requires a valid access token. The user must have the required attributes to perform this action.
+	 *
+	 * Possible 401 Unauthorized: Missing or invalid access token.
+	 * Possible 403 Forbidden: Insufficient permissions (missing required attributes).
 	 */
 	@Post()
 	@ApiPost({
@@ -47,6 +52,11 @@ export class SchoolsController {
 
 	/**
 	 * Get all schools
+	 * Required attributes: "school:read" or "school:*"
+	 * Requires a valid access token. The user must have the required attributes to access this resource.
+	 *
+	 * Possible 401 Unauthorized: Missing or invalid access token.
+	 * Possible 403 Forbidden: Insufficient permissions (missing required attributes).
 	 */
 	@Get()
 	@ApiGet({
@@ -65,6 +75,11 @@ export class SchoolsController {
 
 	/**
 	 * Get a school by ID
+	 * Required attributes: "school:read" or "school:*"
+	 * Requires a valid access token. The user must have the required attributes to access this resource.
+	 *
+	 * Possible 401 Unauthorized: Missing or invalid access token.
+	 * Possible 403 Forbidden: Insufficient permissions (missing required attributes).
 	 */
 	@Get(":id")
 	@ApiGet({ type: SchoolEntity })
@@ -78,6 +93,11 @@ export class SchoolsController {
 
 	/**
 	 * Update a school by ID
+	 * Required attributes: "school:update" or "school:*"
+	 * Requires a valid access token. The user must have the required attributes to perform this action.
+	 *
+	 * Possible 401 Unauthorized: Missing or invalid access token.
+	 * Possible 403 Forbidden: Insufficient permissions (missing required attributes).
 	 */
 	@Patch(":id")
 	@ApiPatch({ type: SchoolEntity })
@@ -96,6 +116,11 @@ export class SchoolsController {
 
 	/**
 	 * Delete a school by ID
+	 * Required attributes: "school:delete" or "school:*"
+	 * Requires a valid access token. The user must have the required attributes to perform this action.
+	 *
+	 * Possible 401 Unauthorized: Missing or invalid access token.
+	 * Possible 403 Forbidden: Insufficient permissions (missing required attributes).
 	 */
 	@Delete(":id")
 	@ApiDelete({ type: SchoolEntity })

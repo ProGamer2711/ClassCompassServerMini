@@ -28,6 +28,11 @@ export class TeachersController {
 
 	/**
 	 * Create a new teacher
+	 * Required attributes: "teacher:create" or "teacher:*"
+	 * Requires a valid access token. The user must have the required attributes to perform this action.
+	 *
+	 * Possible 401 Unauthorized: Missing or invalid access token.
+	 * Possible 403 Forbidden: Insufficient permissions (missing required attributes).
 	 */
 	@Post()
 	@ApiPost({ type: TeacherEntity })
@@ -43,6 +48,11 @@ export class TeachersController {
 
 	/**
 	 * Get a teacher by ID
+	 * Required attributes: "teacher:read" or "teacher:*"
+	 * Requires a valid access token. The user must have the required attributes to access this resource.
+	 *
+	 * Possible 401 Unauthorized: Missing or invalid access token.
+	 * Possible 403 Forbidden: Insufficient permissions (missing required attributes).
 	 */
 	@Get(":id")
 	@ApiGet({ type: TeacherEntity })
@@ -56,6 +66,11 @@ export class TeachersController {
 
 	/**
 	 * Update a teacher by ID
+	 * Required attributes: "teacher:update" or "teacher:*"
+	 * Requires a valid access token. The user must have the required attributes to perform this action.
+	 *
+	 * Possible 401 Unauthorized: Missing or invalid access token.
+	 * Possible 403 Forbidden: Insufficient permissions (missing required attributes).
 	 */
 	@Patch(":id")
 	@ApiPatch({ type: TeacherEntity })
@@ -74,6 +89,11 @@ export class TeachersController {
 
 	/**
 	 * Delete a teacher by ID
+	 * Required attributes: "teacher:delete" or "teacher:*"
+	 * Requires a valid access token. The user must have the required attributes to perform this action.
+	 *
+	 * Possible 401 Unauthorized: Missing or invalid access token.
+	 * Possible 403 Forbidden: Insufficient permissions (missing required attributes).
 	 */
 	@Delete(":id")
 	@ApiDelete({ type: TeacherEntity })
